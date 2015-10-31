@@ -6,15 +6,15 @@
 		protected $nombre;
 		protected $telefono;
 		protected $email;
-		protected $usuario;
-		protected $contraseña;
+		protected $user;
+		protected $pass;
 
 		var $components = array();
 
 		var $auxiliars = array();
 
 		public function metadata(){
-			return array("identificacion" => array(), "nombre" => array(), "telefono" => array(), "email" => array(), "usuario" => array(), "contraseña" => array()); 
+			return array("identificacion" => array(), "nombre" => array(), "telefono" => array(), "email" => array(), "user" => array(), "pass" => array()); 
 		}
 
 		public function primary_key(){

@@ -7,8 +7,8 @@
 		protected $telefono;
 		protected $email;
 		protected $sueldo;
-		protected $usuario;
-		protected $contraseña;
+		protected $user;
+		protected $pass;
 		
 		//components
 		var $components = array();
@@ -18,7 +18,7 @@
 		
 		//data about the attributes
 		public function metadata(){
-			return array("identificacion" => array(), "nombre" => array(), "telefono" => array(), "email" => array(), "sueldo" => array(), "usuario" => array(), "contraseña" => array()); 
+			return array("identificacion" => array(), "nombre" => array(), "telefono" => array(), "email" => array(), "sueldo" => array(), "user" => array(), "pass" => array()); 
 		}
 
 		public function primary_key(){
