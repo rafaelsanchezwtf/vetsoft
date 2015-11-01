@@ -43,39 +43,47 @@ class c_login extends super_controller {
             throw_exception("Los datos ingresados son incorrectos");
 
         if (!is_empty($administrador)){
-            $_SESSION['administrador']['identificacion'] = $administrador[0]->get('identificacion');
-            $_SESSION['administrador']['nombre'] = $administrador[0]->get('nombre');
-            $_SESSION['administrador']['telefono'] = $administrador[0]->get('telefono');
-            $_SESSION['administrador']['email'] = $administrador[0]->get('email');
+            $_SESSION['usuario']['identificacion'] = $administrador[0]->get('identificacion');
+            $_SESSION['usuario']['nombre'] = $administrador[0]->get('nombre');
+            $_SESSION['usuario']['telefono'] = $administrador[0]->get('telefono');
+            $_SESSION['usuario']['email'] = $administrador[0]->get('email');
+            $_SESSION['usuario']['tipo'] = "administrador";
             
-            $this->engine->assign("administrador",$administrador[0]);
             $this->session = $_SESSION;
 
         }elseif (!is_empty($veterinario)){
-            $_SESSION['veterinario']['identificacion'] = $veterinario[0]->get('identificacion');
-            $_SESSION['veterinario']['nombre'] = $veterinario[0]->get('nombre');
-            $_SESSION['veterinario']['telefono'] = $veterinario[0]->get('telefono');
-            $_SESSION['veterinario']['email'] = $veterinario[0]->get('email');
-            $_SESSION['veterinario']['sueldo'] = $veterinario[0]->get('sueldo');
+            $_SESSION['usuario']['identificacion'] = $veterinario[0]->get('identificacion');
+            $_SESSION['usuario']['nombre'] = $veterinario[0]->get('nombre');
+            $_SESSION['usuario']['telefono'] = $veterinario[0]->get('telefono');
+            $_SESSION['usuario']['email'] = $veterinario[0]->get('email');
+            $_SESSION['usuario']['sueldo'] = $veterinario[0]->get('sueldo');
+            $_SESSION['usuario']['tipo'] = "veterinario";
 
-            $this->engine->assign("veterinario",$veterinario[0]);
             $this->session = $_SESSION;     
         }
 
         $this->engine->assign('type_warning','success');
         $this->engine->assign('msg_warning',"Welcome!");
         $this->temp_aux = 'message.tpl';
-
-        if (isset($administrador) && !is_null($administrador)){
+        
+        print_r2($this->session);
+        if ($this->session['usuario']['tipo']=="administrador"){
             header('Location: perfil_administrador.php');
-        }elseif (isset($veterinario) && !is_null($veterinario)) {
+        }elseif ($this->session['usuario']['tipo']=="veterinario") {
             header('Location: perfil_veterinario.php');
         }
         
     }
+
+    public function logout() {
+        session_destroy();
+        unset($this->session);
+
+        header('Location: index.php');
+    }
     
     public function display(){
-
+        $this->engine->assign('title', "Inicio de sesión");
         $this->engine->display('cabecera.tpl');
         $this->engine->display($this->temp_aux);
         $this->engine->display('login.tpl');
@@ -86,10 +94,13 @@ class c_login extends super_controller {
     public function run() {
         try {
             if (isset($this->get->option)) {
-                if ($this->get->option == "login")
+                if ($this->get->option == "login"){
                     $this->{$this->get->option}();
-                else
+                }elseif ($this->get->option == "logout") {
+                    $this->{$this->get->option}();
+                }else{
                     throw_exception("Opción ". $this->get->option." no disponible");
+                }
             }
         } catch (Exception $e) {
             $this->error=1;

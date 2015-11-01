@@ -1,3 +1,4 @@
+<title>{$title}</title>
 <section class="main row" >
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 panellogin">
                 <div class="centrardiv">

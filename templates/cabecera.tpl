@@ -44,41 +44,36 @@
          <!-- Barra Lateral -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-            
-            {if isset($administrador) || isset($veterinario)}
                
+               {if $tipo eq "administrador" or $tipo eq "veterinario"}
                 <li>
-                    <a href="{$gvar.l_global}login.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Cerrar Sesión</a>
+                    <a href="{$gvar.l_global}login.php?option=logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Cerrar Sesión</a>
                 </li>
             
-            {if isset($administrador)}
-                
+                {if $tipo eq "administrador"}
                 <li>
-                    <a href="{$gvar.l_global}perfil_administrador.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Perfil</a>
+                    <a href="{$gvar.l_global}perfil_administrador.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Perfil A</a>
                 </li>
-            {/if}
-                
-            {if isset($veterinario)}
+                {/if}
+                {if $tipo eq "veterinario"}
                 <li>
-                    <a href="{$gvar.l_global}perfil_veterinario.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Perfil</a>
+                    <a href="{$gvar.l_global}perfil_veterinario.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Perfil V</a>
                 </li>
-            {/if}
+                {/if}
                
             {else}
- 
                 <li>
-                    <a href="{$gvar.l_global}login.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Iniciar Sesión</a>
+                    <a href="{$gvar.l_global}login.php?login"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Iniciar Sesión</a>
                 </li>
-  
             {/if}
   
-            <li>
-                <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Ver historia clínica</a>
-            </li>
+                <li>
+                    <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Ver historia clínica</a>
+                </li>
 
-            <li>
-                  <span class="fa-stack fa-lg pull-left" id="footer"><i class="fa fa-copyright fa-stack-1x "></i></span> Framework G &copy; {'Y'|date}  
-            </li>
+                <li>
+                      <span class="fa-stack fa-lg pull-left" id="footer"><i class="fa fa-copyright fa-stack-1x "></i></span> Framework G &copy; {'Y'|date}  
+                </li>
   
                
             </ul>
