@@ -7,11 +7,13 @@ class c_buscar_animal extends super_controller {
         $id= $_POST['codigo'];
         if(is_null($id)){
             $this->engine->assign('error1',1);
-        elseif(is_numeric($id)){
-            
         }
+        elseif(is_numeric($id)){
+            throw_exception("Error, el campo de texto está vacío!");
+        
         }else{
             $this->engine->assign('error2',1);
+            throw_exception("Dato incorrecto!");
         }
     }
     
