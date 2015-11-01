@@ -136,11 +136,19 @@ class db
 		$info = array();
 		switch($option['lvl1'])
 		{																																																																																																										
-			case "user":
+			case "animal":
 			switch($option['lvl2'])
 			{
 				case "all": 
 					//
+					break;
+				case "some": 
+					$this->escape_string($data);
+					#$id=$this->mysqli_real_escape_string($this->cn,$data['id']);
+					#print_r2($data['id']);
+					$id=$data['id'];
+					$info=$this->get_data("SELECT * FROM animal where id like '%$id%';"); 
+					#print_r2($info);
 					break;
 			}
 			break;
