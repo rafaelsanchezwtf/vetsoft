@@ -1,4 +1,3 @@
-{}
 <title>{$title}</title>
 <section class="main row" >
             
