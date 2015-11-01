@@ -2,14 +2,14 @@
 
 require('configs/include.php');
 
-class c_login extends super_controller {
+class c_buscar_animal extends super_controller {
 
     
   
     public function display(){;
-        #$this->engine->display('header.tpl');
-        $this->engine->display('iniciar_sesion.tpl');
-        #$this->engine->display('footer.tpl');
+        $this->engine->display('cabecera.tpl');
+        $this->engine->display('buscar_animal.tpl');
+        $this->engine->display('piedepagina.tpl');
     
     }
     
@@ -19,7 +19,7 @@ class c_login extends super_controller {
         
 }
 
-    $call = new c_login();
+    $call = new c_buscar_animal();
     $call->run();
 
 
