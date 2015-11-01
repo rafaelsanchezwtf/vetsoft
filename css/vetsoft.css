@@ -168,7 +168,7 @@
 
 /*login.php*/
 .panellogin{
-    margin-top: 150px;
+    margin-top: 80px;
 }
 /* perfil_administrador.tpl */
 .btn-default{
@@ -195,6 +195,10 @@
 }
 .parcito{
     margin-left: 80px;
+}
+
+.centrardiv{
+    text-align:center;
 }
     
 
