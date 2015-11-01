@@ -5,7 +5,7 @@ require('configs/include.php');
 class c_perfil_administrador extends super_controller {
     
     public function display(){
-        $this->engine->display('cabecera.tpl');
+        $this->engine->display('cabecera_administrador.tpl');
         $this->engine->display('perfil_administrador.tpl');
         $this->engine->display('piedepagina.tpl');
     }

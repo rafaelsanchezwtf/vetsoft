@@ -43,16 +43,15 @@ class c_login extends super_controller {
             throw_exception("Error, los datos ingresados son incorrectos");
 
         if (!is_empty($administrador)){
-            print_r2($administrador);
             $_SESSION['administrador']['identificacion'] = $administrador[0]->get('identificacion');
             $_SESSION['administrador']['nombre'] = $administrador[0]->get('nombre');
             $_SESSION['administrador']['telefono'] = $administrador[0]->get('telefono');
             $_SESSION['administrador']['email'] = $administrador[0]->get('email');
+            
             $this->engine->assign("administrador",$administrador[0]);
             $this->session = $_SESSION;
 
         }elseif (!is_empty($veterinario)){
-            print_r2($veterinario);
             $_SESSION['veterinario']['identificacion'] = $veterinario[0]->get('identificacion');
             $_SESSION['veterinario']['nombre'] = $veterinario[0]->get('nombre');
             $_SESSION['veterinario']['telefono'] = $veterinario[0]->get('telefono');
@@ -67,11 +66,11 @@ class c_login extends super_controller {
         $this->engine->assign('msg_warning',"Welcome!");
         $this->temp_aux = 'message.tpl';
 
-        // if (isset($administrador) && !is_null($administrador)){
-        //     header('Location: perfil_administrador.php');
-        // }elseif (isset($veterinario) && !is_null($veterinario)) {
-        //     header('Location: perfil_veterinario.php');
-        // }
+        if (isset($administrador) && !is_null($administrador)){
+            header('Location: perfil_administrador.php');
+        }elseif (isset($veterinario) && !is_null($veterinario)) {
+            header('Location: perfil_veterinario.php');
+        }
         
     }
     
