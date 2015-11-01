@@ -3,7 +3,17 @@
 require('configs/include.php');
 
 class c_buscar_animal extends super_controller {
-
+    public function buscar(){
+        $id= $_POST['codigo'];
+        if(is_null($id)){
+            $this->engine->assign('error1',1);
+        elseif(is_numeric($id)){
+            
+        }
+        }else{
+            $this->engine->assign('error2',1);
+        }
+    }
     
   
     public function display(){;
