@@ -39,21 +39,38 @@
                 </div>
     </nav>
     
-    
-    
-    
-    
-    
-    
-    
+
     <div id="wrapper">
          <!-- Barra Lateral -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             
-            <li>
-                <a href="{$gvar.l_global}login.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Iniciar Sesión</a>
-            </li>
+            {if isset($administrador) || isset($veterinario)}
+               
+                <li>
+                    <a href="{$gvar.l_global}login.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Cerrar Sesión</a>
+                </li>
+            
+            {if isset($administrador)}
+                
+                <li>
+                    <a href="{$gvar.l_global}perfil_administrador.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Perfil</a>
+                </li>
+            {/if}
+                
+            {if isset($veterinario)}
+                <li>
+                    <a href="{$gvar.l_global}perfil_veterinario.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Perfil</a>
+                </li>
+            {/if}
+               
+            {else}
+ 
+                <li>
+                    <a href="{$gvar.l_global}login.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Iniciar Sesión</a>
+                </li>
+  
+            {/if}
   
             <li>
                 <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Ver historia clínica</a>
