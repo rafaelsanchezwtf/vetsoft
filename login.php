@@ -40,7 +40,7 @@ class c_login extends super_controller {
         $this->orm->close();
 
         if (is_empty($administrador) && is_empty($veterinario))
-            throw_exception("Error, los datos ingresados son incorrectos");
+            throw_exception("Los datos ingresados son incorrectos");
 
         if (!is_empty($administrador)){
             $_SESSION['administrador']['identificacion'] = $administrador[0]->get('identificacion');
