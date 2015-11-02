@@ -27,7 +27,7 @@
                         <th>Id:</th>
                         <th>Nombre:</th>
                         <th>Foto:</th>
-                        <th>Edad:</th>
+                        <th>Meses:</th>
                         <th>Peso</th>
                         <th>Talla:</th>
                         <th>Genero:</th>
@@ -41,7 +41,7 @@
                         <td>{$animal[$j]->get("id")}</td>
                         <td>{$animal[$j]->get("nombre")}</td>
                         <td>{$animal[$j]->get("foto")}</td>
-                        <td>{$animal[$j]->get("edad")}</dh>
+                        <td>{$animal[$j]->get("fecha_de_nacimiento")}</dh>
                         <td>{$animal[$j]->get("peso")}</td>
                         <td>{$animal[$j]->get("talla")}</td>
                         <td>{$animal[$j]->get("genero")}</td>

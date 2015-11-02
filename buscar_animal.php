@@ -3,7 +3,22 @@
 require('configs/include.php');
 
 class c_buscar_animal extends super_controller {
+
     public function buscar(){
+        function edad($fechanacimiento){
+            list($ano,$mes,$dia) = explode("-",$fechanacimiento);
+            $ano_diferencia  = date("Y") - $ano;
+            if($mes<date("m")){
+                $mes_diferencia  = date("m") - $mes;
+                
+            }elseif($mes==date("m")){
+                $mes_diferencia  =1;
+            }else{
+                $mes_diferencia  = (12 - date("m")) + $mes;
+            }
+            echo ($ano_diferencia*12)+$mes_diferencia;
+            return ($ano_diferencia*12)+$mes_diferencia;
+        }
         $id= $_POST['codigo'];
         if(is_empty($id)){
             $this->engine->assign('error1',1);
@@ -21,7 +36,25 @@ class c_buscar_animal extends super_controller {
                 $this->engine->assign('error3',3);
                 throw_exception("Código no existe o no ha sido asignado");
             }else{
-                $this->engine->assign("animal",$animales);
+                $cant=count($animales);
+                $array = array();
+                for($i=0;$i<$cant;$i++) {
+                    settype($data,'object');  
+                    $edad=$animales[$i]->get('fecha_de_nacimiento');
+                    $edad=edad($edad);      
+                    $data->id =$animales[$i]->get('id');
+                    $data->nombre = $animales[$i]->get('nombre');
+                    $data->foto = $animales[$i]->get('foto');
+                    $data->fecha_de_nacimiento =$edad;
+                    $data->peso = $animales[$i]->get('peso');
+                    $data->talla = $animales[$i]->get('talla');
+                    $data->genero = $animales[$i]->get('genero');
+                    $data->especie = $animales[$i]->get('especie');
+                    $data->dueno = $animales[$i]->get('dueno');
+                    $array[] = new animal($data);
+                    
+                }
+                $this->engine->assign("animal",$array);
             }
         }else{
             $this->engine->assign('error2',2);
@@ -33,7 +66,7 @@ class c_buscar_animal extends super_controller {
         $this->temp_aux = 'message.tpl';
     }
     
-  
+    
     public function display(){;
         $this->engine->display('cabecera.tpl');
         $this->engine->display($this->temp_aux);
