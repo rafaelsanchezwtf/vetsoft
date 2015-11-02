@@ -6,7 +6,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-4">
                             <h3 align="center">Ingrese el código del animal.</h3>
-                            <input {if isset($error1)} style="background-color: #F78181" {/if} {if isset($error2)} style="background-color: #F78181" {/if} title="Ingrese un valor numérico." class="form-control" name="codigo" placeholder="Código"/>
+                            <input {if isset($error1)} style="background-color: #F78181" {/if} {if isset($error2)} style="background-color: #F78181" {/if} title="Ingrese un valor numérico." type="number" class="form-control" name="codigo" placeholder="Código"/ required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -17,8 +17,10 @@
                 </form>
             </div>
 </section>
+</div>
+<div class="container">
     {if isset($animal)}
-           
+    
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tr class="info">
