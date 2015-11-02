@@ -18,6 +18,7 @@
             </div>
 </section>
     {if isset($animal)}
+           
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tr class="info">
@@ -34,6 +35,7 @@
                     </tr>
                     {for $j=0 to count($animal)-1}
                     <tr>
+                       <form action="{$gvar.l_global}editar_animal.php" method="post">
                         <td>{$animal[$j]->get("id")}</td>
                         <td>{$animal[$j]->get("nombre")}</td>
                         <td>{$animal[$j]->get("foto")}</td>
@@ -42,12 +44,30 @@
                         <td>{$animal[$j]->get("talla")}</td>
                         <td>{$animal[$j]->get("genero")}</td>
                         <td>{$animal[$j]->get("especie")}</td>
-                        <td><button class="btn btn-primary">Editar</button></td>
-
+                        <td>
+                        
+                        <button type ="submit" class="btn btn-primary">Editar</button></td>
+                        
                     </tr>
+                    
+                    <input type="hidden" name="id" value="{$animal[$j]->get('id')}">
+                    <input type="hidden" name="nombre" value="{$animal[$j]->get('nombre')}">
+                    <input type="hidden" name="foto" value="{$animal[$j]->get('foto')}">
+                    <input type="hidden" name="edad" value="{$animal[$j]->get('edad')}">
+                    <input type="hidden" name="peso" value="{$animal[$j]->get('peso')}">
+                    <input type="hidden" name="talla" value="{$animal[$j]->get('talla')}">
+                    <input type="hidden" name="genero" value="{$animal[$j]->get('genero')}">
+                    <input type="hidden" name="especie" value="{$animal[$j]->get('especie')}">
+                    <input type="hidden" name="dueno" value="{$animal[$j]->get('dueno')}">
+                    
+                    </form>
+                    
                     {/for}
                 </table>
         </div>
+        
+        
+        
     {/if}
 
 </div>
