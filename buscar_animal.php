@@ -16,7 +16,6 @@ class c_buscar_animal extends super_controller {
             }else{
                 $mes_diferencia  = (12 - date("m")) + $mes;
             }
-            echo ($ano_diferencia*12)+$mes_diferencia;
             return ($ano_diferencia*12)+$mes_diferencia;
         }
         $id= $_POST['codigo'];
