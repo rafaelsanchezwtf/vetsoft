@@ -27,7 +27,7 @@
                         <th>Id:</th>
                         <th>Nombre:</th>
                         <th>Foto:</th>
-                        <th>Meses:</th>
+                        <th>Fecha de Nacimiento:</th>
                         <th>Peso</th>
                         <th>Talla:</th>
                         <th>Genero:</th>
@@ -55,7 +55,7 @@
                     <input type="hidden" name="id" value="{$animal[$j]->get('id')}">
                     <input type="hidden" name="nombre" value="{$animal[$j]->get('nombre')}">
                     <input type="hidden" name="foto" value="{$animal[$j]->get('foto')}">
-                    <input type="hidden" name="edad" value="{$animal[$j]->get('edad')}">
+                    <input type="hidden" name="edad" value="{$animal[$j]->get('fecha_de_nacimiento')}">
                     <input type="hidden" name="peso" value="{$animal[$j]->get('peso')}">
                     <input type="hidden" name="talla" value="{$animal[$j]->get('talla')}">
                     <input type="hidden" name="genero" value="{$animal[$j]->get('genero')}">

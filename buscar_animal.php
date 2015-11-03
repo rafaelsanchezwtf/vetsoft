@@ -35,7 +35,7 @@ class c_buscar_animal extends super_controller {
                 $this->engine->assign('error3',3);
                 throw_exception("Código no existe o no ha sido asignado");
             }else{
-                $cant=count($animales);
+                /*$cant=count($animales);
                 $array = array();
                 for($i=0;$i<$cant;$i++) {
                     settype($data,'object');  
@@ -52,8 +52,8 @@ class c_buscar_animal extends super_controller {
                     $data->dueno = $animales[$i]->get('dueno');
                     $array[] = new animal($data);
                     
-                }
-                $this->engine->assign("animal",$array);
+                }*/
+                $this->engine->assign("animal",$animales);
             }
         }else{
             $this->engine->assign('error2',2);
