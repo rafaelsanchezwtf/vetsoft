@@ -2,29 +2,34 @@
     <b>Datos del dueño:</b><br /><br />
 </div>
 <div class="col-sm-offset-3 col-sm-10">
-    <form action="{$gvar.l_global}login.php" method="post">
-        <table width="100%" border="0" cellpadding="0" cellspacing="5">
+    <form action="{$gvar.l_global}registrar_dueno.php" method="post" enctype="multipart/form-data">
+        <table width="100%" border="0" cellpadding="0" cellspacing="5"> 
             <tr>
                 <td>
                     
-                    <b>Cedula:</b> <input class="input" type="text" required name="cedula"/>
+                    &nbsp<b>Cedula:</b> <input {if isset($cedula_vacio) or isset($cedula_invalido)} style="background-color: #F78181" {/if} type="number" name="cedula"/>
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <b>Telefono:</b> <input type="numeric" required name="telefono"/></br></br>
+                    <b>Telefono:</b> <input {if isset($telefono_vacio) or isset($telefono_invalido)} style="background-color: #F78181" {/if} type="number" name="telefono"/></br></br>
                     
-                    <b>Nombre:</b> <input  type="text" required name="nombre"/>
-                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <b>Email:</b> <input  type="text" required name="email"/>
+                    <b>Nombre:</b> <input {if isset($nombre_vacio)} style="background-color: #F78181" {/if} type="text" name="nombre"/>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <b>Email:</b> <input  {if isset($email_vacio) or isset($email_invalido)} style="background-color: #F78181" {/if} type="text" name="email"/>
                     </br></br>
-                    <b>Fotografia:</b></br> <input type="file" name="foto" />
+                    <b>Fotografia:</b></br> <input type="file" name="foto" id="foto"/>
                 </br>
-                    <input class="btn btn-primary" type="submit" value="Aceptar" />
+                    {if isset($mostrar)}
+                        <img src="{$mostrar}" height='20%' width='20%'/>
+                    {/if}
+                </br>
+                </br>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input class="btn btn-primary" name="cancelar" type="submit" value="Cancelar" />
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input class="btn btn-primary" name="aceptar" type="submit" value="Aceptar" />
+                    
                 </td>
             </tr>
         </table>
     </form> 
 </br>
-    <form action="{$gvar.l_global}registrar_animal.php" method="post">
-        <input class="btn btn-primary" type="submit" value="Cancelar" />
-    </form> 
+        
 </div>
 

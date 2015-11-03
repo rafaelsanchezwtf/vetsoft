@@ -14,7 +14,7 @@
                            
                             <div class="form-group">
                                 <div class=" col-xs-8 col-sm-8 col-md-8 col-lg-8 parcito">
-                                    <button type="submit" class="btn btn-default opcion">Registrar animal</button>
+                                   <a href="{$gvar.l_global}registrar_animal.php" class="btn btn-default opcion" role="button">Registrar animal</a>
                                     <button type="submit" class="btn btn-default opcion">Contratar veterinario</button>
                                 </div>
                                 <div class=" col-xs-8 col-sm-8 col-md-8 col-lg-8 parcito">
