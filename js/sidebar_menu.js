@@ -25,5 +25,13 @@ $("#menu-toggle").click(function(e) {
             }
           }
         );
+         
+         
+       //$("#datosdeldueno").parents("tr").hide(); 
+         
       }
-    $(document).ready(function() {initMenu();});
+    $(document).ready(function() {initMenu();
+                                 
+                             
+                                 
+                                 });

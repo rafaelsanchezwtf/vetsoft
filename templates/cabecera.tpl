@@ -10,11 +10,9 @@
     <style type="text/css"> @import url({/literal}{$gvar.l_global}{literal}css/bootstrap3.min.css); </style>
     <style type="text/css"> @import url({/literal}{$gvar.l_global}{literal}css/font-awesome.min.css); </style>
     <style type="text/css"> @import url({/literal}{$gvar.l_global}{literal}css/vetsoft.css); </style> 
-    <style type="text/css"> @import url({/literal}{$gvar.l_global}{literal}css/fileinput.min.css); </style> 
     <script type='text/javascript'>l_global = '{/literal}{$gvar.l_global}{literal}';</script>
     <script src="{/literal}{$gvar.l_global}{literal}js/jquery.min.js" language="Javascript"></script>
     <script src="{/literal}{$gvar.l_global}{literal}js/bootstrap3.min.js" language="Javascript"></script>
-    <script src="{/literal}{$gvar.l_global}{literal}js/fileinput.min.js" language="Javascript"></script>
     {/literal}
 </head>
 <body>
@@ -41,21 +39,40 @@
                 </div>
     </nav>
     
-    
-    
-    
-    
-    
-    
-    
+
     <div id="wrapper">
          <!-- Barra Lateral -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+               
+               {if $tipo eq "administrador" or $tipo eq "veterinario"}
+                <li>
+                    <a href="{$gvar.l_global}login.php?option=logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Cerrar Sesión</a>
+                </li>
             
-            <li>
-                  <span class="fa-stack fa-lg pull-left" id="footer"><i class="fa fa-copyright fa-stack-1x "></i></span> Framework G &copy; {'Y'|date}
-                   
+                {if $tipo eq "administrador"}
+                <li>
+                    <a href="{$gvar.l_global}perfil_administrador.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Perfil A</a>
+                </li>
+                {/if}
+                {if $tipo eq "veterinario"}
+                <li>
+                    <a href="{$gvar.l_global}perfil_veterinario.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Perfil V</a>
+                </li>
+                {/if}
+               
+            {else}
+                <li>
+                    <a href="{$gvar.l_global}login.php?login"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Iniciar Sesión</a>
+                </li>
+            {/if}
+  
+                <li>
+                    <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Ver historia clínica</a>
+                </li>
+
+                <li>
+                      <span class="fa-stack fa-lg pull-left" id="footer"><i class="fa fa-copyright fa-stack-1x "></i></span> Framework G &copy; {'Y'|date}  
                 </li>
   
                
