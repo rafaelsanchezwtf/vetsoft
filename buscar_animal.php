@@ -66,10 +66,19 @@ class c_buscar_animal extends super_controller {
     }
     
     
-    public function display(){;
+    public function display(){
         $this->engine->display('cabecera.tpl');
-        $this->engine->display($this->temp_aux);
-        $this->engine->display('buscar_animal.tpl');
+        if ($this->session['usuario']['tipo'] == "administrador") {
+            echo $this->session['mensaje']['tipo']. $this->session['mensaje']['texto'];
+            $this->engine->display($this->temp_aux);
+            $this->engine->display('buscar_animal.tpl');
+            $this->engine->display($this->temp_aux);
+        }else{
+            $this->engine->assign('type_warning','Lo sentimos:');
+            $this->engine->assign('msg_warning',"Usted no tiene permiso para acceder a esta opción.");
+            $this->temp_aux = 'message.tpl';
+            $this->engine->display($this->temp_aux);    
+        }
         $this->engine->display('piedepagina.tpl');
     
     }
