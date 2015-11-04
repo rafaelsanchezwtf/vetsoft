@@ -17,7 +17,29 @@
                     <b>Género:</b> <input {if isset($genero_vacio)} style="background-color: #F78181" {/if} type="text" name="genero"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     <b>Especie:</b> <input {if isset($especie_vacio)} style="background-color: #F78181" {/if} type="text" name="especie"/>
                     </br></br>
-                    <b>Fotografia:</b></br> <input type="file" name="foto" id="foto"/>
+                    <b>Fotografia:</b></br> 
+                    <input type="file" name="foto" id="foto" onchange="PreviewImage();"/>
+                    
+                    
+                    <script>  
+                             
+                            $("#foto").change(function(){
+                                PreviewImage();
+                            });
+                            function PreviewImage() {
+                                var oFReader = new FileReader();
+                                oFReader.readAsDataURL(document.getElementById("foto").files[0]);
+                                oFReader.onload = function (oFREvent) {
+                                document.getElementById("uploadPreview").src = oFREvent.target.result;
+                            };
+                            };
+
+                        </script>
+                    
+                    
+                    
+                    <img id="uploadPreview" style="width: 100px; height: 100px;" />
+                    
                 </br>
                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     <input class="btn btn-primary" name="cancelar" type="submit" value="Cancelar" />

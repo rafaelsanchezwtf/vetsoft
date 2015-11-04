@@ -15,7 +15,30 @@
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     <b>Email:</b> <input  {if isset($email_vacio) or isset($email_invalido)} style="background-color: #F78181" {/if} type="text" name="email"/>
                     </br></br>
-                    <b>Fotografia:</b></br> <input type="file" name="foto" id="foto"/>
+                    <b>Fotografia:</b></br> <input type="file" name="foto" id="foto" onchange="PreviewImage();"/>
+                    <script>  
+                             
+                            $("#foto").change(function(){
+                                PreviewImage();
+                            });
+                            function PreviewImage() {
+                                var oFReader = new FileReader();
+                                oFReader.readAsDataURL(document.getElementById("foto").files[0]);
+                                oFReader.onload = function (oFREvent) {
+                                document.getElementById("uploadPreview").src = oFREvent.target.result;
+                            };
+                            };
+
+                        </script>
+                    
+                    
+                    
+                    <img id="uploadPreview" style="width: 100px; height: 100px;" />
+                    
+                    
+                    
+                    
+                    
                 </br>
                     {if isset($mostrar)}
                         <img src="{$mostrar}" height='20%' width='20%'/>
