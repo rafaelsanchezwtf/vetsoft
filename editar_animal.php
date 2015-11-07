@@ -306,23 +306,23 @@ class c_editar_animal extends super_controller {
         $this->engine->assign('title', "Editar animal");
         
         // variables de sesion
-        $this->engine->assign('nombre',$this->session['usuario']['nombre']);
-        $this->engine->assign('tipo',$this->session['usuario']['tipo']);
+        // $this->engine->assign('nombre',$this->session['usuario']['nombre']);
+        // $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         
         
         $this->engine->display('cabecera.tpl');
         
-        if ($this->session['usuario']['tipo'] == "administrador") {
-            echo $this->session['mensaje']['tipo']. $this->session['mensaje']['texto'];
+        // if ($this->session['usuario']['tipo'] == "administrador") {
+            // echo $this->session['mensaje']['tipo']. $this->session['mensaje']['texto'];
             $this->engine->display($this->temp_aux);
-            $this->engine->display('editar_animal.tpl');}
-        else{
-            $this->engine->assign('type_warning','Lo sentimos:');
-            $this->engine->assign('msg_warning',"Usted no tiene permiso para acceder a esta opción.");
-            $this->temp_aux = 'message.tpl';
+            $this->engine->display('editar_animal.tpl');
+        // else{
+        //     $this->engine->assign('type_warning','Lo sentimos:');
+        //     $this->engine->assign('msg_warning',"Usted no tiene permiso para acceder a esta opción.");
+        //     $this->temp_aux = 'message.tpl';
             
-            $this->engine->display($this->temp_aux);    
-        }
+        //     $this->engine->display($this->temp_aux);    
+        // }
         
         
         $this->engine->display('piedepagina.tpl');
