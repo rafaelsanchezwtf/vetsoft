@@ -125,7 +125,6 @@
         width: 250px;
     }
  
- 
     #page-content-wrapper {
         padding: 20px;
         position: relative;
@@ -152,6 +151,7 @@
  
     }
 }
+
 .navbar-default{
     background-color: black;
     border-color: black;
@@ -170,6 +170,7 @@
 .panellogin{
     margin-top: 80px;
 }
+
 /* perfil_administrador.tpl */
 .btn-default{
     background-color: black;
@@ -198,7 +199,7 @@
 }
 
 .centrardiv{
-    text-align:center;
+    margin-left: 380px;
 }
     
 

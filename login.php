@@ -5,6 +5,18 @@ require('modules/m_phpass/PasswordHash.php');
 
 class c_login extends super_controller {
 
+    public function mensaje($icon, $type, $dir, $content){
+        $msg_icon=$icon;
+        $msg_dir=$dir;
+        $msg_type=$type;
+        $msg_content=$content;
+
+        $this->temp_aux = 'message.tpl';
+        $this->engine->assign('msg_icon',$msg_icon);
+        $this->engine->assign('msg_dir',$msg_dir);
+        $this->engine->assign('msg_type',$msg_type);
+        $this->engine->assign('msg_content',$msg_content);
+    }
 
     public function login() {
 
@@ -22,7 +34,8 @@ class c_login extends super_controller {
         }
 
         if ($message1<>"" || $message2<>""){
-            throw_exception("Hay datos incompletos".$message1.$message2);
+            self::mensaje("warning","Error","","Hay campos vacíos");
+            throw_exception("");
         }
 
         $options['administrador']['lvl2'] = "one_login";
@@ -39,8 +52,10 @@ class c_login extends super_controller {
         $veterinario = $this->orm->get_objects("veterinario");
         $this->orm->close();
 
-        if (is_empty($administrador) && is_empty($veterinario))
-            throw_exception("Los datos ingresados son incorrectos");
+        if (is_empty($administrador) && is_empty($veterinario)){
+            self::mensaje("warning","Error","","Nombre de usuario o contraseña invalidos");
+            throw_exception("");
+        }
 
         if (!is_empty($administrador)){
             $_SESSION['usuario']['identificacion'] = $administrador[0]->get('identificacion');
@@ -62,11 +77,8 @@ class c_login extends super_controller {
             $this->session = $_SESSION;     
         }
 
-        $this->engine->assign('type_warning','success');
-        $this->engine->assign('msg_warning',"Welcome!");
-        $this->temp_aux = 'message.tpl';
+        self::mensaje("check-square","Confirmacion","","Acceso exitoso");
         
-        print_r2($this->session);
         if ($this->session['usuario']['tipo']=="administrador"){
             header('Location: perfil_administrador.php');
         }elseif ($this->session['usuario']['tipo']=="veterinario") {
@@ -78,7 +90,6 @@ class c_login extends super_controller {
     public function logout() {
         session_destroy();
         unset($this->session);
-
         header('Location: index.php');
     }
     
