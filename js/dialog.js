@@ -11,7 +11,7 @@ function CustomAlert(){
 	    dialogbox.style.display = "block";
 		document.getElementById('dialogboxhead').innerHTML = title;
 	    document.getElementById('dialogboxbody').innerHTML = dialog;
-	    document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Alert.ok()">Aceptar</button>';
+	    document.getElementById('dialogboxfoot').innerHTML = '<a onclick="Alert.ok()" class="btn btn-default opcion" role="button">Aceptar</a>';
 		
 	}
 	this.ok = function(){
