@@ -34,8 +34,7 @@ class c_login extends super_controller {
         }
 
         if ($message1<>"" || $message2<>""){
-            $direccion=$gvar['l_global']."perfil_administrador.php";
-            self::mensaje("warning","Error",$direccion,"Hay campos vacíos");
+            self::mensaje("warning","Error","","Hay campos vacíos");
             throw_exception("");
         }
 
