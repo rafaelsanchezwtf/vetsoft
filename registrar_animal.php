@@ -4,84 +4,80 @@ require('configs/include.php');
 
 class c_registrar_animal extends super_controller {
     
-    function validateDate($date, $format = 'Y-m-d'){
-        $d = DateTime::createFromFormat($format, $date);
-        return $d && $d->format($format) == $date;
+    public function mensaje($icon, $type, $dir, $content){
+        $msg_icon=$icon;
+        $msg_dir=$dir;
+        $msg_type=$type;
+        $msg_content=$content;
+
+        $this->temp_aux = 'message.tpl';
+        $this->engine->assign('msg_icon',$msg_icon);
+        $this->engine->assign('msg_dir',$msg_dir);
+        $this->engine->assign('msg_type',$msg_type);
+        $this->engine->assign('msg_content',$msg_content);
     }
 
     public function registrar(){
 
+        $this->engine->assign($nombre_animal,$this->post->nombre);
+        $this->engine->assign($fecha_de_nacimiento,$this->post->fecha_de_nacimiento);
+        $this->engine->assign($peso,$this->post->peso);
+        $this->engine->assign($talla,$this->post->talla);
+        $this->engine->assign($genero,$this->post->genero);
+        $this->engine->assign($especie,$this->post->especie);
+
         $animal = new animal($this->post);
 
-        $nombre_vacio = "";
-        $fecha_vacio = "";
-        $peso_vacio = "";
-        $talla_vacio = "";
-        $genero_vacio = "";
-        $especie_vacio = "";
+        $incompletitud = animal::validar_completitud($animal);
 
-        $fecha_invalido = "";
-        $peso_invalido = "";
-        $talla_invalido = "";
-        
-        if (is_empty($this->post->nombre)){
-            $this->engine->assign("nombre_vacio",0);
-            $nombre_vacio = " Campo nombre vacío";
+        if ($incompletitud){
+
+            if (is_empty($this->post->nombre)){
+                $this->engine->assign("nombre_vacio",0);
+            }
+
+            if (is_empty($this->post->fecha_de_nacimiento)){
+                $this->engine->assign("fecha_vacio",0);
+            }
+
+            if (is_empty($this->post->peso)){
+                $this->engine->assign("peso_vacio",0);
+            }
+
+            if (is_empty($this->post->talla)){
+                $this->engine->assign("talla_vacio",0);
+            }
+
+            if (is_empty($this->post->genero)){
+                $this->engine->assign("genero_vacio",0);
+            }
+
+            if (is_empty($this->post->especie)){
+                $this->engine->assign("especie_vacio",0);
+            }
+
+            self::mensaje("warning","Error","","Hay campos vacíos");
+            throw_exception("");
         }
 
-        if (is_empty($this->post->fecha_de_nacimiento)){
-            $this->engine->assign("fecha_vacio",0);
-            $fecha_vacio = " Campo fecha de nacimiento vacío";
-        }
+        $incorrectitud = animal::validar_correctitud($animal);
 
-        if (is_empty($this->post->peso)){
-            $this->engine->assign("peso_vacio",0);
-            $peso_vacio = " Campo Peso vacío";
-        }
+        if ($incorrectitud){
 
-        if (is_empty($this->post->talla)){
-            $this->engine->assign("talla_vacio",0);
-            $talla_vacio = " Campo talla vacío";
-        }
+            if(!(animal::validateDate($this->post->fecha_de_nacimiento))){
+                $this->engine->assign("fecha_invalido",0);
+            }
 
-        if (is_empty($this->post->genero)){
-            $this->engine->assign("genero_vacio",0);
-            $genero_vacio = " Campo genero vacío";
-        }
+            if (!is_numeric($this->post->peso)){
+                $this->engine->assign("peso_invalido",0); 
+            }
 
-        if (is_empty($this->post->especie)){
-            $this->engine->assign("especie_vacio",0);
-            $especie_vacio = " Campo especie vacío";
-        }
+            if (!is_numeric($this->post->talla)){
+                $this->engine->assign("talla_invalido",0);    
+            }
 
-        if ($nombre_vacio<>""
-            || $fecha_vacio<>""
-            || $peso_vacio<>""
-            ||$talla_vacio<>""
-            || $genero_vacio<>""
-            || $especie_vacio<>""){
-            throw_exception("HAY DATOS INCOMPLETOS".$nombre_vacio.$fecha_vacio.
-            $peso_vacio.$talla_vacio.$genero_vacio.$especie_vacio);
-        }
-
-        if(!($this->validateDate($this->post->fecha_de_nacimiento))){
-            $this->engine->assign("fecha_invalido",0);
-            $fecha_invalido = " Campo fecha de nacimiento invalido";
-        }
-
-        if (!is_numeric($this->post->peso)){
-            $this->engine->assign("peso_invalido",0);
-            $peso_invalido = " Campo peso invalido";      
-        }
-
-        if (!is_numeric($this->post->talla)){
-            $this->engine->assign("talla_invalido",0);
-            $talla_invalido = " Campo talla invalido";      
-        }
-
-        if ($fecha_invalido<>"" || $peso_invalido<>"" || $talla_invalido<>""){
-            throw_exception("HAY DATOS INVALIDOS".$fecha_invalido.
-            $peso_invalido.$talla_invalido);
+            self::mensaje("warning","Error","","Hay datos invalidos");
+            throw_exception("");
         }
 
         if ($_FILES['foto']['name'] == "") {
