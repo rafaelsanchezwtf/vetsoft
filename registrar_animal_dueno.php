@@ -360,7 +360,7 @@ class c_registrar_animal_dueno extends super_controller {
 
             $id = $animalmaxid[0]->get('id');
 
-            $msg = "Animal con dueño existente registrado, Codigo animal asignado: " . $id;
+            $msg = "Animal con dueño existente registrado, Codigo asignado: " . $id;
             $dir=$gvar['l_global']."perfil_administrador.php";
             self::mensaje("check-circle","Confirmación",$dir,$msg);
         
