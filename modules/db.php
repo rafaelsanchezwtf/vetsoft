@@ -112,7 +112,7 @@ class db
 					if ($dueno == "") {
 						$this->do_operation("INSERT INTO animal (id, nombre, fecha_de_nacimiento, peso, talla, genero, especie, foto, dueno) VALUES (NULL, '$nombre', '$fecha_de_nacimiento', '$peso', '$talla', '$genero', '$especie', '$foto', NULL);");
 					}else{
-					$this->do_operation("INSERT INTO animal (id, nombre, fecha_de_nacimiento, peso, talla, genero, especie, foto, dueno) VALUES (NULL, '$nombre', '$fecha_de_nacimiento', '$peso', '$talla', '$genero', '$especie', '$foto', '$dueno');");
+						$this->do_operation("INSERT INTO animal (id, nombre, fecha_de_nacimiento, peso, talla, genero, especie, foto, dueno) VALUES (NULL, '$nombre', '$fecha_de_nacimiento', '$peso', '$talla', '$genero', '$especie', '$foto', '$dueno');");
 					}
 					break;
 				}
@@ -208,6 +208,15 @@ class db
 			{
 				case "max": 
 					$info=$this->get_data("SELECT * FROM animal WHERE id = (SELECT MAX(id) FROM animal);");
+					break;
+			}
+			break;
+
+			case "dueno":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					$info=$this->get_data("SELECT * FROM dueno;");
 					break;
 			}
 			break;

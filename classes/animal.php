@@ -57,11 +57,11 @@
     		if(!(self::validateDate($animal->get('fecha_de_nacimiento')))){
     			$flag = TRUE;	
     		}
-    		if (!is_numeric($animal->get('peso'))){
+    		if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
 	            $flag = TRUE;     
 	        }
 
-	        if (!is_numeric($animal->get('talla'))){
+	        if ((!is_numeric($animal->get('talla'))) or ($animal->get('talla') <= 0)){
 	            $flag = TRUE;      
 	        }
 	        RETURN $flag;
