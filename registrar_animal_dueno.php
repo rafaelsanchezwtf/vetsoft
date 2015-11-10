@@ -4,7 +4,114 @@ require('configs/include.php');
 
 class c_registrar_animal_dueno extends super_controller {
     
+    public function asignar_datos_animal($nombre, $fecha_de_nacimiento, $peso, $talla, $genero, $especie){
+        $this->engine->assign('nombre_animal',$nombre);
+        $this->engine->assign('fecha_de_nacimiento',$fecha_de_nacimiento);
+        $this->engine->assign('peso',$peso);
+        $this->engine->assign('talla',$talla);
+        $this->engine->assign('genero',$genero);
+        $this->engine->assign('especie',$especie);  
+    }
+
+    public function asignar_datos_dueno($cedula, $nombre, $telefono, $email){
+        $this->engine->assign('cedula_dueno',$cedula);
+        $this->engine->assign('nombre_dueno',$nombre);
+        $this->engine->assign('telefono_dueno',$telefono);
+        $this->engine->assign('email_dueno',$email); 
+    }
+
+    public function asignar_vacios_animal($nombre, $fecha_de_nacimiento, $peso, $talla, $genero, $especie){
+        if (is_empty($nombre)){
+            $this->engine->assign("nombre_vacio",0);
+        }
+        if (is_empty($fecha_de_nacimiento)){
+            $this->engine->assign("fecha_vacio",0);
+        }
+        if (is_empty($peso)){
+            $this->engine->assign("peso_vacio",0);
+        }
+        if (is_empty($talla)){
+            $this->engine->assign("talla_vacio",0);
+        }
+        if (is_empty($genero)){
+            $this->engine->assign("genero_vacio",0);
+        }
+        if (is_empty($tespecie)){
+            $this->engine->assign("especie_vacio",0);
+        }
+    }
+
+    public function asignar_vacios_dueno($cedula, $nombre, $telefono, $email){
+        if (is_empty($cedula)){
+            $this->engine->assign("cedula_dueno_vacio",0);
+        }
+        if (is_empty($nombre)){
+            $this->engine->assign("nombre_dueno_vacio",0);
+        }
+        if (is_empty($telefono)){
+            $this->engine->assign("telefono_dueno_vacio",0);
+        }
+        if (is_empty($email)){
+            $this->engine->assign("email_dueno_vacio",0);
+        }
+    }
+
+    public function asignar_invalidos_animal($animal){
+        if(!(animal::validateDate($animal->get('fecha_de_nacimiento')))){
+            $this->engine->assign("fecha_invalido",0);
+        }
+        if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
+            $this->engine->assign("peso_invalido",0); 
+        }
+        if ((!is_numeric($animal->get('talla'))) or ($animal->get('talla') <= 0)){
+            $this->engine->assign("talla_invalido",0);    
+        }             
+    }
+
+    public function asignar_invalidos_dueno($dueno){
+        if ((!is_numeric($dueno->get('cedula'))) or ($dueno->get('cedula') <= 0)){
+            $this->engine->assign("cedula_dueno_invalido",0);     
+        }
+
+        if ((!is_numeric($dueno->get('telefono'))) or ($dueno->get('telefono') < 1000000)){
+            $this->engine->assign("telefono_dueno_invalido",0);     
+        }
+        if (!filter_var($dueno->get('email'), FILTER_VALIDATE_EMAIL)){
+            $this->engine->assign("email_dueno_invalido",0);   
+        }
+    }
+
+    public function fotografia($foto,$final){
+        $nombre_foto = $_FILES[$foto]["name"];
+        $ext = strtolower(substr(strrchr($nombre_foto, '.'), 1));
+    
+        $nombre_final = $final;
+        $nombre_final = $nombre_final . "." . $ext;
+
+        if ($foto=="foto"){
+            if (file_exists("files/animal/" . $nombre_final)){
+                $mensaje = "Fotografia con nombre " . $nombre_final . " ya existe!";
+                self::mensaje("warning","Error","",$mensaje);
+                throw_exception("");
+            }else{
+                move_uploaded_file($_FILES[$foto]["tmp_name"],"files/animal/" . $nombre_final);
+            }
+            $foto_atributo = "files/animal/" . $nombre_final;
+        }else{
+            if (file_exists("files/dueno/" . $nombre_final)){
+                $mensaje = "Fotografia con nombre " . $nombre_final . " ya existe!";
+                self::mensaje("warning","Error","",$mensaje);
+                throw_exception("");
+            }else{
+                move_uploaded_file($_FILES[$foto]["tmp_name"],"files/dueno/" . $nombre_final);
+            }
+            $foto_atributo = "files/dueno/" . $nombre_final;
+        }
+        RETURN $foto_atributo;
+    }
+
    public function mensaje($icon, $type, $dir, $content){
+        
         $msg_icon=$icon;
         $msg_dir=$dir;
         $msg_type=$type;
@@ -18,31 +125,19 @@ class c_registrar_animal_dueno extends super_controller {
     }
 
     public function registrar_dueno_nuevo(){
-
-        $this->engine->assign('nombre_animal',$this->post->nombre);
-        $this->engine->assign('fecha_de_nacimiento',$this->post->fecha_de_nacimiento);
-        $this->engine->assign('peso',$this->post->peso);
-        $this->engine->assign('talla',$this->post->talla);
-        $this->engine->assign('genero',$this->post->genero);
-        $this->engine->assign('especie',$this->post->especie);
-
+        self::asignar_datos_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
         $this->engine->assign('registrar_dueno_nuevo',0);
     }
 
     public function registrar_dueno_existente(){
-
-        $this->engine->assign('nombre_animal',$this->post->nombre);
-        $this->engine->assign('fecha_de_nacimiento',$this->post->fecha_de_nacimiento);
-        $this->engine->assign('peso',$this->post->peso);
-        $this->engine->assign('talla',$this->post->talla);
-        $this->engine->assign('genero',$this->post->genero);
-        $this->engine->assign('especie',$this->post->especie);
-        
+        self::asignar_datos_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
+    
         $option['dueno']['lvl2']="all";
         $this->orm->connect();
         $this->orm->read_data(array("dueno"), $option);
         $variable = $this->orm->get_objects("dueno");
         $this->engine->assign('objeto',$variable);
+        
         $this->engine->assign('registrar_dueno_existente',0);
     }
 
@@ -60,20 +155,11 @@ class c_registrar_animal_dueno extends super_controller {
         
         if ($this->post->flag == "dueno_nuevo"){
 
-            $this->engine->assign('cedula_dueno',$this->post->cedula_dueno);
-            $this->engine->assign('nombre_dueno',$this->post->nombre_dueno);
-            $this->engine->assign('telefono_dueno',$this->post->telefono_dueno);
-            $this->engine->assign('email_dueno',$this->post->email_dueno);
-
-            $this->engine->assign('nombre_animal',$this->post->nombre);
-            $this->engine->assign('fecha_de_nacimiento',$this->post->fecha_de_nacimiento);
-            $this->engine->assign('peso',$this->post->peso);
-            $this->engine->assign('talla',$this->post->talla);
-            $this->engine->assign('genero',$this->post->genero);
-            $this->engine->assign('especie',$this->post->especie);
+            self::asignar_datos_dueno($this->post->cedula_dueno,$this->post->nombre_dueno,$this->post->telefono_dueno,$this->post->email_dueno);
+            self::asignar_datos_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
 
             $animal = new animal($this->post);
-            $dueno = new dueno($this->post);
+            $dueno = new dueno();
 
             $dueno->set('cedula',$this->post->cedula_dueno);
             $dueno->set('nombre',$this->post->nombre_dueno);
@@ -85,44 +171,8 @@ class c_registrar_animal_dueno extends super_controller {
 
             if ($incompletitud_animal or $incompletitud_dueno){
 
-                if (is_empty($this->post->nombre)){
-                    $this->engine->assign("nombre_vacio",0);
-                }
-
-                if (is_empty($this->post->fecha_de_nacimiento)){
-                    $this->engine->assign("fecha_vacio",0);
-                }
-
-                if (is_empty($this->post->peso)){
-                    $this->engine->assign("peso_vacio",0);
-                }
-
-                if (is_empty($this->post->talla)){
-                    $this->engine->assign("talla_vacio",0);
-                }
-
-                if (is_empty($this->post->genero)){
-                    $this->engine->assign("genero_vacio",0);
-                }
-
-                if (is_empty($this->post->especie)){
-                    $this->engine->assign("especie_vacio",0);
-                }
-                if (is_empty($this->post->cedula_dueno)){
-                    $this->engine->assign("cedula_dueno_vacio",0);
-                }
-
-                if (is_empty($this->post->nombre_dueno)){
-                    $this->engine->assign("nombre_dueno_vacio",0);
-                }
-
-                if (is_empty($this->post->telefono_dueno)){
-                    $this->engine->assign("telefono_dueno_vacio",0);
-                }
-
-                if (is_empty($this->post->email_dueno)){
-                    $this->engine->assign("email_dueno_vacio",0);
-                }
+                self::asignar_vacios_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
+                self::asignar_vacios_dueno($this->post->cedula_dueno,$this->post->nombre_dueno,$this->post->telefono_dueno,$this->post->email_dueno);
 
                 self::mensaje("warning","Error","","Hay campos vacíos");
                 throw_exception("");
@@ -133,28 +183,8 @@ class c_registrar_animal_dueno extends super_controller {
 
             if ($incorrectitud_animal or $incorrectitud_dueno){
 
-                if(!(animal::validateDate($this->post->fecha_de_nacimiento))){
-                    $this->engine->assign("fecha_invalido",0);
-                }
-
-                if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
-                    $this->engine->assign("peso_invalido",0); 
-                }
-
-                if ((!is_numeric($animal->get('talla'))) or ($animal->get('talla') <= 0)){
-                    $this->engine->assign("talla_invalido",0);    
-                }
-
-                if ((!is_numeric($dueno->get('cedula'))) or ($dueno->get('cedula') <= 0)){
-                    $this->engine->assign("cedula_dueno_invalido",0);     
-                }
-
-                if ((!is_numeric($dueno->get('telefono'))) or ($dueno->get('telefono') < 1000000)){
-                    $this->engine->assign("telefono_dueno_invalido",0);     
-                }
-                if (!filter_var($dueno->get('email'), FILTER_VALIDATE_EMAIL)){
-                    $this->engine->assign("email_dueno_invalido",0);   
-                }
+                self::asignar_invalidos_animal($animal);
+                self::asignar_invalidos_dueno($dueno);
 
                 self::mensaje("warning","Error","","Hay datos invalidos");
                 throw_exception("");
@@ -175,22 +205,7 @@ class c_registrar_animal_dueno extends super_controller {
                     throw_exception("");
             }
 
-            $nombre_foto_dueno = $_FILES["foto_dueno"]["name"];
-            $ext_dueno = strtolower(substr(strrchr($nombre_foto_dueno, '.'), 1));
-        
-            $nombre_final_dueno = $this->post->cedula_dueno;
-            $nombre_final_dueno = $nombre_final_dueno . "." . $ext_dueno;
-
-            if (file_exists("files/dueno/" . $nombre_final_dueno)){
-                $mensaje = "Fotografia con nombre " . $nombre_final_dueno . " ya existe!";
-                self::mensaje("warning","Error","",$mensaje);
-                throw_exception("");
-            }else{
-                move_uploaded_file($_FILES["foto_dueno"]["tmp_name"],"files/dueno/" . $nombre_final_dueno);
-            }
-
-            $foto_atributo_dueno = "files/dueno/" . $nombre_final_dueno;
-
+            $foto_atributo_dueno = self::fotografia("foto_dueno",$this->post->cedula_dueno);
             $dueno->set('foto',$foto_atributo_dueno);
 
             $this->orm->connect();
@@ -208,21 +223,7 @@ class c_registrar_animal_dueno extends super_controller {
                 $id = $animalmaxid[0]->get('id') + 1;
             }
 
-            $nombre_foto_animal = $_FILES["foto"]["name"];
-            $ext_animal = strtolower(substr(strrchr($nombre_foto_animal, '.'), 1));
-            
-            $nombre_final_animal = $id;
-            $nombre_final_animal = $nombre_final_animal . "." . $ext_animal;
-
-            if (file_exists("files/animal/" . $nombre_final_animal)){
-                $mensaje = "Fotografia con nombre " . $nombre_final_animal . " ya existe!";
-                self::mensaje("warning","Error","",$mensaje);
-                throw_exception("");
-            }else{
-                move_uploaded_file($_FILES["foto"]["tmp_name"],"files/animal/" . $nombre_final_animal);
-            }
-
-            $foto_atributo_animal = "files/animal/" . $nombre_final_animal;
+            $foto_atributo_animal = self::fotografia("foto",$id);
 
             $animal->set('dueno',$this->post->cedula_dueno);
             $animal->set('foto',$foto_atributo_animal);
@@ -245,13 +246,7 @@ class c_registrar_animal_dueno extends super_controller {
         }elseif ($this->post->flag == "dueno_existente") {
 
             self::registrar_dueno_existente();
-
-            $this->engine->assign('nombre_animal',$this->post->nombre);
-            $this->engine->assign('fecha_de_nacimiento',$this->post->fecha_de_nacimiento);
-            $this->engine->assign('peso',$this->post->peso);
-            $this->engine->assign('talla',$this->post->talla);
-            $this->engine->assign('genero',$this->post->genero);
-            $this->engine->assign('especie',$this->post->especie);
+            self::asignar_datos_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
 
             $animal = new animal($this->post);
 
@@ -259,30 +254,7 @@ class c_registrar_animal_dueno extends super_controller {
 
             if ($incompletitud_animal){
 
-                if (is_empty($this->post->nombre)){
-                    $this->engine->assign("nombre_vacio",0);
-                }
-
-                if (is_empty($this->post->fecha_de_nacimiento)){
-                    $this->engine->assign("fecha_vacio",0);
-                }
-
-                if (is_empty($this->post->peso)){
-                    $this->engine->assign("peso_vacio",0);
-                }
-
-                if (is_empty($this->post->talla)){
-                    $this->engine->assign("talla_vacio",0);
-                }
-
-                if (is_empty($this->post->genero)){
-                    $this->engine->assign("genero_vacio",0);
-                }
-
-                if (is_empty($this->post->especie)){
-                    $this->engine->assign("especie_vacio",0);
-                }
-
+                self::asignar_vacios_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
                 self::mensaje("warning","Error","","Hay campos vacíos");
                 throw_exception("");
             }
@@ -291,18 +263,7 @@ class c_registrar_animal_dueno extends super_controller {
 
             if ($incorrectitud_animal){
 
-                if(!(animal::validateDate($this->post->fecha_de_nacimiento))){
-                    $this->engine->assign("fecha_invalido",0);
-                }
-
-                if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
-                    $this->engine->assign("peso_invalido",0); 
-                }
-
-                if ((!is_numeric($animal->get('talla'))) or ($animal->get('talla') <= 0)){
-                    $this->engine->assign("talla_invalido",0);    
-                }
-
+                self::asignar_invalidos_animal($animal);
                 self::mensaje("warning","Error","","Hay datos invalidos");
                 throw_exception("");
             }
@@ -330,21 +291,7 @@ class c_registrar_animal_dueno extends super_controller {
                 $id = $animalmaxid[0]->get('id') + 1;
             }
 
-            $nombre_foto_animal = $_FILES["foto"]["name"];
-            $ext_animal = strtolower(substr(strrchr($nombre_foto_animal, '.'), 1));
-            
-            $nombre_final_animal = $id;
-            $nombre_final_animal = $nombre_final_animal . "." . $ext_animal;
-
-            if (file_exists("files/animal/" . $nombre_final_animal)){
-                $mensaje = "Fotografia con nombre " . $nombre_final_animal . " ya existe!";
-                self::mensaje("warning","Error","",$mensaje);
-                throw_exception("");
-            }else{
-                move_uploaded_file($_FILES["foto"]["tmp_name"],"files/animal/" . $nombre_final_animal);
-            }
-
-            $foto_atributo_animal = "files/animal/" . $nombre_final_animal;
+            $foto_atributo_animal = self::fotografia("foto",$id);
 
             $animal->set('dueno',$this->post->dueno);
             $animal->set('foto',$foto_atributo_animal);
@@ -366,43 +313,14 @@ class c_registrar_animal_dueno extends super_controller {
         
         } else{
 
-            $this->engine->assign('nombre_animal',$this->post->nombre);
-            $this->engine->assign('fecha_de_nacimiento',$this->post->fecha_de_nacimiento);
-            $this->engine->assign('peso',$this->post->peso);
-            $this->engine->assign('talla',$this->post->talla);
-            $this->engine->assign('genero',$this->post->genero);
-            $this->engine->assign('especie',$this->post->especie);
-
+            self::asignar_datos_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
             $animal = new animal($this->post);
 
             $incompletitud_animal = animal::validar_completitud($animal);
 
             if ($incompletitud_animal){
 
-                if (is_empty($this->post->nombre)){
-                    $this->engine->assign("nombre_vacio",0);
-                }
-
-                if (is_empty($this->post->fecha_de_nacimiento)){
-                    $this->engine->assign("fecha_vacio",0);
-                }
-
-                if (is_empty($this->post->peso)){
-                    $this->engine->assign("peso_vacio",0);
-                }
-
-                if (is_empty($this->post->talla)){
-                    $this->engine->assign("talla_vacio",0);
-                }
-
-                if (is_empty($this->post->genero)){
-                    $this->engine->assign("genero_vacio",0);
-                }
-
-                if (is_empty($this->post->especie)){
-                    $this->engine->assign("especie_vacio",0);
-                }
-
+                self::asignar_vacios_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
                 self::mensaje("warning","Error","","Hay campos vacíos");
                 throw_exception("");
             }
@@ -411,18 +329,7 @@ class c_registrar_animal_dueno extends super_controller {
 
             if ($incorrectitud_animal){
 
-                if(!(animal::validateDate($this->post->fecha_de_nacimiento))){
-                    $this->engine->assign("fecha_invalido",0);
-                }
-
-                if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
-                    $this->engine->assign("peso_invalido",0); 
-                }
-
-                if ((!is_numeric($animal->get('talla'))) or ($animal->get('talla') <= 0)){
-                    $this->engine->assign("talla_invalido",0);    
-                }
-
+                self::asignar_invalidos_animal($animal);
                 self::mensaje("warning","Error","","Hay datos invalidos");
                 throw_exception("");
             }
@@ -450,21 +357,7 @@ class c_registrar_animal_dueno extends super_controller {
                 $id = $animalmaxid[0]->get('id') + 1;
             }
 
-            $nombre_foto_animal = $_FILES["foto"]["name"];
-            $ext_animal = strtolower(substr(strrchr($nombre_foto_animal, '.'), 1));
-            
-            $nombre_final_animal = $id;
-            $nombre_final_animal = $nombre_final_animal . "." . $ext_animal;
-
-            if (file_exists("files/animal/" . $nombre_final_animal)){
-                $mensaje = "Fotografia con nombre " . $nombre_final_animal . " ya existe!";
-                self::mensaje("warning","Error","",$mensaje);
-                throw_exception("");
-            }else{
-                move_uploaded_file($_FILES["foto"]["tmp_name"],"files/animal/" . $nombre_final_animal);
-            }
-
-            $foto_atributo_animal = "files/animal/" . $nombre_final_animal;
+            $foto_atributo_animal = self::fotografia("foto",$id);
 
             $animal->set('dueno',"");
             $animal->set('foto',$foto_atributo_animal);
@@ -548,9 +441,6 @@ class c_registrar_animal_dueno extends super_controller {
     }
         
 }
-
     $call = new c_registrar_animal_dueno();
     $call->run();
-
-
 ?>
