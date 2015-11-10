@@ -8,21 +8,21 @@
                 <tr>
                     <td>
                         
-                        &nbsp<b>Cedula:</b> <input {if isset($cedula_dueno)}value="{$cedula_dueno}"{/if} {if isset($cedula_dueno_vacio) or isset($cedula_dueno_invalido)} style="background-color: #F78181" {/if} {if isset($cedula_dueno_invalido)} value="" {/if} type="number" name="cedula_dueno"/>
+                        &nbsp<b>Cedula*</b> <input {if isset($cedula_dueno)} value="{$cedula_dueno}"{/if} {if isset($cedula_dueno_vacio) or isset($cedula_dueno_invalido)} style="background-color: #F78181" {/if} {if isset($cedula_dueno_invalido)} value="" {/if} type="number" name="cedula_dueno"/>
 
                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
-                        <b>Telefono:</b> <input {if isset($telefono_dueno)}value="{$telefono_dueno}"{/if} {if isset($telefono_dueno_vacio) or isset($telefono_dueno_invalido)} style="background-color: #F78181" {/if} {if isset($telefono_dueno_invalido)} value="" {/if} type="number" name="telefono_dueno"/></br></br>
+                        <b>Telefono*</b> <input {if isset($telefono_dueno)}value="{$telefono_dueno}"{/if} {if isset($telefono_dueno_vacio) or isset($telefono_dueno_invalido)} style="background-color: #F78181" {/if} {if isset($telefono_dueno_invalido)} value="" {/if} type="number" name="telefono_dueno"/></br></br>
                         
-                        <b>Nombre:</b> <input {if isset($nombre_dueno)}value="{$nombre_dueno}"{/if} {if isset($nombre_dueno_vacio)} style="background-color: #F78181" {/if} type="text" name="nombre_dueno"/>
+                        <b>Nombre*</b> <input {if isset($nombre_dueno)}value="{$nombre_dueno}"{/if} {if isset($nombre_dueno_vacio)} style="background-color: #F78181" {/if} type="text" name="nombre_dueno"/>
 
                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                         
-                        <b>Email:</b> <input {if isset($email_dueno)}value="{$email_dueno}"{/if} {if isset($email_dueno_vacio) or isset($email_dueno_invalido)} style="background-color: #F78181" {/if} {if isset($email_dueno_invalido)} value="" {/if} type="text" name="email_dueno"/>
+                        <b>Email*</b> <input {if isset($email_dueno)}value="{$email_dueno}"{/if} {if isset($email_dueno_vacio) or isset($email_dueno_invalido)} style="background-color: #F78181" {/if} {if isset($email_dueno_invalido)} value="" {/if} type="text" name="email_dueno"/>
                         
                         </br></br>
                         <input type="hidden" name="flag" value="dueno_nuevo">
-                        <b>Fotografia:</b></br> <input type="file" name="foto_dueno" id="foto_dueno" onchange="PreviewImage1();"/>
+                        <b>Fotografia*:</b></br> <input type="file" name="foto_dueno" id="foto_dueno" onchange="PreviewImage1();"/>
                         
                         <script>     
                                 $("#foto_dueno").change(function(){
@@ -37,10 +37,11 @@
                                 };
                             </script>
                         <img id="uploadPreview_d" style="width: 100px; height: 100px;" />
-
+                        </br>
+                        </br>
+                        <p>* Campos obligatorios</p>
                     </br>
-                    </br>
-                    </br>
+                    
                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
                         <input class="btn btn-primary" name="cancelar_dueno" type="submit" value="Cancelar" />
@@ -57,11 +58,12 @@
 
 {if isset($registrar_dueno_existente)}
 <div>
-        <b>Seleccione el dueño para este animal:</b><br /><br />
+        <b>Seleccione el dueño para este animal (obligatorio):</b><br /><br />
 </div>
 <div class="col-sm-offset-3 col-sm-10">
         <form action="{$gvar.l_global}registrar_animal_dueno.php" method="post" enctype="multipart/form-data">
         <select name="dueno">
+                            <option value="0">Selección</option>    
                         {section loop=$objeto name=i}
                             <option value="{$objeto[i]->get('cedula')}">{$objeto[i]->get('cedula')} - {$objeto[i]->get('nombre')}</option>
                         {/section} 
@@ -85,27 +87,27 @@
             <tr>
                 <td>
                     
-                    <b>Nombre:</b> <input {if isset($nombre_vacio)} style="background-color: #F78181" {/if} type="text" name="nombre" {if isset($nombre_animal)} value="{$nombre_animal}" {/if}/>
+                    <b>Nombre*</b> <input {if isset($nombre_vacio)} style="background-color: #F78181" {/if} type="text" name="nombre" {if isset($nombre_animal)} value="{$nombre_animal}" {/if}/>
 
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
-                    <b>Fecha de nacimiento:</b> <input {if isset($fecha_de_nacimiento)}value="{$fecha_de_nacimiento}"{/if} {if isset($fecha_vacio) or isset($fecha_invalido)} style="background-color: #F78181" {/if} {if isset($fecha_invalido)} value="" {/if} type="date" size="5" name="fecha_de_nacimiento"/></br></br>
+                    <b>Fecha de nacimiento*</b> <input {if isset($fecha_de_nacimiento)}value="{$fecha_de_nacimiento}"{/if} {if isset($fecha_vacio) or isset($fecha_invalido)} style="background-color: #F78181" {/if} {if isset($fecha_invalido)} value="" {/if} type="date" size="5" name="fecha_de_nacimiento"/></br></br>
 
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
-                    <b>Talla:</b> <input {if isset($talla)}value="{$talla}"{/if} {if isset($talla_vacio) or isset($talla_invalido)} style="background-color: #F78181" {/if}  {if isset($talla_invalido)} value="" {/if} type="text" size="5" name="talla"/><b>cm</b>
+                    <b>Talla*</b> <input {if isset($talla)}value="{$talla}"{/if} {if isset($talla_vacio) or isset($talla_invalido)} style="background-color: #F78181" {/if}  {if isset($talla_invalido)} value="" {/if} type="text" size="5" name="talla"/><b>cm</b>
 
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     
-                    <b>Peso:</b> <input {if isset($peso)}value="{$peso}"{/if} {if isset($peso_vacio) or isset($peso_invalido)} style="background-color: #F78181" {/if} {if isset($peso_invalido)} value="" {/if} type="text" size="5" name="peso"/><b>kg</b>
+                    <b>Peso*</b> <input {if isset($peso)}value="{$peso}"{/if} {if isset($peso_vacio) or isset($peso_invalido)} style="background-color: #F78181" {/if} {if isset($peso_invalido)} value="" {/if} type="text" size="5" name="peso"/><b>kg</b>
                     
                     </br></br>
                     
-                    <b>Género:</b> <input {if isset($genero)}value="{$genero}"{/if} {if isset($genero_vacio)} style="background-color: #F78181" {/if} type="text" name="genero" />
+                    <b>Género*</b> <input {if isset($genero)}value="{$genero}"{/if} {if isset($genero_vacio)} style="background-color: #F78181" {/if} type="text" name="genero" />
 
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     
-                    <b>Especie:</b> <input {if isset($especie)}value="{$especie}"{/if} {if isset($especie_vacio)} style="background-color: #F78181" {/if} type="text" name="especie"/>
+                    <b>Especie*</b> <input {if isset($especie)}value="{$especie}"{/if} {if isset($especie_vacio)} style="background-color: #F78181" {/if} type="text" name="especie"/>
                     
                     </br></br>
                     
@@ -127,11 +129,13 @@
 
                     <img id="uploadPreview" style="width: 100px; height: 100px;" />
                     
-                </br>
-                <br/>
+                    </br>
+                    </br>
+                    <p>* Campos obligatorios</p>
+                    </br>
                 
                 {if not isset($registrar_dueno_nuevo) and not isset($registrar_dueno_existente)}
-                    <input class="btn btn-primary" type="submit" name="dueno_nuevo" value="Registrar Dueño Nuevo" />
+                    Opcional: <input class="btn btn-primary" type="submit" name="dueno_nuevo" value="Registrar Dueño Nuevo" />
                     <input class="btn btn-primary" type="submit" name="dueno_existente" value="Registrar Dueño Existente" />
                     <input type="hidden" name="flag" value="sin_dueno">
                 {/if}

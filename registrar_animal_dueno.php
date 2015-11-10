@@ -81,7 +81,7 @@ class c_registrar_animal_dueno extends super_controller {
         }
     }
 
-    public function fotografia($foto,$final){
+    public function insertar_fotografia($foto,$final){
         $nombre_foto = $_FILES[$foto]["name"];
         $ext = strtolower(substr(strrchr($nombre_foto, '.'), 1));
     
@@ -108,6 +108,20 @@ class c_registrar_animal_dueno extends super_controller {
             $foto_atributo = "files/dueno/" . $nombre_final;
         }
         RETURN $foto_atributo;
+    }
+
+    public function verificar_fotografia($foto){
+        if ($_FILES[$foto]['name'] == "") {
+                self::mensaje("warning","Error","","No se ha seleccionado una fotografia");
+                throw_exception("");   
+            }
+
+        $mTmpFile = $_FILES[$foto]["tmp_name"];
+        $mTipo = exif_imagetype($mTmpFile);
+            if (($mTipo != IMAGETYPE_JPEG) && ($mTipo != IMAGETYPE_PNG)){
+                self::mensaje("warning","Error","","Formato fotografia inválido");
+                throw_exception(""); 
+            }
     }
 
    public function mensaje($icon, $type, $dir, $content){
@@ -190,22 +204,10 @@ class c_registrar_animal_dueno extends super_controller {
                 throw_exception("");
             }
 
-            if ($_FILES['foto_dueno']['name'] == "" or $_FILES['foto']['name'] == "") {
-                self::mensaje("warning","Error","","No se ha seleccionado una fotografia para dueño o para animal");
-                throw_exception("");   
-            }
+            self::verificar_fotografia("foto");
+            self::verificar_fotografia("foto_dueno");
 
-            if (($_FILES['foto']['type'] != "image/png"
-                && $_FILES['foto']['type'] != "image/jpeg"
-                && $_FILES["foto"]["type"] != "image/pjpeg") ||
-                ($_FILES['foto_dueno']['type'] != "image/png"
-                && $_FILES['foto_dueno']['type'] != "image/jpeg"
-                && $_FILES["foto_dueno"]["type"] != "image/pjpeg")){
-                    self::mensaje("warning","Error","","Al menos un archivo subido no es una imagen"); 
-                    throw_exception("");
-            }
-
-            $foto_atributo_dueno = self::fotografia("foto_dueno",$this->post->cedula_dueno);
+            $foto_atributo_dueno = self::insertar_fotografia("foto_dueno",$this->post->cedula_dueno);
             $dueno->set('foto',$foto_atributo_dueno);
 
             $this->orm->connect();
@@ -223,7 +225,7 @@ class c_registrar_animal_dueno extends super_controller {
                 $id = $animalmaxid[0]->get('id') + 1;
             }
 
-            $foto_atributo_animal = self::fotografia("foto",$id);
+            $foto_atributo_animal = self::insertar_fotografia("foto",$id);
 
             $animal->set('dueno',$this->post->cedula_dueno);
             $animal->set('foto',$foto_atributo_animal);
@@ -245,6 +247,7 @@ class c_registrar_animal_dueno extends super_controller {
 
         }elseif ($this->post->flag == "dueno_existente") {
 
+            $this->engine->assign('selector_dueno',$this->post->dueno);
             self::registrar_dueno_existente();
             self::asignar_datos_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
 
@@ -259,6 +262,11 @@ class c_registrar_animal_dueno extends super_controller {
                 throw_exception("");
             }
 
+            if ($this->post->dueno == "0") {
+                self::mensaje("warning","Error","","Por favor seleccione un dueño");
+                throw_exception("");
+            }
+
             $incorrectitud_animal = animal::validar_correctitud($animal);
 
             if ($incorrectitud_animal){
@@ -268,17 +276,7 @@ class c_registrar_animal_dueno extends super_controller {
                 throw_exception("");
             }
 
-            if ($_FILES['foto']['name'] == "") {
-                self::mensaje("warning","Error","","No se ha seleccionado una fotografia");
-                throw_exception("");   
-            }
-
-            if ($_FILES['foto']['type'] != "image/png"
-                && $_FILES['foto']['type'] != "image/jpeg"
-                && $_FILES["foto"]["type"] != "image/pjpeg"){
-                    self::mensaje("warning","Error","","Archivo subido no es una imagen"); 
-                    throw_exception("");
-            }
+            self::verificar_fotografia("foto");
 
             $options['animal']['lvl2']="max";
             $this->orm->connect();
@@ -291,7 +289,7 @@ class c_registrar_animal_dueno extends super_controller {
                 $id = $animalmaxid[0]->get('id') + 1;
             }
 
-            $foto_atributo_animal = self::fotografia("foto",$id);
+            $foto_atributo_animal = self::insertar_fotografia("foto",$id);
 
             $animal->set('dueno',$this->post->dueno);
             $animal->set('foto',$foto_atributo_animal);
@@ -321,6 +319,7 @@ class c_registrar_animal_dueno extends super_controller {
             if ($incompletitud_animal){
 
                 self::asignar_vacios_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
+                    
                 self::mensaje("warning","Error","","Hay campos vacíos");
                 throw_exception("");
             }
@@ -334,17 +333,7 @@ class c_registrar_animal_dueno extends super_controller {
                 throw_exception("");
             }
 
-            if ($_FILES['foto']['name'] == "") {
-                self::mensaje("warning","Error","","No se ha seleccionado una fotografia");
-                throw_exception("");   
-            }
-
-            if ($_FILES['foto']['type'] != "image/png"
-                && $_FILES['foto']['type'] != "image/jpeg"
-                && $_FILES["foto"]["type"] != "image/pjpeg"){
-                    self::mensaje("warning","Error","","Archivo subido no es una imagen"); 
-                    throw_exception("");
-            }
+            self::verificar_fotografia("foto");
 
             $options['animal']['lvl2']="max";
             $this->orm->connect();
@@ -357,7 +346,7 @@ class c_registrar_animal_dueno extends super_controller {
                 $id = $animalmaxid[0]->get('id') + 1;
             }
 
-            $foto_atributo_animal = self::fotografia("foto",$id);
+            $foto_atributo_animal = self::insertar_fotografia("foto",$id);
 
             $animal->set('dueno',"");
             $animal->set('foto',$foto_atributo_animal);
