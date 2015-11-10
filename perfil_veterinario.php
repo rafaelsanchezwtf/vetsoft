@@ -23,9 +23,6 @@ class c_perfil_veterinario extends super_controller {
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
         if ($this->session['usuario']['tipo'] == "veterinario") {
-            $_SESSION['mensaje']['tipo'] = '';
-            $_SESSION['mensaje']['texto'] = '';
-            $_SESSION['mensaje']['codigo'] = '';
             $this->engine->display($this->temp_aux);
             $this->engine->display('perfil_veterinario.tpl');
         }else{
