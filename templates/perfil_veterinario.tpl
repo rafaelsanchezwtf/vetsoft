@@ -25,18 +25,8 @@
                                     <a href="{$gvar.l_global}atender_tratamiento.php" class="btn btn-default opcion" role="button">Atender tratamiento</a>
                                 </div>
                             </div>
-                           
-                           
-                            
                           </div>
                     </div> 
-                       
-                       
-                       
-                        
-                    
-                    
-                    
                 </form>
             </div>
         </section>
