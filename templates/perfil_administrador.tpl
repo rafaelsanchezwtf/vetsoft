@@ -1,7 +1,7 @@
 <title>{$title}</title>
 <section class="main row" >
             
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 panelperfil">
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-5 panelperfil">
                 <form class="form-horizontal">
                     <div class="page-header text-center titulobienvenida">
                       <h1>Bienvenido(a) {$nombre}</h1>
@@ -24,9 +24,9 @@
                                 <div class=" col-xs-8 col-sm-8 col-md-8 col-lg-8  parcito">
                                     <a href="{$gvar.l_global}buscar_veterinario.php" class="btn btn-default opcion" role="button">Buscar Veterinario</a>
                                     <a href="{$gvar.l_global}asignar_cita.php" class="btn btn-default opcion" role="button">Asignar Cita</a>
+                                    <a href="{$gvar.l_global}adquirir_producto.php" class="btn btn-default opcion" role="button">Adquirir Producto</a>
                                 </div>
                             </div>
-
                           </div>
                     </div> 
                 </form>
