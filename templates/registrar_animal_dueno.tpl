@@ -91,7 +91,7 @@
 
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
-                    <b>Fecha de nacimiento*</b> <input {if isset($fecha_de_nacimiento)}value="{$fecha_de_nacimiento}"{/if} {if isset($fecha_vacio) or isset($fecha_invalido)} style="background-color: #F78181" {/if} {if isset($fecha_invalido)} value="" {/if} type="date" size="5" name="fecha_de_nacimiento"/></br></br>
+                    <b>Fecha de nacimiento*</b> <input {if isset($fecha_de_nacimiento)}value="{$fecha_de_nacimiento}"{/if} {if isset($fecha_vacio) or isset($fecha_invalido)} style="background-color: #F78181" {/if} {if isset($fecha_invalido)} value="" {/if} type="text" size="22" name="fecha_de_nacimiento" placeholder="YYYY-mm-dd"/></br></br>
 
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 

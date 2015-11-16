@@ -54,7 +54,8 @@
 
     	public static function validar_correctitud($animal){
     		$flag = FALSE;
-    		if(!(self::validateDate($animal->get('fecha_de_nacimiento')))){
+    		$fecha_actual = date('Y-m-d');
+    		if((!(self::validateDate($animal->get('fecha_de_nacimiento')))) or ($animal->get('fecha_de_nacimiento') > $fecha_actual)){
     			$flag = TRUE;	
     		}
     		if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
