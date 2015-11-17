@@ -5,7 +5,6 @@ require('modules/m_phpass/PasswordHash.php');
 
 class c_login extends super_controller {
 
-
     public function login() {
 
          $message1 = "";
@@ -22,7 +21,8 @@ class c_login extends super_controller {
         }
 
         if ($message1<>"" || $message2<>""){
-            throw_exception("Hay datos incompletos".$message1.$message2);
+            $this->mensaje("warning","Error","","Hay campos vacíos");
+            throw_exception("");
         }
 
         $options['administrador']['lvl2'] = "one_login";
@@ -39,8 +39,10 @@ class c_login extends super_controller {
         $veterinario = $this->orm->get_objects("veterinario");
         $this->orm->close();
 
-        if (is_empty($administrador) && is_empty($veterinario))
-            throw_exception("Los datos ingresados son incorrectos");
+        if (is_empty($administrador) && is_empty($veterinario)){
+            $this->mensaje("warning","Error","","Nombre de usuario o contraseña invalidos");
+            throw_exception("");
+        }
 
         if (!is_empty($administrador)){
             $_SESSION['usuario']['identificacion'] = $administrador[0]->get('identificacion');
@@ -61,16 +63,13 @@ class c_login extends super_controller {
 
             $this->session = $_SESSION;     
         }
-
-        $this->engine->assign('type_warning','success');
-        $this->engine->assign('msg_warning',"Welcome!");
-        $this->temp_aux = 'message.tpl';
         
-        print_r2($this->session);
+        $dir1 = $gvar['l_global']."perfil_administrador.php";
+        $dir2 = $gvar['l_global']."perfil_veterinario.php";
         if ($this->session['usuario']['tipo']=="administrador"){
-            header('Location: perfil_administrador.php');
+            $this->mensaje("check-square","Confirmacion",$dir1,"Acceso exitoso");
         }elseif ($this->session['usuario']['tipo']=="veterinario") {
-            header('Location: perfil_veterinario.php');
+            $this->mensaje("check-square","Confirmacion",$dir2,"Acceso exitoso");
         }
         
     }
@@ -78,7 +77,6 @@ class c_login extends super_controller {
     public function logout() {
         session_destroy();
         unset($this->session);
-
         header('Location: index.php');
     }
     
@@ -88,7 +86,6 @@ class c_login extends super_controller {
         $this->engine->display($this->temp_aux);
         $this->engine->display('login.tpl');
         $this->engine->display('piedepagina.tpl');
-    
     }
     
     public function run() {

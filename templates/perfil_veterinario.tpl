@@ -1,16 +1,10 @@
 <title>{$title}</title>
 <section class="main row" >
-            
-            
-            
-            
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 panelperfil">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5 panelperfil">
                 <form class="form-horizontal">
                     <div class="page-header text-center titulobienvenida">
                       <h1>Bienvenido(a) {$nombre}</h1>
                     </div>
-                       
-                       
                       <div class="panel panel-default paneladmin">
                           <div class="panel-heading text-center">
                             <h3 class="panel-title">Opciones</h3>
@@ -19,30 +13,20 @@
                            
                             <div class="form-group">
                                 <div class=" col-xs-8 col-sm-8 col-md-8 col-lg-8 parcito">
-                                    <button type="submit" class="btn btn-default opcion">Buscar cita</button>
-                                    <button type="submit" class="btn btn-default opcion">Asignar cita</button>
+                                    <a href="{$gvar.l_global}buscar_cita.php" class="btn btn-default opcion" role="button">Buscar Cita</a>
+                                    <a href="{$gvar.l_global}asignar_cita.php" class="btn btn-default opcion" role="button">Asignar Cita</a>
                                 </div>
                                 <div class=" col-xs-8 col-sm-8 col-md-8 col-lg-8 parcito" >
-                                    <button type="submit" class="btn btn-default opcion">Atender cita</button>
-                                    <button type="submit" class="btn btn-default opcion">Buscar tratamiento</button>
+                                    <a href="{$gvar.l_global}atender_cita.php" class="btn btn-default opcion" role="button">Atender Cita</a>
+                                    <a href="{$gvar.l_global}buscar_tratamiento.php" class="btn btn-default opcion" role="button">Buscar Tratamiento</a>
                                 </div>
                                 <div class=" col-xs-8 col-sm-8 col-md-8 col-lg-8  parcito" >
-                                    <button type="submit" class="btn btn-default opcion">Asignar tratamiento</button>
-                                    <button type="submit" class="btn btn-default opcion">Atender tratamiento</button>
+                                    <a href="{$gvar.l_global}asignar_tratamiento.php" class="btn btn-default opcion" role="button">Asignar Tratamiento</a>
+                                    <a href="{$gvar.l_global}atender_tratamiento.php" class="btn btn-default opcion" role="button">Atender tratamiento</a>
                                 </div>
                             </div>
-                           
-                           
-                            
                           </div>
                     </div> 
-                       
-                       
-                       
-                        
-                    
-                    
-                    
                 </form>
             </div>
         </section>

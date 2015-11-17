@@ -1,6 +1,4 @@
-body{
-    background-image: url("../images/fondo.jpg");
-}
+
  #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
@@ -127,7 +125,6 @@ body{
         width: 250px;
     }
  
- 
     #page-content-wrapper {
         padding: 20px;
         position: relative;
@@ -154,6 +151,7 @@ body{
  
     }
 }
+
 .navbar-default{
     background-color: black;
     border-color: black;
@@ -170,8 +168,9 @@ body{
 
 /*login.php*/
 .panellogin{
-    margin-top: 150px;
+    margin-top: 80px;
 }
+
 /* perfil_administrador.tpl */
 .btn-default{
     background-color: black;
@@ -185,7 +184,7 @@ body{
 }
 .panelperfil{
     margin-top: 20px;
-    margin-left: 150px;
+    margin-left: 275px;
     background-color: rgba(0,0,0,0.7);
 }
 .paneladmin{
@@ -198,24 +197,11 @@ body{
 .parcito{
     margin-left: 80px;
 }
- /* editar animal tpl*/  
-.tablaeditarcustom{
-    background-color: rgba(0,0,0,0.6);
-    width: 600px;
+
+.centrardiv{
+    margin-left: 380px;
 }
-.caracteristica{
-    color: #DDDDDD;
-    font-size: 14px;
-}
-
-.datosdeldueno{
-    display: none;
-    visibility:hidden;
-}
-
-
-
-
+    
 
     
     

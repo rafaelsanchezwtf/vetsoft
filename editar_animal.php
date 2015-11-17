@@ -4,14 +4,6 @@ require('configs/include.php');
 
 class c_editar_animal extends super_controller {
     
-    public function cancelar(){
-    
-    
-        $_SESSION['mensaje']['tipo'] = 'Informacion: ';
-        $_SESSION['mensaje']['texto'] = 'Operación cancelada por el administrador';
-        $this->session = $_SESSION;
-        header('Location: buscar_animal.php');    }
-    
     function validateDate($date, $format = 'Y-m-d'){
         $d = DateTime::createFromFormat($format, $date);
         return $d && $d->format($format) == $date;
@@ -302,6 +294,12 @@ class c_editar_animal extends super_controller {
      
     
     }
+
+    public function cancelar(){
+        $dir = $gvar['l_global']."buscar_animal.php";
+        $this->mensaje("warning","Información",$dir,"Operacion cancelada por el administrador");
+    }
+    
     public function display(){
         $this->engine->assign('title', "Editar animal");
         
