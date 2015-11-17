@@ -14,25 +14,25 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Nombre</h4>
-                        <input type="text" {if isset($nombre_p)}value="{$nombre_p}"{/if} {if isset($nombre_vacio)} style="background-color: #F78181" {/if} class="form-control" name="nombre" placeholder="Nombre">
+                        <input type="text" {if isset($nombre_p)}value="{$nombre_p}"{/if} {if isset($nombre_vacio)} style="background-color: #F78181" {/if} class="form-control default_color" name="nombre" placeholder="Nombre">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Marca</h4>
-                        <input type="text" {if isset($marca)}value="{$marca}"{/if} {if isset($marca_vacio)} style="background-color: #F78181" {/if} class="form-control" name="marca" placeholder="Marca">
+                        <input type="text" {if isset($marca)}value="{$marca}"{/if} {if isset($marca_vacio)} style="background-color: #F78181" {/if} class="form-control default_color" name="marca" placeholder="Marca">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Cantidad</h4>
-                        <input type="text" {if isset($cantidad)}value="{$cantidad}"{/if} {if isset($cantidad_vacio) or isset($cantidad_invalido)} style="background-color: #F78181" {/if} class="form-control" name="cantidad" placeholder="Cantidad">
+                        <input type="text" {if isset($cantidad)}value="{$cantidad}"{/if} {if isset($cantidad_vacio) or isset($cantidad_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="cantidad" placeholder="Cantidad">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Tipo</h4>
-                        <select name="tipo" class="col-sm-offset-0 col-sm-6" {if isset($tipo_vacio) or isset($tipo_invalido)} style="background-color: #F78181" {/if}>
+                        <select name="tipo" class="form-control default_color" {if isset($tipo_vacio) or isset($tipo_invalido)} style="background-color: #F78181" {/if}>
                             <option value="sel">Seleccion</option>
                             <option value="medicamento">Medicamento</option>
                             <option value="implemento">Implemento</option>
@@ -49,10 +49,12 @@
             </form>
         </div>
     </div>
-    
-
-    <footer>
-    </footer>
 </body>
 </html>
+<script type="text/javascript">
+    $(".default_color").focus(function(){
+        $(this).attr("style","");
+    });
+</script>
+
 
