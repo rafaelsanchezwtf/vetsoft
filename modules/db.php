@@ -81,14 +81,21 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																													
-			case "user":
-			switch($options['lvl2'])
-			{
+			case "veterinario":
+				switch($options['lvl2']){
+				
 				case "normal":
-					//
+					$identificacion=mysqli_real_escape_string($this->cn,$object->get('identificacion'));
+					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+					$telefono=mysqli_real_escape_string($this->cn, $object->get('telefono'));
+					$email=mysqli_real_escape_string($this->cn,$object->get('email'));
+					$sueldo=mysqli_real_escape_string($this->cn,$object->get('sueldo'));
+					$user=mysqli_real_escape_string($this->cn,$object->get('user'));
+					$pass=mysqli_real_escape_string($this->cn,$object->get('pass'));
+					$this->do_operation("INSERT INTO veterinario (identificacion, nombre, telefono, email, sueldo, user, pass) VALUES ('$identificacion', '$nombre', '$telefono', '$email', '$sueldo', '$user', '$pass');");
 					break;
-			}
-			break;
+				}
+				break;
 			
 			default: break;
 		}
