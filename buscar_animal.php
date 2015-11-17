@@ -21,7 +21,8 @@ class c_buscar_animal extends super_controller {
         $id= $_POST['codigo'];
         if(is_empty($id)){
             $this->engine->assign('error1',1);
-            throw_exception("Error, el campo de texto está vacío!");
+            $this->mensaje("warning","Error","","El campo de texto está vacío");
+            throw_exception("");
             
         }
         elseif(is_numeric($id)){
@@ -33,54 +34,33 @@ class c_buscar_animal extends super_controller {
             $this->orm->close();
             if (is_empty($animales)){
                 $this->engine->assign('error3',3);
-                throw_exception("Código no existe o no ha sido asignado");
+                $this->mensaje("warning","Error","","Codigo no existe o no ha sido asignado");
+                throw_exception("");
             }else{
-                /*$cant=count($animales);
-                $array = array();
-                for($i=0;$i<$cant;$i++) {
-                    settype($data,'object');  
-                    $edad=$animales[$i]->get('fecha_de_nacimiento');
-                    $edad=edad($edad);      
-                    $data->id =$animales[$i]->get('id');
-                    $data->nombre = $animales[$i]->get('nombre');
-                    $data->foto = $animales[$i]->get('foto');
-                    $data->fecha_de_nacimiento =$edad;
-                    $data->peso = $animales[$i]->get('peso');
-                    $data->talla = $animales[$i]->get('talla');
-                    $data->genero = $animales[$i]->get('genero');
-                    $data->especie = $animales[$i]->get('especie');
-                    $data->dueno = $animales[$i]->get('dueno');
-                    $array[] = new animal($data);
-                    
-                }*/
                 $this->engine->assign("animal",$animales);
             }
         }else{
             $this->engine->assign('error2',2);
-            throw_exception("Dato incorrecto!");
+            $this->mensaje("warning","Error","","Dato incorrecto");
+            throw_exception("");
         }
-
-        #$this->engine->assign('type_warning','success');
-        #$this->engine->assign('msg_warning',"Welcome!");
-        $this->temp_aux = 'message.tpl';
     }
     
     
     public function display(){
+        $this->engine->assign('title', "Buscar Animal");
+        $this->engine->assign('nombre',$this->session['usuario']['nombre']);
+        $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
-        // if ($this->session['usuario']['tipo'] == "administrador") {
-            // echo $this->session['mensaje']['tipo']. $this->session['mensaje']['texto'];
+        if ($this->session['usuario']['tipo'] == "administrador") {
             $this->engine->display($this->temp_aux);
             $this->engine->display('buscar_animal.tpl');
-            // $this->engine->display($this->temp_aux);
-        // }else{
-            // $this->engine->assign('type_warning','Lo sentimos:');
-            // $this->engine->assign('msg_warning',"Usted no tiene permiso para acceder a esta opción.");
-            // $this->temp_aux = 'message.tpl';
-            // $this->engine->display($this->temp_aux);    
-        // }
+        }else{
+            $direccion=$gvar['l_global']."index.php";
+            $this->mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
+            $this->engine->display($this->temp_aux); 
+        }
         $this->engine->display('piedepagina.tpl');
-    
     }
     
     public function run(){

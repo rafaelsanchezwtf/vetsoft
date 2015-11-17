@@ -69,6 +69,19 @@ class super_controller
 		
 		$this->engine->assign('gvar',$gvar); //assign vars
 	}
+
+	public function mensaje($icon, $type, $dir, $content){
+        $msg_icon=$icon;
+        $msg_dir=$dir;
+        $msg_type=$type;
+        $msg_content=$content;
+
+        $this->temp_aux = 'message.tpl';
+        $this->engine->assign('msg_icon',$msg_icon);
+        $this->engine->assign('msg_dir',$msg_dir);
+        $this->engine->assign('msg_type',$msg_type);
+        $this->engine->assign('msg_content',$msg_content);
+    }
 }
 
 ?>
