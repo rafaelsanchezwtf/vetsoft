@@ -18,7 +18,7 @@
     position: absolute; 
     left: 250px;
     width: 0;
-    height: 100%;
+    height: 90%;
     margin-left: -250px;
     overflow-y: auto;
     background: #000;
@@ -125,7 +125,6 @@
         width: 250px;
     }
  
- 
     #page-content-wrapper {
         padding: 20px;
         position: relative;
@@ -152,16 +151,57 @@
  
     }
 }
+
 .navbar-default{
     background-color: black;
-    border-color: #101010;
+    border-color: black;
+    border-bottom-color: #303030;
     border-radius: 0px;
 }
-#footer{
-    
+.glyphicon-th-large{
+    color:dimgray;
 }
+.opcion{
+  width: 150px;
+  margin-bottom: 10px;
+}
+
 /*login.php*/
-.col-xs-12{
-    margin-top: 150px;
+.panellogin{
+    margin-top: 80px;
 }
+
+/* perfil_administrador.tpl */
+.btn-default{
+    background-color: black;
+    color:darkgrey;
+    border-color: black;
+}
+.btn-default:hover{
+    background-color:#404040;
+    color:white;
+    border-color:#404040;
+}
+.panelperfil{
+    margin-top: 20px;
+    margin-left: 275px;
+    background-color: rgba(0,0,0,0.7);
+}
+.paneladmin{
+    background-color: rgba(0,0,0,0.6);
+    border-color:#404040;
+}
+.titulobienvenida{
+    color: #AFAFAF;
+}
+.parcito{
+    margin-left: 80px;
+}
+
+.centrardiv{
+    margin-left: 380px;
+}
+    
+
+    
     
