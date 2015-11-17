@@ -63,10 +63,8 @@ class c_adquirir_producto extends super_controller {
             $this->engine->assign("tipo_vacio",0);
             self::mensaje("warning","Error","","Por favor seleccione un tipo");  
             throw_exception("");
-
         }
             
-
         $incorrectitud_producto = producto::validar_correctitud($producto);
 
         if ($incorrectitud_producto){
