@@ -3,19 +3,6 @@
 require('configs/include.php');
 
 class c_perfil_administrador extends super_controller {
-    
-    public function mensaje($icon, $type, $dir, $content){
-        $msg_icon=$icon;
-        $msg_dir=$dir;
-        $msg_type=$type;
-        $msg_content=$content;
-
-        $this->temp_aux = 'message.tpl';
-        $this->engine->assign('msg_icon',$msg_icon);
-        $this->engine->assign('msg_dir',$msg_dir);
-        $this->engine->assign('msg_type',$msg_type);
-        $this->engine->assign('msg_content',$msg_content);
-    }
 
     public function display(){
         $this->engine->assign('title', "Perfil Administrador");
@@ -30,7 +17,7 @@ class c_perfil_administrador extends super_controller {
             $this->engine->display('perfil_administrador.tpl');
         }else{
             $direccion=$gvar['l_global']."index.php";
-            self::mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
+            $this->mensaje("info","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
             $this->engine->display($this->temp_aux);    
         }
         $this->engine->display('piedepagina.tpl');
