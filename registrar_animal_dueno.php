@@ -92,7 +92,7 @@ class c_registrar_animal_dueno extends super_controller {
         if ($foto=="foto"){
             if (file_exists("files/animal/" . $nombre_final)){
                 $mensaje = "Fotografia con nombre " . $nombre_final . " ya existe!";
-                self::mensaje("warning","Error","",$mensaje);
+                $this->mensaje("warning","Error","",$mensaje);
                 throw_exception("");
             }else{
                 move_uploaded_file($_FILES[$foto]["tmp_name"],"files/animal/" . $nombre_final);
@@ -101,7 +101,7 @@ class c_registrar_animal_dueno extends super_controller {
         }else{
             if (file_exists("files/dueno/" . $nombre_final)){
                 $mensaje = "Fotografia con nombre " . $nombre_final . " ya existe!";
-                self::mensaje("warning","Error","",$mensaje);
+                $this->mensaje("warning","Error","",$mensaje);
                 throw_exception("");
             }else{
                 move_uploaded_file($_FILES[$foto]["tmp_name"],"files/dueno/" . $nombre_final);
@@ -113,32 +113,18 @@ class c_registrar_animal_dueno extends super_controller {
 
     public function verificar_fotografia($foto){
         if ($_FILES[$foto]['name'] == "") {
-                self::mensaje("warning","Error","","No se ha seleccionado una fotografia");
+                $this->mensaje("warning","Error","","No se ha seleccionado una fotografia");
                 throw_exception("");   
             }
 
         $mTmpFile = $_FILES[$foto]["tmp_name"];
         $mTipo = exif_imagetype($mTmpFile);
             if (($mTipo != IMAGETYPE_JPEG) && ($mTipo != IMAGETYPE_PNG)){
-                self::mensaje("warning","Error","","Formato fotografia inválido");
+                $this->mensaje("warning","Error","","Formato fotografia inválido");
                 throw_exception(""); 
             }
     }
-
-   public function mensaje($icon, $type, $dir, $content){
-        
-        $msg_icon=$icon;
-        $msg_dir=$dir;
-        $msg_type=$type;
-        $msg_content=$content;
-
-        $this->temp_aux = 'message.tpl';
-        $this->engine->assign('msg_icon',$msg_icon);
-        $this->engine->assign('msg_dir',$msg_dir);
-        $this->engine->assign('msg_type',$msg_type);
-        $this->engine->assign('msg_content',$msg_content);
-    }
-
+    
     public function registrar_dueno_nuevo(){
         self::asignar_datos_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
         $this->engine->assign('registrar_dueno_nuevo',0);
@@ -157,7 +143,7 @@ class c_registrar_animal_dueno extends super_controller {
     }
 
     public function cancelar_dueno(){
-        self::mensaje("info","Información","","Dueño no registrado");    
+        $this->mensaje("info","Información","","Dueño no registrado");    
     }
 
     public function registrar(){
@@ -189,7 +175,7 @@ class c_registrar_animal_dueno extends super_controller {
                 self::asignar_vacios_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
                 self::asignar_vacios_dueno($this->post->cedula_dueno,$this->post->nombre_dueno,$this->post->telefono_dueno,$this->post->email_dueno);
 
-                self::mensaje("warning","Error","","Hay campos vacíos");
+                $this->mensaje("warning","Error","","Hay campos vacíos");
                 throw_exception("");
             }
 
@@ -201,7 +187,7 @@ class c_registrar_animal_dueno extends super_controller {
                 self::asignar_invalidos_animal($animal);
                 self::asignar_invalidos_dueno($dueno);
 
-                self::mensaje("warning","Error","","Hay datos invalidos");
+                $this->mensaje("warning","Error","","Hay datos invalidos");
                 throw_exception("");
             }
 
@@ -244,7 +230,7 @@ class c_registrar_animal_dueno extends super_controller {
 
             $msg = "Animal y dueño registrados, Codigo asignado: " . $id;
             $dir=$gvar['l_global']."perfil_administrador.php";
-            self::mensaje("check-circle","Confirmación",$dir,$msg);
+            $this->mensaje("check-circle","Confirmación",$dir,$msg);
 
         }elseif ($this->post->flag == "dueno_existente") {
 
@@ -259,12 +245,12 @@ class c_registrar_animal_dueno extends super_controller {
             if ($incompletitud_animal){
 
                 self::asignar_vacios_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
-                self::mensaje("warning","Error","","Hay campos vacíos");
+                $this->mensaje("warning","Error","","Hay campos vacíos");
                 throw_exception("");
             }
 
             if ($this->post->dueno == "0") {
-                self::mensaje("warning","Error","","Por favor seleccione un dueño");
+                $this->mensaje("warning","Error","","Por favor seleccione un dueño");
                 throw_exception("");
             }
 
@@ -273,7 +259,7 @@ class c_registrar_animal_dueno extends super_controller {
             if ($incorrectitud_animal){
 
                 self::asignar_invalidos_animal($animal);
-                self::mensaje("warning","Error","","Hay datos invalidos");
+                $this->mensaje("warning","Error","","Hay datos invalidos");
                 throw_exception("");
             }
 
@@ -308,7 +294,7 @@ class c_registrar_animal_dueno extends super_controller {
 
             $msg = "Animal con dueño existente registrado, Codigo asignado: " . $id;
             $dir=$gvar['l_global']."perfil_administrador.php";
-            self::mensaje("check-circle","Confirmación",$dir,$msg);
+            $this->mensaje("check-circle","Confirmación",$dir,$msg);
         
         } else{
 
@@ -321,7 +307,7 @@ class c_registrar_animal_dueno extends super_controller {
 
                 self::asignar_vacios_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
                     
-                self::mensaje("warning","Error","","Hay campos vacíos");
+                $this->mensaje("warning","Error","","Hay campos vacíos");
                 throw_exception("");
             }
 
@@ -330,7 +316,7 @@ class c_registrar_animal_dueno extends super_controller {
             if ($incorrectitud_animal){
 
                 self::asignar_invalidos_animal($animal);
-                self::mensaje("warning","Error","","Hay datos invalidos");
+                $this->mensaje("warning","Error","","Hay datos invalidos");
                 throw_exception("");
             }
 
@@ -365,13 +351,13 @@ class c_registrar_animal_dueno extends super_controller {
 
             $msg = "Animal sin dueño registrado, Codigo asignado: " . $id;
             $dir=$gvar['l_global']."perfil_administrador.php";
-            self::mensaje("check-circle","Confirmación",$dir,$msg);
+            $this->mensaje("check-circle","Confirmación",$dir,$msg);
         }
     }
 
     public function cancelar(){
         $msg_dir=$gvar['l_global']."perfil_administrador.php";
-        self::mensaje("info","Informacion",$msg_dir,"Operación cancelada por el administrador");
+        $this->mensaje("info","Informacion",$msg_dir,"Operación cancelada por el administrador");
     }
 
     public function display(){
@@ -384,7 +370,7 @@ class c_registrar_animal_dueno extends super_controller {
             $this->engine->display('registrar_animal_dueno.tpl');
         }else{
             $direccion=$gvar['l_global']."index.php";
-            self::mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
+            $this->mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
             $this->engine->display($this->temp_aux); 
         }
         $this->engine->display('piedepagina.tpl');
