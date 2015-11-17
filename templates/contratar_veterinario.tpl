@@ -14,31 +14,31 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Identificacion*</h4>
-                        <input type="text" {if isset($id_v)}value="{$id_v}"{/if} {if isset($id_v_vacio) or isset($id_v_invalido)} style="background-color: #F78181" {/if} class="form-control quitar_color" name="identificacion" placeholder="Identificacion">
+                        <input type="text" {if isset($id_v)}value="{$id_v}"{/if} {if isset($id_v_vacio) or isset($id_v_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="identificacion" placeholder="Identificacion">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Nombre*</h4>
-                        <input type="text" {if isset($nombre_v)}value="{$nombre_v}"{/if} {if isset($nombre_v_vacio)} style="background-color: #F78181" {/if} class="form-control quitar_color" name="nombre" placeholder="Nombre">
+                        <input type="text" {if isset($nombre_v)}value="{$nombre_v}"{/if} {if isset($nombre_v_vacio)} style="background-color: #F78181" {/if} class="form-control default_color" name="nombre" placeholder="Nombre">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Telefeono*</h4>
-                        <input type="text" {if isset($telefono_v)}value="{$telefono_v}"{/if} {if isset($telefono_v_vacio) or isset($telefono_v_invalido)} style="background-color: #F78181" {/if} class="form-control quitar_color" name="telefono" placeholder="Telefono">
+                        <input type="text" {if isset($telefono_v)}value="{$telefono_v}"{/if} {if isset($telefono_v_vacio) or isset($telefono_v_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="telefono" placeholder="Telefono">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Email*</h4>
-                        <input type="text" {if isset($email_v)}value="{$email_v}"{/if} {if isset($email_v_vacio) or isset($email_v_invalido)} style="background-color: #F78181" {/if} class="form-control quitar_color" name="email" placeholder="Email">
+                        <input type="text" {if isset($email_v)}value="{$email_v}"{/if} {if isset($email_v_vacio) or isset($email_v_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="email" placeholder="Email">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Sueldo* (COP)</h4>
-                        <input type="text" {if isset($sueldo_v)}value="{$sueldo_v}"{/if} {if isset($sueldo_v_vacio) or isset($sueldo_v_invalido)} style="background-color: #F78181" {/if} class="form-control quitar_color" name="sueldo" placeholder="Sueldo">
+                        <input type="text" {if isset($sueldo_v)}value="{$sueldo_v}"{/if} {if isset($sueldo_v_vacio) or isset($sueldo_v_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="sueldo" placeholder="Sueldo">
                     </div>
                 </div> 
             </br>
@@ -56,7 +56,7 @@
         </div>
     </div>
     <script type="text/javascript">
-        $(".quitar_color").focus(function(){
+        $(".default_color").focus(function(){
             $(this).attr("style","");
         });
     </script>

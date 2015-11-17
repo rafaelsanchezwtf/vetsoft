@@ -10,13 +10,13 @@
             
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-4">
-                    <input  {if isset($error1)} style="background-color: #F78181" {/if} type="text" name="user" class="form-control quitar_color" id="inputText3" placeholder="Usuario">
+                    <input  {if isset($error1)} style="background-color: #F78181" {/if} type="text" name="user" class="form-control default_color" id="inputText3" placeholder="Usuario">
 
                 </div>
             </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-4">
-                        <input onfocus='txt_onfocus(this);' {if isset($error2)} style="background: #F78181" {/if}  type="password" name="pass" class="form-control quitar_color" id="inputPassword3" placeholder="Contraseña">
+                        <input {if isset($error2)} style="background: #F78181" {/if}  type="password" name="pass" class="form-control default_color" id="inputPassword3" placeholder="Contraseña">
                     </div>
                 </div>
             <div class="form-group">
@@ -28,7 +28,7 @@
     </div>
 </section>
 <script type="text/javascript">
-    $(".quitar_color").focus(function(){
+    $(".default_color").focus(function(){
         $(this).attr("style","");
     });
 </script>
