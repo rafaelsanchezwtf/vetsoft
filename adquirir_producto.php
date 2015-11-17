@@ -4,46 +4,30 @@ require('configs/include.php');
 
 class c_adquirir_producto extends super_controller {
     
-    public function asignar_datos($nombre, $fecha_de_nacimiento, $peso, $talla, $genero, $especie){
-        $this->engine->assign('nombre_animal',$nombre);
-        $this->engine->assign('fecha_de_nacimiento',$fecha_de_nacimiento);
-        $this->engine->assign('peso',$peso);
-        $this->engine->assign('talla',$talla);
-        $this->engine->assign('genero',$genero);
-        $this->engine->assign('especie',$especie);  
+    public function asignar_datos($nombre, $marca, $cantidad){
+        $this->engine->assign('nombre_p',$nombre);
+        $this->engine->assign('marca',$marca);
+        $this->engine->assign('cantidad',$cantidad);      
     }
 
-    public function asignar_vacios($nombre, $fecha_de_nacimiento, $peso, $talla, $genero, $especie){
+    public function asignar_vacios($nombre, $marca, $cantidad, $tipo){
         if (is_empty($nombre)){
             $this->engine->assign("nombre_vacio",0);
         }
-        if (is_empty($fecha_de_nacimiento)){
-            $this->engine->assign("fecha_vacio",0);
+        if (is_empty($marca)){
+            $this->engine->assign("marca_vacio",0);
         }
-        if (is_empty($peso)){
-            $this->engine->assign("peso_vacio",0);
-        }
-        if (is_empty($talla)){
-            $this->engine->assign("talla_vacio",0);
-        }
-        if (is_empty($genero)){
-            $this->engine->assign("genero_vacio",0);
-        }
-        if (is_empty($tespecie)){
-            $this->engine->assign("especie_vacio",0);
+        if (is_empty($cantidad)){
+            $this->engine->assign("cantidad_vacio",0);
         }
     }
 
-    public function asignar_invalidos($animal){
-        $fecha_actual = date('Y-m-d');
-        if((!(animal::validateDate($animal->get('fecha_de_nacimiento')))) or ($animal->get('fecha_de_nacimiento') > $fecha_actual)){
-            $this->engine->assign("fecha_invalido",0);
+    public function asignar_invalidos($producto){
+        if ((!is_numeric($producto->get('cantidad'))) OR ($producto->get('cantidad') <= 0)){
+            $this->engine->assign("cantidad_invalido",0);     
         }
-        if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
-            $this->engine->assign("peso_invalido",0); 
-        }
-        if ((!is_numeric($animal->get('talla'))) or ($animal->get('talla') <= 0)){
-            $this->engine->assign("talla_invalido",0);    
+        if (($producto->get('tipo') != "medicamento") AND ($producto->get('tipo') != "implemento")){
+            $this->engine->assign("tipo_invalido",0);    
         }             
     }
 
@@ -61,82 +45,42 @@ class c_adquirir_producto extends super_controller {
     }
 
     public function agregar(){
-        echo "in";
-        // self::asignar_datos_dueno($this->post->cedula_dueno,$this->post->nombre_dueno,$this->post->telefono_dueno,$this->post->email_dueno);
-        // self::asignar_datos_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
+        self::asignar_datos($this->post->nombre,$this->post->marca,$this->post->cantidad,$this->post->tipo);
 
-        // $animal = new animal($this->post);
-        // $dueno = new dueno();
+        $producto = new producto($this->post);
 
-        // $dueno->set('cedula',$this->post->cedula_dueno);
-        // $dueno->set('nombre',$this->post->nombre_dueno);
-        // $dueno->set('telefono',$this->post->telefono_dueno);
-        // $dueno->set('email',$this->post->email_dueno);
+        $producto->set('fecha_de_adquisicion',date('Y-m-d'));
 
-        // $incompletitud_animal = animal::validar_completitud($animal);
-        // $incompletitud_dueno = dueno::validar_completitud($dueno);
+        $incompletitud_producto = producto::validar_completitud($producto);
 
-        // if ($incompletitud_animal or $incompletitud_dueno){
+        if ($incompletitud_producto){
+            self::asignar_vacios($this->post->nombre,$this->post->marca,$this->post->cantidad,$this->post->tipo);
+            self::mensaje("warning","Error","","Hay campos vacíos");
+            throw_exception("");  
+        }
 
-        //     self::asignar_vacios_animal($this->post->nombre,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
-        //     self::asignar_vacios_dueno($this->post->cedula_dueno,$this->post->nombre_dueno,$this->post->telefono_dueno,$this->post->email_dueno);
+        if($this->post->tipo=="sel"){
+            $this->engine->assign("tipo_vacio",0);
+            self::mensaje("warning","Error","","Por favor seleccione un tipo");  
+            throw_exception("");
 
-        //     self::mensaje("warning","Error","","Hay campos vacíos");
-        //     throw_exception("");
-        // }
+        }
+            
 
-        // $incorrectitud_animal = animal::validar_correctitud($animal);
-        // $incorrectitud_dueno = dueno::validar_correctitud($dueno);
+        $incorrectitud_producto = producto::validar_correctitud($producto);
 
-        // if ($incorrectitud_animal or $incorrectitud_dueno){
+        if ($incorrectitud_producto){
+            self::asignar_invalidos($producto);
+            self::mensaje("warning","Error","","Hay datos invalidos");
+            throw_exception("");
+        }
 
-        //     self::asignar_invalidos_animal($animal);
-        //     self::asignar_invalidos_dueno($dueno);
+        $this->orm->connect();
+        $this->orm->insert_data("normal",$producto);
+        $this->orm->close();
 
-        //     self::mensaje("warning","Error","","Hay datos invalidos");
-        //     throw_exception("");
-        // }
-
-        // self::verificar_fotografia("foto");
-        // self::verificar_fotografia("foto_dueno");
-
-        // $foto_atributo_dueno = self::insertar_fotografia("foto_dueno",$this->post->cedula_dueno);
-        // $dueno->set('foto',$foto_atributo_dueno);
-
-        // $this->orm->connect();
-        // $this->orm->insert_data("normal",$dueno);
-        // $this->orm->close();
-
-        // $options['animal']['lvl2']="max";
-        // $this->orm->connect();
-        // $this->orm->read_data(array("animal"), $options);
-        // $animalmaxid = $this->orm->get_objects("animal");
-
-        // if (is_null($animalmaxid)) {
-        //     $id = 1;
-        // }else{
-        //     $id = $animalmaxid[0]->get('id') + 1;
-        // }
-
-        // $foto_atributo_animal = self::insertar_fotografia("foto",$id);
-
-        // $animal->set('dueno',$this->post->cedula_dueno);
-        // $animal->set('foto',$foto_atributo_animal);
-
-        // $this->orm->connect();
-        // $this->orm->insert_data("normal",$animal);
-        // $this->orm->close();
-
-        // $options['animal']['lvl2']="max";
-        // $this->orm->connect();
-        // $this->orm->read_data(array("animal"), $options);
-        // $animalmaxid = $this->orm->get_objects("animal");
-
-        // $id = $animalmaxid[0]->get('id');
-
-        // $msg = "Animal y dueño registrados, Codigo asignado: " . $id;
-        // $dir=$gvar['l_global']."perfil_administrador.php";
-        // self::mensaje("check-circle","Confirmación",$dir,$msg);
+        $dir=$gvar['l_global']."perfil_administrador.php";
+        self::mensaje("check-circle","Confirmación",$dir,"Producto ingresado satisfactoriamente");
     }
 
     public function cancelar(){

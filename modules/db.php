@@ -81,14 +81,19 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																													
-			case "user":
-			switch($options['lvl2'])
-			{
+			case "producto":
+				switch($options['lvl2']){
+				
 				case "normal":
-					//
+					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+					$marca=mysqli_real_escape_string($this->cn, $object->get('marca'));
+					$cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+					$tipo=mysqli_real_escape_string($this->cn,$object->get('tipo'));
+					$fecha_de_adquisicion=mysqli_real_escape_string($this->cn,$object->get('fecha_de_adquisicion'));
+					$this->do_operation("INSERT INTO producto (id, nombre, cantidad, fecha_de_adquisicion, marca, tipo) VALUES (NULL,'$nombre', '$cantidad', '$fecha_de_adquisicion', '$marca', '$tipo');");
 					break;
-			}
-			break;
+				}
+				break;
 			
 			default: break;
 		}

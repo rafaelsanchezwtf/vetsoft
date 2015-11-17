@@ -14,28 +14,28 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Nombre</h4>
-                        <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+                        <input type="text" {if isset($nombre_p)}value="{$nombre_p}"{/if} {if isset($nombre_vacio)} style="background-color: #F78181" {/if} class="form-control" name="nombre" placeholder="Nombre">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Marca</h4>
-                        <input type="text" class="form-control" name="marca" placeholder="Marca">
+                        <input type="text" {if isset($marca)}value="{$marca}"{/if} {if isset($marca_vacio)} style="background-color: #F78181" {/if} class="form-control" name="marca" placeholder="Marca">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Cantidad</h4>
-                        <input type="number" class="form-control" name="cantidad" placeholder="Cantidad">
+                        <input type="text" {if isset($cantidad)}value="{$cantidad}"{/if} {if isset($cantidad_vacio) or isset($cantidad_invalido)} style="background-color: #F78181" {/if} class="form-control" name="cantidad" placeholder="Cantidad">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Tipo</h4>
-                        <select name="tipo" class="col-sm-offset-0 col-sm-6">
-                              <option value="">Seleccion</option>
-                              <option value="medicamento">Medicamento</option>
-                              <option value="implemento">Implemento</option>
+                        <select name="tipo" class="col-sm-offset-0 col-sm-6" {if isset($tipo_vacio) or isset($tipo_invalido)} style="background-color: #F78181" {/if}>
+                            <option value="sel">Seleccion</option>
+                            <option value="medicamento">Medicamento</option>
+                            <option value="implemento">Implemento</option>
                         </select> 
                     </div>
                 </div> 
@@ -43,8 +43,8 @@
             </br>
             </br>
                 <div class="col-sm-offset-5 col-sm-6">              
-                    <button type="submit" name="agregar" class="btn btn-primary">Agregar</button>
-                    <button type="submit" name="cancelar" class="btn btn-primary">Cancelar</button>
+                    <input class="btn btn-primary" name="agregar" type="submit" value="Agregar"/>
+                    <input class="btn btn-primary" name="cancelar" type="submit" value="Cancelar"/>
                 </div>
             </form>
         </div>
