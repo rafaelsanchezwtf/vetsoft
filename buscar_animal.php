@@ -5,27 +5,27 @@ require('configs/include.php');
 class c_buscar_animal extends super_controller {
 
     public function buscar(){
-        function edad($fechanacimiento){
-            list($ano,$mes,$dia) = explode("-",$fechanacimiento);
-            $ano_diferencia  = date("Y") - $ano;
-            if($mes<date("m")){
-                $mes_diferencia  = date("m") - $mes;
+        
+        // function edad($fechanacimiento){
+        //     list($ano,$mes,$dia) = explode("-",$fechanacimiento);
+        //     $ano_diferencia  = date("Y") - $ano;
+        //     if($mes<date("m")){
+        //         $mes_diferencia  = date("m") - $mes;
                 
-            }elseif($mes==date("m")){
-                $mes_diferencia  =1;
-            }else{
-                $mes_diferencia  = (12 - date("m")) + $mes;
-            }
-            return ($ano_diferencia*12)+$mes_diferencia;
-        }
+        //     }elseif($mes==date("m")){
+        //         $mes_diferencia  =1;
+        //     }else{
+        //         $mes_diferencia  = (12 - date("m")) + $mes;
+        //     }
+        //     return ($ano_diferencia*12)+$mes_diferencia;
+        // }
+
         $id= $_POST['codigo'];
         if(is_empty($id)){
             $this->engine->assign('error1',1);
             $this->mensaje("warning","Error","","El campo de texto está vacío");
-            throw_exception("");
-            
-        }
-        elseif(is_numeric($id)){
+            throw_exception("");   
+        }elseif(is_numeric($id)){
             $options['animal']['lvl2'] = "some";
             $cod['animal']['id'] = $id;
             $this->orm->connect();
