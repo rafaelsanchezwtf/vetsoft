@@ -5,19 +5,6 @@ require('modules/m_phpass/PasswordHash.php');
 
 class c_login extends super_controller {
 
-    public function mensaje($icon, $type, $dir, $content){
-        $msg_icon=$icon;
-        $msg_dir=$dir;
-        $msg_type=$type;
-        $msg_content=$content;
-
-        $this->temp_aux = 'message.tpl';
-        $this->engine->assign('msg_icon',$msg_icon);
-        $this->engine->assign('msg_dir',$msg_dir);
-        $this->engine->assign('msg_type',$msg_type);
-        $this->engine->assign('msg_content',$msg_content);
-    }
-
     public function login() {
 
          $message1 = "";
@@ -34,7 +21,7 @@ class c_login extends super_controller {
         }
 
         if ($message1<>"" || $message2<>""){
-            self::mensaje("warning","Error","","Hay campos vacíos");
+            $this->mensaje("warning","Error","","Hay campos vacíos");
             throw_exception("");
         }
 
@@ -53,7 +40,7 @@ class c_login extends super_controller {
         $this->orm->close();
 
         if (is_empty($administrador) && is_empty($veterinario)){
-            self::mensaje("warning","Error","","Nombre de usuario o contraseña invalidos");
+            $this->mensaje("warning","Error","","Nombre de usuario o contraseña invalidos");
             throw_exception("");
         }
 
@@ -76,13 +63,13 @@ class c_login extends super_controller {
 
             $this->session = $_SESSION;     
         }
-
-        self::mensaje("check-square","Confirmacion","","Acceso exitoso");
         
+        $dir1 = $gvar['l_global']."perfil_administrador.php";
+        $dir2 = $gvar['l_global']."perfil_veterinario.php";
         if ($this->session['usuario']['tipo']=="administrador"){
-            header('Location: perfil_administrador.php');
+            $this->mensaje("check-square","Confirmacion",$dir1,"Acceso exitoso");
         }elseif ($this->session['usuario']['tipo']=="veterinario") {
-            header('Location: perfil_veterinario.php');
+            $this->mensaje("check-square","Confirmacion",$dir2,"Acceso exitoso");
         }
         
     }
@@ -99,7 +86,6 @@ class c_login extends super_controller {
         $this->engine->display($this->temp_aux);
         $this->engine->display('login.tpl');
         $this->engine->display('piedepagina.tpl');
-    
     }
     
     public function run() {
