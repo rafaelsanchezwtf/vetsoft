@@ -104,8 +104,6 @@ class db
                 switch($options['lvl2'])
 			{
 				case "normal":
-                    
-                    
 					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
                     $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
                     $fecha_de_nacimiento=mysqli_real_escape_string($this->cn, $object->get('fecha_de_nacimiento'));
@@ -113,51 +111,27 @@ class db
                     $talla=mysqli_real_escape_string($this->cn,$object->get('talla'));
                     $genero=mysqli_real_escape_string($this->cn,$object->get('genero'));
                     $especie=mysqli_real_escape_string($this->cn,$object->get('especie'));
-                    
                     $fotonueva=mysqli_real_escape_string($this->cn,$object->get('foto'));
-                    
-                    
-                    
-                    //$dueno=mysqli_real_escape_string($this->cn,$object->get('dueno'));
-                    
-                
-                
                     $this->do_operation("UPDATE animal SET nombre ='$nombre',peso= '$peso', talla='$talla', genero='$genero', especie='$especie',  fecha_de_nacimiento='$fecha_de_nacimiento', foto='$fotonueva' WHERE id='$id';");
-
 					break;
 			}
 			break;
-            
-            
             
             case "dueno":
                 switch($options['lvl2'])
-			{
+                {
 				case "normal":
-                    
-                    
 					$cedula=mysqli_real_escape_string($this->cn,$object->get('cedula'));
                     $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
-                    
                     $telefono=mysqli_real_escape_string($this->cn,$object->get('telefono'));
                     $email=mysqli_real_escape_string($this->cn,$object->get('email'));
-                    $foto=mysqli_real_escape_string($this->cn,$object->get('foto'));
-                    
-                    
-                                
+                    $foto=mysqli_real_escape_string($this->cn,$object->get('foto'));        
                     $this->do_operation("UPDATE dueno SET nombre= '$nombre', telefono='$telefono', email='$email',  foto='$foto' WHERE cedula='$cedula';");
-
 					break;
-			}
+				}
 			break;
             
-            
-            
-            
-            
-			
 			default: break;
-            break;
 		}
 	}
 	
@@ -184,39 +158,71 @@ class db
 	{
 		$info = array();
 		switch($option['lvl1'])
-		{																																																																																																										
-			case "animal":
+		{
+			case "administrador":
 			switch($option['lvl2'])
 			{
 				case "all": 
 					//
 					break;
+
+				case "one_login":
+					$user = mysqli_real_escape_string($this->cn, $data['user']);
+					$pass = $data['pass'];
+					$result = $this->get_data("SELECT user, pass FROM administrador WHERE user='$user';");
+					$hasher = new PasswordHash(8, FALSE);
+					if ($hasher->CheckPassword($pass, $result[0]->pass))
+						$info = $this->get_data("SELECT * FROM administrador WHERE user = '$user';");
+					unset($hasher);
+					break;
+			}
+			break;
+
+			case "veterinario":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					//
+					break;
+
+				case "one_login":
+					$user = mysqli_real_escape_string($this->cn, $data['user']);
+					$pass = $data['pass'];
+					$result = $this->get_data("SELECT user, pass FROM veterinario WHERE user='$user';");
+					$hasher = new PasswordHash(8, FALSE);
+					if ($hasher->CheckPassword($pass, $result[0]->pass))
+						$info = $this->get_data("SELECT * FROM veterinario WHERE user = '$user';");
+					unset($hasher);
+					break;
+			}
+			break;
+
+			case "animal":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					//
+				break;
+				
 				case "some": 
 					$this->escape_string($data);
-					#$id=$this->mysqli_real_escape_string($this->cn,$data['id']);
-					#print_r2($data['id']);
 					$id=$data['id'];
 					$info=$this->get_data("SELECT * FROM animal where id like '%$id%';"); 
-					#print_r2($info);
 					break;
 
 			}
 			break;
-            
-            
-            
+
             case "dueno":
 			switch($option['lvl2'])
 			{
-            
-
                 case "one":
-                    
 					$cedula=mysqli_real_escape_string($this->cn,$data['cedula']);
 					$info=$this->get_data("SELECT * FROM dueno WHERE cedula='$cedula';");
-					
                 break;
-            }break;
+            }
+            break;
+
 			default: break;
 		}
 		return $info;
