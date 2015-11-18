@@ -31,9 +31,15 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
+                        <h4>Precio Neto</h4>
+                        <input type="text" {if isset($precio_neto)}value="{$precio_neto}"{/if} {if isset($precio_neto_vacio) or isset($precio_neto_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="precio_neto" placeholder="Precio Neto">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-6">
                         <h4>Tipo</h4>
                         <select name="tipo" class="form-control default_color" {if isset($tipo_vacio) or isset($tipo_invalido)} style="background-color: #F78181" {/if}>
-                            <option value="sel">Seleccion</option>
+                            <option value="seleccion">Seleccion</option>
                             <option value="medicamento">Medicamento</option>
                             <option value="implemento">Implemento</option>
                         </select> 

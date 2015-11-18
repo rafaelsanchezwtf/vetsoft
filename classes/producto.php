@@ -7,6 +7,7 @@
 		protected $cantidad;
 		protected $fecha_de_adqusicion;
 		protected $marca;
+		protected $precio_neto;
 		protected $tipo;
 
 		var $components = array();
@@ -14,7 +15,7 @@
 		var $auxiliars = array();
 
 		public function metadata(){
-			return array("id" => array(), "nombre" => array(), "cantidad" => array(), "fecha_de_adqusicion" => array(), "marca" => array(), "tipo" => array()); 
+			return array("id" => array(), "nombre" => array(), "cantidad" => array(), "fecha_de_adqusicion" => array(), "marca" => array(), "tipo" => array(), "precio_neto" => array()); 
 		}
 
 		public function primary_key(){
@@ -32,6 +33,9 @@
 	        if (is_empty($producto->get('marca'))){
 	            $flag = TRUE;
 	        }
+	        if (is_empty($producto->get('precio_neto'))){
+	            $flag = TRUE;
+	        }
 	        if ($producto->get('tipo') == "seleccion"){
 	            $flag = TRUE;
 	        }
@@ -43,7 +47,9 @@
     		if ((!is_numeric($producto->get('cantidad'))) OR ($producto->get('cantidad') <= 0)){
 	            $flag = TRUE;     
 	        }
-
+	        if ((!is_numeric($producto->get('precio_neto'))) OR ($producto->get('precio_neto') <= 0)){
+	            $flag = TRUE;     
+	        }
 	        if (($producto->get('tipo') != "medicamento") AND ($producto->get('tipo') != "implemento")){
 	            $flag = TRUE;   
         	}

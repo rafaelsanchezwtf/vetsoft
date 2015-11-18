@@ -4,27 +4,37 @@ require('configs/include.php');
 
 class c_adquirir_producto extends super_controller {
     
-    public function asignar_datos($nombre, $marca, $cantidad){
+    public function asignar_datos($nombre, $marca, $cantidad, $precio_neto){
         $this->engine->assign('nombre_p',$nombre);
         $this->engine->assign('marca',$marca);
-        $this->engine->assign('cantidad',$cantidad);      
+        $this->engine->assign('cantidad',$cantidad);
+        $this->engine->assign('precio_neto',$precio_neto);      
     }
 
-    public function asignar_vacios($nombre, $marca, $cantidad, $tipo){
+    public function asignar_vacios($nombre, $marca, $cantidad, $precio_neto, $tipo){
         if (is_empty($nombre)){
             $this->engine->assign("nombre_vacio",0);
         }
         if (is_empty($marca)){
             $this->engine->assign("marca_vacio",0);
         }
+        if (is_empty($precio_neto)){
+            $this->engine->assign("precio_neto_vacio",0);
+        }
         if (is_empty($cantidad)){
             $this->engine->assign("cantidad_vacio",0);
-        }
+        } 
+        if ($tipo == "seleccion"){
+            $this->engine->assign("tipo_vacio",0);
+        } 
     }
 
     public function asignar_invalidos($producto){
         if ((!is_numeric($producto->get('cantidad'))) OR ($producto->get('cantidad') <= 0)){
             $this->engine->assign("cantidad_invalido",0);     
+        }
+        if ((!is_numeric($producto->get('precio_neto'))) OR ($producto->get('precio_neto') <= 0)){
+            $this->engine->assign("precio_neto_invalido",0);    
         }
         if (($producto->get('tipo') != "medicamento") AND ($producto->get('tipo') != "implemento")){
             $this->engine->assign("tipo_invalido",0);    
@@ -45,7 +55,7 @@ class c_adquirir_producto extends super_controller {
     }
 
     public function agregar(){
-        self::asignar_datos($this->post->nombre,$this->post->marca,$this->post->cantidad,$this->post->tipo);
+        self::asignar_datos($this->post->nombre,$this->post->marca,$this->post->cantidad,$this->post->precio_neto);
 
         $producto = new producto($this->post);
 
@@ -54,15 +64,9 @@ class c_adquirir_producto extends super_controller {
         $incompletitud_producto = producto::validar_completitud($producto);
 
         if ($incompletitud_producto){
-            self::asignar_vacios($this->post->nombre,$this->post->marca,$this->post->cantidad,$this->post->tipo);
+            self::asignar_vacios($this->post->nombre,$this->post->marca,$this->post->cantidad,$this->post->precio_neto,$this->post->tipo);
             self::mensaje("warning","Error","","Hay campos vacíos");
             throw_exception("");  
-        }
-
-        if($this->post->tipo=="sel"){
-            $this->engine->assign("tipo_vacio",0);
-            self::mensaje("warning","Error","","Por favor seleccione un tipo");  
-            throw_exception("");
         }
             
         $incorrectitud_producto = producto::validar_correctitud($producto);
