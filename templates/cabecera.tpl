@@ -66,11 +66,12 @@
                     <a href="{$gvar.l_global}login.php?login"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Iniciar Sesión</a>
                 </li>
             {/if}
-  
+                
+            {if (not isset($tipo))}
                 <li>
                     <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Ver historia clínica</a>
                 </li>
-
+            {/if}
                 <li>
                       <span class="fa-stack fa-lg pull-left" id="footer"><i class="fa fa-copyright fa-stack-1x "></i></span> Framework G &copy; {'Y'|date}  
                 </li>

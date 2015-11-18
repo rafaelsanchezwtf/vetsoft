@@ -52,7 +52,7 @@ class c_buscar_animal extends super_controller {
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
-        if ($this->session['usuario']['tipo'] == "administrador") {
+        if (($this->session['usuario']['tipo'] == "administrador") OR ($this->session['usuario']['tipo'] == "veterinario")){
             $this->engine->display($this->temp_aux);
             $this->engine->display('buscar_animal.tpl');
         }else{

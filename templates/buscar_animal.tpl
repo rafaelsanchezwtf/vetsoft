@@ -31,13 +31,18 @@
                         <th>Talla(cm)</th>
                         <th>Genero</th>
                         <th>Especie</th>
+                    {if $tipo eq "administrador"}
                         <th>Editar</th>
+                    {/if}
+                    {if $tipo eq "veterinario" or $tipo eq "administrador"}
                         <th>Cita</th>
+                    {/if}
+                    {if $tipo eq "veterinario"}
+                        <th>Tratamiento</th>
+                    {/if}
                     </tr>
                     {for $j=0 to count($animal)-1}
                     <tr>
-                       <form action="{$gvar.l_global}editar_animal.php" method="post">
-                            
                             <td>{$animal[$j]->get("id")}</td>
                             <td>{$animal[$j]->get("nombre")}</td>
                             <td>{$animal[$j]->get("foto")}</td>
@@ -46,9 +51,9 @@
                             <td>{$animal[$j]->get("talla")}</td>
                             <td>{$animal[$j]->get("genero")}</td>
                             <td>{$animal[$j]->get("especie")}</td>
-                            
-                            <td><button type ="submit" class="btn btn-primary">Editar</button></td>
-
+                        
+                        {if $tipo eq "administrador"}    
+                        <form action="{$gvar.l_global}editar_animal.php" method="post">    
                             <input type="hidden" name="id" value="{$animal[$j]->get('id')}">
                             <input type="hidden" name="nombre" value="{$animal[$j]->get('nombre')}">
                             <input type="hidden" name="foto" value="{$animal[$j]->get('foto')}">
@@ -58,8 +63,31 @@
                             <input type="hidden" name="genero" value="{$animal[$j]->get('genero')}">
                             <input type="hidden" name="especie" value="{$animal[$j]->get('especie')}">
                             <input type="hidden" name="dueno" value="{$animal[$j]->get('dueno')}">
+
+                            <td><button type ="submit" class="btn btn-primary">Editar</button></td>
                         </form>
-                            <td><button type ="submit" class="btn btn-primary">Asignar</button></td>     
+                        {/if}
+                        
+                        {if $tipo eq "veterinario" or $tipo eq "administrador"}
+                        <form action="{$gvar.l_global}editar_animal.php" method="post">    
+                            <input type="hidden" name="id" value="{$animal[$j]->get('id')}">
+                            <input type="hidden" name="nombre" value="{$animal[$j]->get('nombre')}">
+                            <input type="hidden" name="foto" value="{$animal[$j]->get('foto')}">
+
+                            <td><button type ="submit" class="btn btn-primary">Asignar</button></td>
+                        </form>
+                        {/if}
+                        
+                        {if $tipo eq "veterinario"}
+                        <form action="{$gvar.l_global}editar_animal.php" method="post">    
+                            <input type="hidden" name="id" value="{$animal[$j]->get('id')}">
+                            <input type="hidden" name="nombre" value="{$animal[$j]->get('nombre')}">
+                            <input type="hidden" name="foto" value="{$animal[$j]->get('foto')}">
+
+                            <td><button type ="submit" class="btn btn-primary">Asignar</button></td>
+                        </form>
+                        {/if}  
+
                       </tr>    
                     {/for}
                 </table>
