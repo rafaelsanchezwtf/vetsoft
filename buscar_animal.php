@@ -5,20 +5,6 @@ require('configs/include.php');
 class c_buscar_animal extends super_controller {
 
     public function buscar(){
-        
-        // function edad($fechanacimiento){
-        //     list($ano,$mes,$dia) = explode("-",$fechanacimiento);
-        //     $ano_diferencia  = date("Y") - $ano;
-        //     if($mes<date("m")){
-        //         $mes_diferencia  = date("m") - $mes;
-                
-        //     }elseif($mes==date("m")){
-        //         $mes_diferencia  =1;
-        //     }else{
-        //         $mes_diferencia  = (12 - date("m")) + $mes;
-        //     }
-        //     return ($ano_diferencia*12)+$mes_diferencia;
-        // }
 
         $id= $_POST['codigo'];
         if(is_empty($id)){
@@ -38,8 +24,6 @@ class c_buscar_animal extends super_controller {
                 throw_exception("");
             }else{
                 $this->engine->assign("animal",$animales);
-                $_SESSION['animales'] = $animales;
-                $this->session = $_SESSION;
             }
         }else{
             $this->engine->assign('error2',2);
@@ -47,7 +31,6 @@ class c_buscar_animal extends super_controller {
             throw_exception("");
         }
     }
-    
     
     public function display(){
         $this->engine->assign('title', "Buscar Animal");

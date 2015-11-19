@@ -220,8 +220,47 @@ class db
 					$cedula=mysqli_real_escape_string($this->cn,$data['cedula']);
 					$info=$this->get_data("SELECT * FROM dueno WHERE cedula='$cedula';");
                 break;
-            }
-            break;
+
+            }break;
+            
+            
+            case "administrador":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					//
+					break;
+
+				case "one_login":
+					$user = mysqli_real_escape_string($this->cn, $data['user']);
+					$pass = $data['pass'];
+					$result = $this->get_data("SELECT user, pass FROM administrador WHERE user='$user';");
+					$hasher = new PasswordHash(8, FALSE);
+					if ($hasher->CheckPassword($pass, $result[0]->pass))
+						$info = $this->get_data("SELECT * FROM administrador WHERE user = '$user';");
+					unset($hasher);
+					break;
+			}
+			break;
+
+			case "veterinario":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					//
+					break;
+
+				case "one_login":
+					$user = mysqli_real_escape_string($this->cn, $data['user']);
+					$pass = $data['pass'];
+					$result = $this->get_data("SELECT user, pass FROM veterinario WHERE user='$user';");
+					$hasher = new PasswordHash(8, FALSE);
+					if ($hasher->CheckPassword($pass, $result[0]->pass))
+						$info = $this->get_data("SELECT * FROM veterinario WHERE user = '$user';");
+					unset($hasher);
+					break;
+			}
+			break;
 
 			default: break;
 		}

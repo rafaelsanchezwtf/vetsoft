@@ -4,6 +4,72 @@ require('configs/include.php');
 
 class c_editar_animal extends super_controller {
     
+    
+    public function asignar_vacios_animal($nombre, $fecha_de_nacimiento, $peso, $talla, $genero, $especie){
+        if (is_empty($nombre)){
+            $this->engine->assign("nombre_vacio",0);
+        }
+        if (is_empty($fecha_de_nacimiento)){
+            $this->engine->assign("fecha_vacio",0);
+        }
+        if (is_empty($peso)){
+            $this->engine->assign("peso_vacio",0);
+        }
+        if (is_empty($talla)){
+            $this->engine->assign("talla_vacio",0);
+        }
+        if (is_empty($genero)){
+            $this->engine->assign("genero_vacio",0);
+        }
+        if (is_empty($tespecie)){
+            $this->engine->assign("especie_vacio",0);
+        }
+    
+    
+    
+    }
+    public function asignar_vacios_dueno( $nombre, $telefono, $email){
+        
+        if (is_empty($nombre)){
+            $this->engine->assign("nombre_dueno_vacio",0);
+        }
+        if (is_empty($telefono)){
+            $this->engine->assign("telefono_dueno_vacio",0);
+        }
+        if (is_empty($email)){
+            $this->engine->assign("email_dueno_vacio",0);
+        }
+    }
+    
+    
+    
+    public function asignar_invalidos_animal($animal){
+        $fecha_actual = date('Y-m-d');
+        if((!(animal::validateDate($animal->get('fecha_de_nacimiento')))) or ($animal->get('fecha_de_nacimiento') > $fecha_actual)){
+            $this->engine->assign("fecha_invalido",0);
+        }
+        if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
+            $this->engine->assign("peso_invalido",0); 
+        }
+        if ((!is_numeric($animal->get('talla'))) or ($animal->get('talla') <= 0)){
+            $this->engine->assign("talla_invalido",0);    
+        }             
+    }
+
+    public function asignar_invalidos_dueno($dueno){
+        if ((!is_numeric($dueno->get('cedula'))) or ($dueno->get('cedula') <= 0)){
+            $this->engine->assign("cedula_dueno_invalido",0);     
+        }
+
+        if ((!is_numeric($dueno->get('telefono'))) or ($dueno->get('telefono') < 1000000)){
+            $this->engine->assign("telefono_dueno_invalido",0);     
+        }
+        if (!filter_var($dueno->get('email'), FILTER_VALIDATE_EMAIL)){
+            $this->engine->assign("email_dueno_invalido",0);   
+        }
+    }
+    
+    
     function validateDate($date, $format = 'Y-m-d'){
         $d = DateTime::createFromFormat($format, $date);
         return $d && $d->format($format) == $date;
@@ -11,51 +77,7 @@ class c_editar_animal extends super_controller {
 
     public function actualizar(){
         
-        $nombre_vacio = "";
-        $fecha_vacio = "";
-        $peso_vacio = "";
-        $talla_vacio = "";
-        $genero_vacio = "";
-        $especie_vacio = "";
-
-        $fecha_invalido = "";
-        $peso_invalido = "";
-        $talla_invalido = "";
-        
-        
-    
-        
-        if(is_empty($this->post->id)){ throw_exception('Debes ingresar un valor en el campo Id.');} 
-        if(is_empty($this->post->nombre)){ 
-            $this->engine->assign("nombre_vacio",0);
-            $nombre_vacio = " Campo nombre vacío";
-            
-        } 
-        if(is_empty($this->post->fecha_de_nacimiento)){ 
-            $this->engine->assign("fecha_vacio",0);
-            $fecha_vacio = " Campo fecha de nacimiento vacío";
-           
-        } 
-        if(is_empty($this->post->peso)){ 
-            $this->engine->assign("peso_vacio",0);
-            $peso_vacio = " Campo Peso vacío";
-            
-        } 
-        if(is_empty($this->post->talla)){ 
-            $this->engine->assign("talla_vacio",0);
-            $talla_vacio = " Campo talla vacío";
-           
-        } 
-        if(is_empty($this->post->genero)){ 
-            $this->engine->assign("genero_vacio",0);
-            $genero_vacio = " Campo genero vacío";
-            
-        } 
-        if(is_empty($this->post->especie)){ 
-             $this->engine->assign("especie_vacio",0);
-            $especie_vacio = " Campo especie vacío";
-            
-        } 
+       
         
         if ($nombre_vacio<>""
             || $fecha_vacio<>""
