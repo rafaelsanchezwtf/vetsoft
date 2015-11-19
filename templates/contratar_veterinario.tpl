@@ -10,7 +10,7 @@
     </header>
     <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" action="{$gvar.l_global}contratar_veterinario.php" method="post">
+            <form class="form-horizontal" action="{$gvar.l_global}contratar_veterinario.php?option=contratar" method="post">
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Identificacion*</h4>
@@ -49,7 +49,7 @@
             </br>
             </br>
                 <div class="col-sm-offset-5 col-sm-6">              
-                    <a href="{$gvar.l_global}contratar_veterinario.php?option=contratar" class="btn btn-default" role="button"><span class="fa fa-check"></span> Contratar</a>
+                    <button class="btn btn-default" type="submit"><span class="fa fa-check"></span> Contratar</button>
                     <a href="{$gvar.l_global}contratar_veterinario.php?option=cancelar" class="btn btn-default" role="button"><span class="fa fa-close"></span> Cancelar</a>
                 </div>
             </form>
