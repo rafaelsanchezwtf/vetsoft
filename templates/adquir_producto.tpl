@@ -10,7 +10,7 @@
     </header>
     <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" action="{$gvar.l_global}adquirir_producto.php?" method="post">
+            <form class="form-horizontal" action="{$gvar.l_global}adquirir_producto.php?option=agregar" method="post">
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Nombre</h4>
@@ -26,12 +26,12 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <h4>Cantidad</h4>
-                        <input type="text" {if isset($cantidad)}value="{$cantidad}"{/if} {if isset($cantidad_vacio) or isset($cantidad_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="cantidad" placeholder="Cantidad">
+                        <input type="text" {if isset($cantidad)}value="{$cantidad}"{/if} {if isset($cantidad_vacio) or isset($cantidad_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="cantidad" placeholder="Número de unidades">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
-                        <h4>Precio Neto</h4>
+                        <h4>Precio Neto (COP)</h4>
                         <input type="text" {if isset($precio_neto)}value="{$precio_neto}"{/if} {if isset($precio_neto_vacio) or isset($precio_neto_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="precio_neto" placeholder="Precio Neto">
                     </div>
                 </div>
@@ -49,8 +49,9 @@
             </br>
             </br>
                 <div class="col-sm-offset-5 col-sm-6">              
-                    <input class="btn btn-primary" name="agregar" type="submit" value="Agregar"/>
-                    <input class="btn btn-primary" name="cancelar" type="submit" value="Cancelar"/>
+                    <button class="btn btn-default" type="submit"><span class="fa fa-check"></span> Agregar</button>
+                    <a href="{$gvar.l_global}adquirir_producto.php?option=cancelar" class="btn btn-default" role="button"><span class="fa fa-close"></span> Cancelar</a>
+
                 </div>
             </form>
         </div>

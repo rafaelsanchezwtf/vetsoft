@@ -108,12 +108,6 @@ class c_adquirir_producto extends super_controller {
     
     public function run() {
         try {
-            if ($_POST[agregar]){
-                $this->get->option = "agregar";   
-            }elseif ($_POST[cancelar]){
-                $this->get->option = "cancelar";  
-            }
-
             if (isset($this->get->option)) {
                 if ($this->get->option == "agregar"){
                     $this->{$this->get->option}();

@@ -88,9 +88,10 @@ class db
 					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
 					$marca=mysqli_real_escape_string($this->cn, $object->get('marca'));
 					$cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+					$precio_neto=mysqli_real_escape_string($this->cn,$object->get('precio_neto'));
 					$tipo=mysqli_real_escape_string($this->cn,$object->get('tipo'));
 					$fecha_de_adquisicion=mysqli_real_escape_string($this->cn,$object->get('fecha_de_adquisicion'));
-					$this->do_operation("INSERT INTO producto (id, nombre, cantidad, fecha_de_adquisicion, marca, tipo) VALUES (NULL,'$nombre', '$cantidad', '$fecha_de_adquisicion', '$marca', '$tipo');");
+					$this->do_operation("INSERT INTO producto (id, nombre, cantidad, fecha_de_adquisicion, marca, precio_neto, tipo) VALUES (NULL,'$nombre', '$cantidad', '$fecha_de_adquisicion', '$marca', '$precio_neto', '$tipo');");
 					break;
 				}
 				break;
