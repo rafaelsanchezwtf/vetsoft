@@ -25,9 +25,7 @@
                     </button>
                     <a class="navbar-brand" href="{$gvar.l_global}index.php">
                     
-                    <i class="fa fa-rocket fa-4"></i> VETSOFT
-                    
-                   <!-- <img src="../images/logo.PNG" >-->
+                    <i class="fa fa-paw fa-4"></i> VETSOFT
                     
                     </a>
                 </div>
@@ -47,35 +45,35 @@
                
                {if $tipo eq "administrador" or $tipo eq "veterinario"}
                 <li>
-                    <a href="{$gvar.l_global}login.php?option=logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Cerrar Sesión</a>
+                    <a href="{$gvar.l_global}login.php?option=logout"><span class="fa-stack fa-lg pull-left"><i class="fa fa-power-off fa-stack-1x "></i></span>Cerrar Sesión</a>
                 </li>
             
                 {if $tipo eq "administrador"}
                 <li>
-                    <a href="{$gvar.l_global}perfil_administrador.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Perfil A</a>
+                    <a href="{$gvar.l_global}perfil_administrador.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span>Mi Perfil</a>
                 </li>
                 {/if}
                 {if $tipo eq "veterinario"}
                 <li>
-                    <a href="{$gvar.l_global}perfil_veterinario.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Perfil V</a>
+                    <a href="{$gvar.l_global}perfil_veterinario.php"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span>Mi Perfil</a>
                 </li>
                 {/if}
                
             {else}
                 <li>
-                    <a href="{$gvar.l_global}login.php?login"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Iniciar Sesión</a>
+                    <a href="{$gvar.l_global}login.php?login"><span class="fa-stack fa-lg pull-left"><i class="fa fa-circle-o-notch fa-stack-1x "></i></span>Iniciar Sesión</a>
                 </li>
             {/if}
                 
             {if (not isset($tipo))}
                 <li>
-                    <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Ver historia clínica</a>
+                    <a href="{$gvar.l_global}historia_clinica.php"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-heartbeat fa-stack-1x "></i></span>Ver historia clínica</a>
+                </li>
+            
+                <li>
+                      <a href="{$gvar.l_global}acerca_de.php"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span>Acerca De</a>  
                 </li>
             {/if}
-                <li>
-                      <span class="fa-stack fa-lg pull-left" id="footer"><i class="fa fa-copyright fa-stack-1x "></i></span> Framework G &copy; {'Y'|date}  
-                </li>
-  
                
             </ul>
             
