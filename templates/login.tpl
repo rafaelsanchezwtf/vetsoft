@@ -7,10 +7,10 @@
         </div>
         <br/><br/>
         <form class="form-horizontal" action="{$gvar.l_global}login.php?option=login" method="post">
-            
+           
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-4">
-                    <input  {if isset($error1)} style="background-color: #F78181" {/if} type="text" name="user" class="form-control default_color" id="inputText3" placeholder="Usuario"/>
+                    </i><input  {if isset($error1)} style="background-color: #F78181" {/if} type="text" name="user" class="form-control default_color" id="inputText3" placeholder="Usuario"/>
 
                 </div>
             </div>

@@ -13,16 +13,14 @@
                            
                             <div class="form-group">
                                 <div class=" col-xs-8 col-sm-8 col-md-8 col-lg-8 parcito">
-                                    <a href="{$gvar.l_global}buscar_cita.php" class="btn btn-default opcion" role="button">Buscar Cita</a>
-                                    <a href="{$gvar.l_global}asignar_cita.php" class="btn btn-default opcion" role="button">Asignar Cita</a>
+                  <a href="{$gvar.l_global}buscar_animal.php" class="btn btn-default opcion"><span class="fa fa-search"></span> Buscar Animal</a>
+                  <a href="{$gvar.l_global}buscar_cita.php" class="btn btn-default opcion"><span class="fa fa-search"></span> Buscar Cita</a>
                                 </div>
                                 <div class=" col-xs-8 col-sm-8 col-md-8 col-lg-8 parcito" >
-                                    <a href="{$gvar.l_global}atender_cita.php" class="btn btn-default opcion" role="button">Atender Cita</a>
-                                    <a href="{$gvar.l_global}buscar_tratamiento.php" class="btn btn-default opcion" role="button">Buscar Tratamiento</a>
+                  <a href="{$gvar.l_global}buscar_tratamiento.php" class="btn btn-default opcion"><span class="fa fa-search"></span> Buscar Tratamiento</a>
+                  <a href="{$gvar.l_global}historia_clinica.php" class="btn btn-default opcion"><span class="fa fa-heartbeat"></span> Ver Historia Clinica</a>
                                 </div>
                                 <div class=" col-xs-8 col-sm-8 col-md-8 col-lg-8  parcito" >
-                                    <a href="{$gvar.l_global}asignar_tratamiento.php" class="btn btn-default opcion" role="button">Asignar Tratamiento</a>
-                                    <a href="{$gvar.l_global}atender_tratamiento.php" class="btn btn-default opcion" role="button">Atender tratamiento</a>
                                 </div>
                             </div>
                           </div>
