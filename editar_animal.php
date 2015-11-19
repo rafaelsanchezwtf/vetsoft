@@ -301,41 +301,30 @@ class c_editar_animal extends super_controller {
     }
     
     public function display(){
-        $this->engine->assign('title', "Editar animal");
-        
-        // variables de sesion
-        // $this->engine->assign('nombre',$this->session['usuario']['nombre']);
-        // $this->engine->assign('tipo',$this->session['usuario']['tipo']);
-        
-        
+        $this->engine->assign('title', "Editar Animal");
+        $this->engine->assign('nombre',$this->session['usuario']['nombre']);
+        $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
-        
-        // if ($this->session['usuario']['tipo'] == "administrador") {
-            // echo $this->session['mensaje']['tipo']. $this->session['mensaje']['texto'];
+        if ($this->session['usuario']['tipo'] == "administrador"){
             $this->engine->display($this->temp_aux);
             $this->engine->display('editar_animal.tpl');
-        // else{
-        //     $this->engine->assign('type_warning','Lo sentimos:');
-        //     $this->engine->assign('msg_warning',"Usted no tiene permiso para acceder a esta opción.");
-        //     $this->temp_aux = 'message.tpl';
-            
-        //     $this->engine->display($this->temp_aux);    
-        // }
-        
-        
+        }else{
+            $direccion=$gvar['l_global']."index.php";
+            $this->mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
+            $this->engine->display($this->temp_aux); 
+        }
         $this->engine->display('piedepagina.tpl');
     }
     
     public function run(){
         try {
-            if(isset($this->get->op)){
-                if($this->get->op=="cancelar"){
-                    $this->{$this->get->op}();}
+            if(isset($this->get->option)){
+                if($this->get->option=="cancelar"){
+                    $this->{$this->get->option}();}
                 else{throw_exception("Opción ". $this->get->option." no disponible");}
             }
             
             else if (isset($this->post->fotovieja)) {
-                
                 $this->actualizar();                
             }
             else if(isset($this->post->id)){ 

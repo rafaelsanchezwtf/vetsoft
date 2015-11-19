@@ -77,7 +77,7 @@
                     </tr>
                     {if isset($dueno)}
                    <tr>  
-                        <td><button class="btn btn-default" type="button" id="editardueno">Editar dueño</button></td><td></td>    
+                        <td><button class="btn btn-default" type="button" id="editardueno"><span class="fa fa-edit"></span> Editar dueño</button></td><td></td>    
                    </tr>
                     {/if}
                     
@@ -85,8 +85,8 @@
                            
                            
                            <tr>
-                        <td class="caracteristica"><button class="btn btn-default" type="submit">Aceptar</button></td>
-                        <td class="caracteristica"><a href="{$gvar.l_global}editar_animal.php?op=cancelar" class="btn btn-default opcion" role="button">Cancelar</a></td>      
+                        <td class="caracteristica"><button class="btn btn-default" type="submit"><span class="fa fa-check"></span> Aceptar</button></td>
+                        <td class="caracteristica"><a href="{$gvar.l_global}editar_animal.php?option=cancelar" class="btn btn-default" role="button"><span class="fa fa-close"></span> Cancelar</a></td>      
                     </tr>
                             
                         
