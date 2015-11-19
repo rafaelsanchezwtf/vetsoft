@@ -117,11 +117,6 @@ class c_contratar_veterinario extends super_controller {
     
     public function run() {
         try {
-            if ($_POST[contratar]){
-                $this->get->option = "contratar";   
-            }elseif ($_POST[cancelar]){
-                $this->get->option = "cancelar";  
-            }
 
             if (isset($this->get->option)) {
                 if ($this->get->option == "contratar"){

@@ -49,8 +49,8 @@
             </br>
             </br>
                 <div class="col-sm-offset-5 col-sm-6">              
-                    <input class="btn btn-primary" name="contratar" type="submit" value="Contratar"/>
-                    <input class="btn btn-primary" name="cancelar" type="submit" value="Cancelar"/>
+                    <a href="{$gvar.l_global}contratar_veterinario.php?option=contratar" class="btn btn-default" role="button"><span class="fa fa-check"></span> Contratar</a>
+                    <a href="{$gvar.l_global}contratar_veterinario.php?option=cancelar" class="btn btn-default" role="button"><span class="fa fa-close"></span> Cancelar</a>
                 </div>
             </form>
         </div>
