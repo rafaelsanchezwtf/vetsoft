@@ -264,19 +264,17 @@ class db
             
             
             
-            
+            default: break;
             
             
             
 
             }
-            break;
+return $info;
 
-
-			default: break;
 		}
-		return $info;
-	}
+		
+	
 	
 	//close the db connection
 	public function close()
