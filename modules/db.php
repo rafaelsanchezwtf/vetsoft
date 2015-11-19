@@ -81,13 +81,21 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																													
-			case "user":
-			switch($options['lvl2'])
-			{
+			case "cita":
+				switch($options['lvl2']){
+				
 				case "normal":
-					//
+					$motivo=mysqli_real_escape_string($this->cn,$object->get('motivo'));
+					$fecha=mysqli_real_escape_string($this->cn,$object->get('fecha'));
+					$hora=mysqli_real_escape_string($this->cn, $object->get('hora'));
+					$lugar=mysqli_real_escape_string($this->cn,$object->get('lugar'));
+					$estado=mysqli_real_escape_string($this->cn,$object->get('estado'));
+					$animal=mysqli_real_escape_string($this->cn,$object->get('animal'));
+					$veterinario=mysqli_real_escape_string($this->cn,$object->get('veterinario'));
+					$this->do_operation("INSERT INTO cita (codigo, motivo, fecha, hora, lugar, condicion, estado, diagnostico, animal, veterinario) VALUES (NULL, '$motivo', '$fecha', '$hora', '$lugar', NULL, '$estado', NULL, '$animal', '$veterinario');");
 					break;
-			}
+				}
+			
 			break;
 			
 			default: break;
@@ -135,13 +143,14 @@ class db
 	{
 		$info = array();
 		switch($option['lvl1'])
-		{																																																																																																										
+		{	
+
 			case "administrador":
 			switch($option['lvl2'])
 			{
 				case "all": 
 					//
-					break;
+				break;
 
 				case "one_login":
 					$user = mysqli_real_escape_string($this->cn, $data['user']);
@@ -159,7 +168,7 @@ class db
 			switch($option['lvl2'])
 			{
 				case "all": 
-					//
+					$info=$this->get_data("SELECT * FROM veterinario;");
 					break;
 
 				case "one_login":
@@ -174,7 +183,20 @@ class db
 			}
 			break;
 
-
+			case "animal":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					//
+				break;
+				
+				case "some": 
+					$this->escape_string($data);
+					$id=$data['id'];
+					$info=$this->get_data("SELECT * FROM animal where id like '%$id%';"); 
+					break;
+			}
+			break;
 			
 			default: break;
 		}

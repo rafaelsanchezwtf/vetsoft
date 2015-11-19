@@ -25,7 +25,7 @@
 		}
 
 		public function primary_key(){
-			return array("codigo");
+			return array("fecha","hora","animal");
 		}
 
 		public function relational_keys($class, $rel_name){
