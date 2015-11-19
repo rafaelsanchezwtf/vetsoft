@@ -47,15 +47,10 @@
         	RETURN $flag;
 		}
 
-		public static function validateDate($date, $format = 'Y-m-d'){
-	        $d = DateTime::createFromFormat($format, $date);
-	        return $d && $d->format($format) == $date;
-    	}
-
     	public static function validar_correctitud($animal){
     		$flag = FALSE;
     		$fecha_actual = date('Y-m-d');
-    		if((!(self::validateDate($animal->get('fecha_de_nacimiento')))) or ($animal->get('fecha_de_nacimiento') > $fecha_actual)){
+    		if((!(parent::validateDate($animal->get('fecha_de_nacimiento')))) or ($animal->get('fecha_de_nacimiento') > $fecha_actual)){
     			$flag = TRUE;	
     		}
     		if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){

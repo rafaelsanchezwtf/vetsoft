@@ -58,7 +58,7 @@ class c_registrar_animal_dueno extends super_controller {
 
     public function asignar_invalidos_animal($animal){
         $fecha_actual = date('Y-m-d');
-        if((!(animal::validateDate($animal->get('fecha_de_nacimiento')))) or ($animal->get('fecha_de_nacimiento') > $fecha_actual)){
+        if((!($animal->validateDate($animal->get('fecha_de_nacimiento')))) or ($animal->get('fecha_de_nacimiento') > $fecha_actual)){
             $this->engine->assign("fecha_invalido",0);
         }
         if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
