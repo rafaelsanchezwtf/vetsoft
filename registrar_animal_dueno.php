@@ -100,7 +100,7 @@ class c_registrar_animal_dueno extends super_controller {
             $foto_atributo = "files/animal/" . $nombre_final;
         }else{
             if (file_exists("files/dueno/" . $nombre_final)){
-                $mensaje = "Fotografia con nombre " . $nombre_final . " ya existe!";
+                $mensaje = "Ya existe un dueno con esa cedula";
                 $this->mensaje("warning","Error","",$mensaje);
                 throw_exception("");
             }else{
