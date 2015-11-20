@@ -175,36 +175,46 @@ class db
 			}
 			break;
 
-			case "animal":
+			case "tratamiento":
 			switch($option['lvl2'])
 			{
 				case "all": 
 					//
 				break;
 				
-				case "by_id": 
+				case "by_codigo": 
 					$this->escape_string($data);
-					$id=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where id like '%$id%';"); 
+					$codigo=$data['valor'];
+					$info=$this->get_data("SELECT * FROM tratamiento where codigo like '%$codigo%';"); 
 					break;
 
-				case "by_nombre": 
+				case "by_titulo": 
 					$this->escape_string($data);
-					$nombre=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where nombre like '%$nombre%';"); 
-					break;
-
-				case "by_especie": 
-					$this->escape_string($data);
-					$especie=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where especie like '%$especie%';"); 
+					$titulo=$data['valor'];
+					$info=$this->get_data("SELECT * FROM tratamiento where titulo like '%$titulo%';"); 
 					break;
 
 				case "by_fecha": 
 					$this->escape_string($data);
 					$fecha=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where fecha_de_nacimiento like '%$fecha%';"); 
+					$info=$this->get_data("SELECT * FROM tratamiento where fecha like '%$fecha%';"); 
 					break;
+
+				case "by_hora": 
+					$this->escape_string($data);
+					$hora=$data['valor'];
+					$info=$this->get_data("SELECT * FROM tratamiento where hora like '%$hora%';"); 
+					break;
+
+				case "by_animal": 
+					$this->escape_string($data);
+					$animal=$data['valor'];
+					$info=$this->get_data("SELECT * FROM tratamiento WHERE animal IN (SELECT id FROM animal WHERE nombre like '%$animal%');"); 
+					break;
+
+
+
+				
 
 			}
 			break;

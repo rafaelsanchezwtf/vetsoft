@@ -2,7 +2,7 @@
 
 require('configs/include.php');
         
-class c_buscar_animal extends super_controller {
+class c_buscar_tratamiento extends super_controller {
 
     public function buscar(){
         $opcion = $this->post->optradio;
@@ -14,9 +14,9 @@ class c_buscar_animal extends super_controller {
         }
         else{
             switch ($opcion) {
-                case 'i':
+                case 'c':
                     if (is_numeric($valor)){
-                        $consulta = "by_id";    
+                        $consulta = "by_codigo";    
                     }else{
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
@@ -24,12 +24,8 @@ class c_buscar_animal extends super_controller {
                     }
                     break;
 
-                case 'n':
-                    $consulta = "by_nombre";
-                    break;
-
-                case 'e':
-                    $consulta = "by_especie";
+                case 't':
+                    $consulta = "by_titulo";
                     break;
 
                 case 'f':
@@ -41,24 +37,40 @@ class c_buscar_animal extends super_controller {
                         throw_exception("");
                     }
                     break;
+
+                case 'h':
+                    $aux = new animal();
+                    if ($aux->validateDate($valor)){
+                        $consulta = "by_hora";    
+                    }else{
+                        $this->engine->assign('error2',2);
+                        $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");    
+                    }
+                    break;
+
+                case 'a':
+                    $consulta = "by_animal";
+                    break;
                 
                 default:
                     $this->mensaje("warning","Error","","Debe seleccionar un criterio de busqueda");
                     throw_exception(""); 
                     break;
             }
-            $options['animal']['lvl2'] = $consulta;
-            $cod['animal']['valor'] = $valor;
+            $options['tratamiento']['lvl2'] = $consulta;
+            $cod['tratamiento']['valor'] = $valor;
+            $cod['tratamiento']['identificacion'] = $this->session['usuario']['identificacion'];
             $this->orm->connect();
-            $this->orm->read_data(array("animal"), $options, $cod);
-            $animales = $this->orm->get_objects("animal");
+            $this->orm->read_data(array("tratamiento"), $options, $cod);
+            $tratamientos = $this->orm->get_objects("tratamiento");
             $this->orm->close();
-            if (is_empty($animales)){
+            if (is_empty($tratamientos)){
                 $this->engine->assign('error3',3);
                 $this->mensaje("warning","Error","","Codigo no existe o no ha sido asignado");
                 throw_exception("");
             }else{
-                $this->engine->assign("animal",$animales);
+                $this->engine->assign("tratamiento",$tratamientos);
             }
         }
 
@@ -66,13 +78,13 @@ class c_buscar_animal extends super_controller {
     
     
     public function display(){
-        $this->engine->assign('title', "Buscar Animal");
+        $this->engine->assign('title', "Buscar Tratamiento");
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
-        if (($this->session['usuario']['tipo'] == "administrador") OR ($this->session['usuario']['tipo'] == "veterinario")){
+        if (($this->session['usuario']['tipo'] == "veterinario")){
             $this->engine->display($this->temp_aux);
-            $this->engine->display('buscar_animal.tpl');
+            $this->engine->display('buscar_tratamiento.tpl');
         }else{
             $direccion=$gvar['l_global']."index.php";
             $this->mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
@@ -90,7 +102,7 @@ class c_buscar_animal extends super_controller {
                     throw_exception("Opción ". $this->get->option." no disponible");
             }
         } catch (Exception $e) {
-            #$this->error=1;
+            $this->error=1;
             $this->msg_warning=$e->getMessage();
             $this->temp_aux = 'message.tpl';
             $this->engine->assign('type_warning',$this->type_warning);
@@ -101,7 +113,7 @@ class c_buscar_animal extends super_controller {
         
 }
 
-    $call = new c_buscar_animal();
+    $call = new c_buscar_tratamiento();
     $call->run();
 
 
