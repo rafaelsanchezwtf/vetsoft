@@ -1,18 +1,27 @@
 <div class="container">
-<section class="main row">         
-            
+<section class="main row">                   
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"  style="margin-top: 10px;">
                 <form class="form-horizontal" method="post" action="{$gvar.l_global}buscar_animal.php?option=buscar">
                     <div class="form-group">
+                        <h3 align="center"><b>Ingrese un valor en el campo de busqueda</b></h3>
                         <div class="col-sm-offset-4 col-sm-4">
-                            <h3 align="center">Ingrese el código del animal.</h3>
-                            <input {if isset($error1)} style="background-color: #F78181" {/if} {if isset($error2)} style="background-color: #F78181" {/if} title="Ingrese un valor numérico." type="number" class="form-control default_color" name="codigo" placeholder="Código"/>
+                            
+                            <input {if isset($error1)} style="background-color: #F78181" {/if} {if isset($error2)} style="background-color: #F78181" {/if} title="Ingrese un valor numérico." type="text" class="form-control default_color" name="codigo" placeholder="Campo de busqueda"/>
+                        </div>
+                    </div>
+                        <h4 align="center">Criterio de busqueda</h4>
+        
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-5">
+                            <label class="radio-inline"><input type="radio" name="optradio" value="i">Id</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" value="n">Nombre</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" value="e">Especie</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" value="f">Fecha de nacimiento</label>
+                            
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-offset-6 col-sm-6">
-                            <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Buscar</button>
-                        </div>
+                            <button type="submit" class="col-sm-offset-5 col-sm-2 btn btn-primary"><span class="fa fa-search"></span> Buscar</button>         
                     </div>
                 </form>
             </div>
