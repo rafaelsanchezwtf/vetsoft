@@ -1,28 +1,10 @@
 <?php
 
 require('configs/include.php');
-        //     $options['animal']['lvl2'] = "some";
-        //     $cod['animal']['id'] = $id;
-        //     $this->orm->connect();
-        //     $this->orm->read_data(array("animal"), $options, $cod);
-        //     $animales = $this->orm->get_objects("animal");
-        //     $this->orm->close();
-        //     if (is_empty($animales)){
-        //         $this->engine->assign('error3',3);
-        //         $this->mensaje("warning","Error","","Codigo no existe o no ha sido asignado");
-        //         throw_exception("");
-        //     }else{
-        //         $this->engine->assign("animal",$animales);
-        //     }
-        // }else{
-        //     $this->engine->assign('error2',2);
-        //     $this->mensaje("warning","Error","","Dato incorrecto");
-        //     throw_exception("");
-        // }
+        
 class c_buscar_animal extends super_controller {
 
     public function buscar(){
-        
         $opcion = $this->post->optradio;
         $valor = $_POST['codigo'];
         if(is_empty($valor)){
