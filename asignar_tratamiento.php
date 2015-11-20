@@ -31,7 +31,7 @@ class c_asignar_tratamiento extends super_controller {
         }
      }
 
-     public function asignar_invalidos($tratamiento, $variable){
+     public function asignar_invalidos($tratamiento){
         $hoy = getdate();
         $año = $hoy['year'];
         if ($hoy['mon']<10){
