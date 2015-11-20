@@ -19,7 +19,7 @@
 		}
 
 		public function primary_key(){
-			return array("id");
+			return array("nombre","marca");
 		}
 
 		public function relational_keys($class, $rel_name){
