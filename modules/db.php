@@ -81,13 +81,22 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																													
-			case "user":
-			switch($options['lvl2'])
-			{
+			case "tratamiento":
+				switch($options['lvl2']){
+				
 				case "normal":
-					//
+					$titulo=mysqli_real_escape_string($this->cn,$object->get('titulo'));
+					$descripcion=mysqli_real_escape_string($this->cn,$object->get('descripcion'));
+					$fecha=mysqli_real_escape_string($this->cn,$object->get('fecha'));
+					$hora=mysqli_real_escape_string($this->cn, $object->get('hora'));
+					$lugar=mysqli_real_escape_string($this->cn,$object->get('lugar'));
+					$estado=mysqli_real_escape_string($this->cn,$object->get('estado'));
+					$animal=mysqli_real_escape_string($this->cn,$object->get('animal'));
+					$veterinario=mysqli_real_escape_string($this->cn,$object->get('veterinario'));
+					$this->do_operation("INSERT INTO tratamiento (codigo, titulo, descripcion, fecha, hora, duracion, lugar, estado, resultado, animal, veterinario) VALUES (NULL, '$titulo', '$descripcion', '$fecha', '$hora', NULL, '$lugar', '$estado', NULL, '$animal', '$veterinario');");
 					break;
-			}
+				}
+			
 			break;
 			
 			default: break;
@@ -174,8 +183,39 @@ class db
 			}
 			break;
 
+			case "animal":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					//
+				break;
+				
+				case "some": 
+					$this->escape_string($data);
+					$id=$data['id'];
+					$info=$this->get_data("SELECT * FROM animal where id like '%$id%';"); 
+					break;
+			}
+			break;
 
-			
+			case "cita":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					$info=$this->get_data("SELECT * FROM cita;");
+					break;
+			}
+			break;
+
+			case "tratamiento":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					$info=$this->get_data("SELECT * FROM tratamiento;");
+					break;
+			}
+			break;
+
 			default: break;
 		}
 		return $info;
