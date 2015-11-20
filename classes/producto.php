@@ -19,7 +19,7 @@
 		}
 
 		public function primary_key(){
-			return array("id");
+			return array("nombre","marca");
 		}
 
 		public static function validar_completitud($producto){
