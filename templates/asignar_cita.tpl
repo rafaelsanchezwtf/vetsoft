@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-2">
                         <h4>Hora* (24 hrs)</h4>
-                        <input type="text" {if isset($hora_c)}value="{$hora_c}"{/if} {if isset($hora_c_vacio) or isset($hora_c_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="hora" placeholder="HH:MM">
+                        <input type="text" {if isset($hora_c)}value="{$hora_c}"{/if} {if isset($hora_c_vacio) or isset($hora_c_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="hora" placeholder="HH:MM:SS">
                     </div>
                 </div>
                 <div class="form-group">
@@ -76,13 +76,13 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-2">
                         <h4>Fecha*</h4>
-                        <input type="text" {if isset($fecha_c)}value="{$fecha_c}"{/if} {if isset($fecha_c_vacio)} style="background-color: #F78181" {/if} class="form-control default_color" name="fecha" placeholder="YYY-mm-dd">
+                        <input type="text" {if isset($fecha_c)}value="{$fecha_c}"{/if} {if isset($fecha_c_vacio) or isset($fecha_c_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="fecha" placeholder="YYY-mm-dd">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-2">
                         <h4>Hora*</h4>
-                        <input type="time" {if isset($hora_c)}value="{$hora_c}"{/if} {if isset($hora_c_vacio)} style="background-color: #F78181" {/if} class="form-control default_color" name="hora" placeholder="YYY-mm-dd">
+                        <input type="text" {if isset($hora_c)}value="{$hora_c}"{/if} {if isset($hora_c_vacio) or isset($hora_c_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="hora" placeholder="HH:MM:SS">
                     </div>
                 </div>
                 <div class="form-group">

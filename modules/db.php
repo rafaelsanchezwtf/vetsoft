@@ -197,6 +197,24 @@ class db
 					break;
 			}
 			break;
+
+			case "cita":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					$info=$this->get_data("SELECT * FROM cita;");
+					break;
+			}
+			break;
+
+			case "tratamiento":
+			switch($option['lvl2'])
+			{
+				case "all":
+					$info=$this->get_data("SELECT * FROM tratamiento;");
+					break;
+			}
+			break;
 			
 			default: break;
 		}

@@ -79,7 +79,12 @@
         	}else{
         		$minutos = $hoy['minutes'];
         	}
-        	$hora_actual = $hora . ":" . $minutos;
+        	if ($hoy['seconds']<10){
+            	$segundos = "0" . $hoy['seconds'];
+        	}else{
+        		$segundos = $hoy['seconds'];
+        	}
+        	$hora_actual = $hora . ":" . $minutos . ":" . $segundos;
         	if((!(parent::validateDate($cita->get('fecha')))) or ($cita->get('fecha') < $fecha_actual)){
     			$flag = TRUE;	
     		}
