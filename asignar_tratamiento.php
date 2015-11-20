@@ -124,8 +124,6 @@ class c_asignar_tratamiento extends super_controller {
         $tratamientos = $this->orm->get_objects("tratamiento");
 
         if (!(is_empty($tratamientos))){
-            echo "vamos acá";
-            print_r2($tratamientos);
             foreach($tratamientos as $tr_aux){    
                 if (($tr_aux->get('fecha') == $tratamiento->get('fecha')) AND ($tr_aux->get('hora') == $tratamiento->get('hora')) AND ($tr_aux->get('animal') == $tratamiento->get('animal'))){
                     $this->mensaje("warning","Error","","Ya existe un tratamiento para en esa fecha y hora para este animal");
@@ -138,7 +136,7 @@ class c_asignar_tratamiento extends super_controller {
         $this->orm->insert_data("normal",$tratamiento);
         $this->orm->close();
 
-        $dir=$gvar['l_global']."perfil_administrador.php";
+        $dir=$gvar['l_global']."perfil_veterinario.php";
         $this->mensaje("check-circle","Confirmación",$dir,"Tratamiento Asignado exitosamente!");
 
     }
