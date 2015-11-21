@@ -119,10 +119,19 @@ class c_asignar_cita extends super_controller {
         $citas = $this->orm->get_objects("cita");
         
         if (!(is_empty($citas))){
-            print_r2($citas);
             foreach($citas as $cita_aux){
                 if (($cita_aux->get('fecha') == $cita->get('fecha')) AND ($cita_aux->get('hora') == $hora_comp) AND ($cita_aux->get('animal') == $cita->get('animal'))){
                     $this->mensaje("warning","Error","","Ya existe una cita en esa fecha y hora para este animal");
+                    throw_exception(""); 
+                }
+            }
+        }
+
+        if (!(is_empty($citas))){
+            print_r2($citas);
+            foreach($citas as $cita_aux){
+                if (($cita_aux->get('fecha') == $cita->get('fecha')) AND ($cita_aux->get('hora') == $hora_comp) AND ($cita_aux->get('veterinario') == $cita->get('veterinario'))){
+                    $this->mensaje("warning","Error","","Ya existe una cita en esa fecha y hora para este veterinario");
                     throw_exception(""); 
                 }
             }
@@ -134,10 +143,18 @@ class c_asignar_cita extends super_controller {
         $tratamientos = $this->orm->get_objects("tratamiento");
 
         if (!(is_empty($tratamientos))){
-            print_r2($tratamientos);
             foreach($tratamientos as $tr_aux){    
                 if (($tr_aux->get('fecha') == $cita->get('fecha')) AND ($tr_aux->get('hora') == $hora_comp) AND ($tr_aux->get('animal') == $cita->get('animal'))){
                     $this->mensaje("warning","Error","","Ya existe un tratamiento en esa fecha y hora para este animal");
+                    throw_exception(""); 
+                }
+            }
+        }
+
+        if (!(is_empty($tratamientos))){
+            foreach($tratamientos as $tr_aux){    
+                if (($tr_aux->get('fecha') == $cita->get('fecha')) AND ($tr_aux->get('hora') == $hora_comp) AND ($tr_aux->get('veterinario') == $cita->get('veterinario'))){
+                    $this->mensaje("warning","Error","","Ya existe un tratamiento en esa fecha y hora para este veterinario");
                     throw_exception(""); 
                 }
             }
@@ -198,6 +215,16 @@ class c_asignar_cita extends super_controller {
             }
         }
 
+        if (!(is_empty($citas))){
+            print_r2($citas);
+            foreach($citas as $cita_aux){
+                if (($cita_aux->get('fecha') == $cita->get('fecha')) AND ($cita_aux->get('hora') == $hora_comp) AND ($cita_aux->get('veterinario') == $cita->get('veterinario'))){
+                    $this->mensaje("warning","Error","","Ya existe una cita en esa fecha y hora para usted");
+                    throw_exception(""); 
+                }
+            }
+        }
+
         $option['tratamiento']['lvl2']="all";
         $this->orm->connect();
         $this->orm->read_data(array("tratamiento"), $option);
@@ -207,6 +234,15 @@ class c_asignar_cita extends super_controller {
             foreach($tratamientos as $tr_aux){    
                 if (($tr_aux->get('fecha') == $cita->get('fecha')) AND ($tr_aux->get('hora') == $hora_comp) AND ($tr_aux->get('animal') == $cita->get('animal'))){
                     $this->mensaje("warning","Error","","Ya existe un tratamiento en esa fecha y hora para este animal");
+                    throw_exception(""); 
+                }
+            }
+        }
+
+        if (!(is_empty($tratamientos))){
+            foreach($tratamientos as $tr_aux){    
+                if (($tr_aux->get('fecha') == $cita->get('fecha')) AND ($tr_aux->get('hora') == $hora_comp) AND ($tr_aux->get('veterinario') == $cita->get('veterinario'))){
+                    $this->mensaje("warning","Error","","Ya existe un tratamiento en esa fecha y hora para usted");
                     throw_exception(""); 
                 }
             }
