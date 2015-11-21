@@ -151,7 +151,7 @@ class c_asignar_tratamiento extends super_controller {
         $this->orm->insert_data("normal",$tratamiento);
         $this->orm->close();
 
-        $dir=$gvar['l_global']."perfil_veterinario.php";
+        $dir=$gvar['l_global']."buscar_animal.php";
         $this->mensaje("check-circle","Confirmación",$dir,"Tratamiento Asignado exitosamente!");
 
     }
