@@ -66,7 +66,7 @@
                             <input type="hidden" name="hora" value="{$tratamiento[$j]->get('hora')}">
                             <input type="hidden" name="descripcion" value="{$tratamiento[$j]->get('animal')}">
 
-                            <td><button {if $tratamiento[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-edit"></span> Atender</button></td>
+                            <td><button {if $tratamiento[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-medkit"></span> Atender</button></td>
                         </form>
                         
                         <form action="{$gvar.l_global}editar_tratamiento.php" method="post">    
@@ -78,13 +78,13 @@
                             <input type="hidden" name="lugar" value="{$tratamiento[$j]->get('lugar')}">
                             <input type="hidden" name="animal" value="{$tratamiento[$j]->get('animal')}">
 
-                            <td><button {if $tratamiento[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-stethoscope"></span> Editar</button></td>
+                            <td><button {if $tratamiento[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-edit"></span> Editar</button></td>
                         </form>
                         
                         <form action="{$gvar.l_global}eliminar_tratamiento.php" method="post">    
                             <input type="hidden" name="codigo" value="{$tratamiento[$j]->get('codigo')}">
 
-                            <td><button {if $tratamiento[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-medkit"></span> Eliminar</button></td>
+                            <td><button {if $tratamiento[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-close"></span> Eliminar</button></td>
                         </form>
 
                       </tr>    
