@@ -34,7 +34,7 @@
                     <tr class="info">
                         <th>Código</th>
                         <th>Titulo</th>
-                        <th>Descripcion</th>
+                        <th>Descrip</th>
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Lugar</th>
@@ -55,7 +55,7 @@
                             <td>{$tratamiento[$j]->get("hora")}</td>
                             <td>{$tratamiento[$j]->get("lugar")}</td>
                             <td>{$tratamiento[$j]->get("estado")}</td>
-                            <td>{$tratamiento[$j]->get("animal")}</td>
+                            <td>{$tratamiento[$j]->get("animal")} - {$tratamiento[$j]->auxiliars['nombre_animal']}</td>
                             <td>{$tratamiento[$j]->get("duracion")}</td>
                             <td>{$tratamiento[$j]->get("especie")}</td>
                          

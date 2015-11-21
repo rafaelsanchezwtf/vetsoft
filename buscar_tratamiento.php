@@ -7,50 +7,72 @@ class c_buscar_tratamiento extends super_controller {
     public function buscar(){
         $opcion = $this->post->optradio;
         $valor = $_POST['codigo'];
-        if(is_empty($valor)){
-            $this->engine->assign('error1',1);
-            $this->mensaje("warning","Error","","El campo de busqueda está vacío");
-            throw_exception("");   
-        }
-        else{
+        if(is_empty($valor) AND is_empty($opcion)){
+            $consulta = "all";   
+        }else{
             switch ($opcion) {
                 case 'c':
                     if (is_numeric($valor)){
                         $consulta = "by_codigo";    
-                    }else{
+                    }elseif (!(is_numeric($valor))){
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");
+                    }elseif (is_empty($valor)){
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");
                     }
                     break;
 
                 case 't':
-                    $consulta = "by_titulo";
+                    if (!(is_empty($valor))){
+                        $consulta = "by_titulo";    
+                    }else{
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
+                        throw_exception("");
+                    }
                     break;
 
                 case 'f':
                     if (is_numeric($valor)){
                         $consulta = "by_fecha";    
-                    }else{
+                    }elseif (!(is_numeric($valor))){
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");
+                    }elseif (is_empty($valor)){
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");
                     }
                     break;
 
                 case 'h':
-                    $aux = new animal();
-                    if ($aux->validateDate($valor)){
-                        $consulta = "by_hora";    
+                    $aux=new animal();
+                    if (!(is_empty($valor))){
+                        if($aux->validateTime($valor)){
+                            $consulta = "by_hora";
+                        }else{
+                            $this->engine->assign('error2',2);
+                            $this->mensaje("warning","Error","","Dato incorrecto");
+                            throw_exception("");
+                        }
                     }else{
-                        $this->engine->assign('error2',2);
-                        $this->mensaje("warning","Error","","Dato incorrecto");
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");    
                     }
-                    break;
 
                 case 'a':
-                    $consulta = "by_animal";
+                    if (!(is_empty($valor))){
+                        $consulta = "by_animal";    
+                    }else{
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
+                        throw_exception("");
+                    }
                     break;
                 
                 default:
@@ -58,22 +80,22 @@ class c_buscar_tratamiento extends super_controller {
                     throw_exception(""); 
                     break;
             }
-            $options['tratamiento']['lvl2'] = $consulta;
-            $cod['tratamiento']['valor'] = $valor;
-            $cod['tratamiento']['identificacion'] = $this->session['usuario']['identificacion'];
-            $this->orm->connect();
-            $this->orm->read_data(array("tratamiento"), $options, $cod);
-            $tratamientos = $this->orm->get_objects("tratamiento");
-            $this->orm->close();
-            if (is_empty($tratamientos)){
-                $this->engine->assign('error3',3);
-                $this->mensaje("warning","Error","","Codigo no existe o no ha sido asignado");
-                throw_exception("");
-            }else{
-                $this->engine->assign("tratamiento",$tratamientos);
-            }
         }
-
+        $options['tratamiento']['lvl2'] = $consulta;
+        $auxiliars['tratamiento']=array("nombre_animal");
+        $cod['tratamiento']['valor'] = $valor;
+        $cod['tratamiento']['identificacion'] = $this->session['usuario']['identificacion'];
+        $this->orm->connect();
+        $this->orm->read_data(array("tratamiento"), $options, $cod);
+        $tratamientos = $this->orm->get_objects("tratamiento",NULL,$auxiliars);
+        $this->orm->close();
+        if (is_empty($tratamientos)){
+            $this->engine->assign('error3',3);
+            $this->mensaje("warning","Error","","No existen coincidencias");
+            throw_exception("");
+        }else{
+            $this->engine->assign("tratamiento",$tratamientos);
+        }
     }
     
     
