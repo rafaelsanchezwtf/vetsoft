@@ -86,6 +86,20 @@ class c_contratar_veterinario extends super_controller {
         $veterinario->set('user',$this->post->identificacion);
         $veterinario->set('pass',$password);
 
+        $option['veterinario']['lvl2']="all";
+        $this->orm->connect();
+        $this->orm->read_data(array("veterinario"), $option);
+        $veterinarios = $this->orm->get_objects("veterinario");
+        
+        if (!(is_empty($veterinarios))){
+            foreach($veterinarios as $vet_aux){
+                if ($vet_aux->get('identificacion') == $veterinario->get('identificacion')){
+                    $this->mensaje("warning","Error","","Ya existe un veterinario con esa identificacion");
+                    throw_exception(""); 
+                }
+            }
+        }
+
         $this->orm->connect();
         $this->orm->insert_data("normal",$veterinario);
         $this->orm->close();

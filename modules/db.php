@@ -166,7 +166,7 @@ class db
 			switch($option['lvl2'])
 			{
 				case "all": 
-					//
+					$info = $this->get_data("SELECT * FROM veterinario;");
 					break;
 
 				case "one_login":
