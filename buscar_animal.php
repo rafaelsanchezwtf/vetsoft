@@ -1,19 +1,54 @@
 <?php
 
 require('configs/include.php');
-
+        
 class c_buscar_animal extends super_controller {
 
     public function buscar(){
-
-        $id= $_POST['codigo'];
-        if(is_empty($id)){
+        $opcion = $this->post->optradio;
+        $valor = $_POST['codigo'];
+        if(is_empty($valor)){
             $this->engine->assign('error1',1);
-            $this->mensaje("warning","Error","","El campo de texto está vacío");
+            $this->mensaje("warning","Error","","El campo de busqueda está vacío");
             throw_exception("");   
-        }elseif(is_numeric($id)){
-            $options['animal']['lvl2'] = "some";
-            $cod['animal']['id'] = $id;
+        }
+        else{
+            switch ($opcion) {
+                case 'i':
+                    if (is_numeric($valor)){
+                        $consulta = "by_id";    
+                    }else{
+                        $this->engine->assign('error2',2);
+                        $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");
+                    }
+                    break;
+
+                case 'n':
+                    $consulta = "by_nombre";
+                    break;
+
+                case 'e':
+                    $consulta = "by_especie";
+                    break;
+
+                case 'f':
+                    if (is_numeric($valor)){
+                        $consulta = "by_fecha";    
+                    }else{
+                        $this->engine->assign('error2',2);
+                        $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");
+                    }
+                    break;
+                
+                default:
+                    $this->mensaje("warning","Error","","Debe seleccionar un criterio de busqueda");
+                    throw_exception(""); 
+                    break;
+            }
+            $options['animal']['lvl2'] = $consulta;
+            $cod['animal']['valor'] = $valor;
             $this->orm->connect();
             $this->orm->read_data(array("animal"), $options, $cod);
             $animales = $this->orm->get_objects("animal");
@@ -25,12 +60,10 @@ class c_buscar_animal extends super_controller {
             }else{
                 $this->engine->assign("animal",$animales);
             }
-        }else{
-            $this->engine->assign('error2',2);
-            $this->mensaje("warning","Error","","Dato incorrecto");
-            throw_exception("");
         }
+
     }
+    
     
     public function display(){
         $this->engine->assign('title', "Buscar Animal");

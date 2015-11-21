@@ -165,13 +165,33 @@ class db
 				case "all": 
 					//
 				break;
+                
+                
+                
 				
-				case "some": 
+				case "by_id": 
 					$this->escape_string($data);
-					$id=$data['id'];
+					$id=$data['valor'];
 					$info=$this->get_data("SELECT * FROM animal where id like '%$id%';"); 
 					break;
 
+				case "by_nombre": 
+					$this->escape_string($data);
+					$nombre=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal where nombre like '%$nombre%';"); 
+					break;
+
+				case "by_especie": 
+					$this->escape_string($data);
+					$especie=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal where especie like '%$especie%';"); 
+					break;
+
+				case "by_fecha": 
+					$this->escape_string($data);
+					$fecha=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal where fecha_de_nacimiento like '%$fecha%';"); 
+					break;
 			}
 			break;
 
