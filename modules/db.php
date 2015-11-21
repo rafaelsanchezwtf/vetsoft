@@ -180,6 +180,14 @@ class db
 			}
 			break;
 
+			case "producto":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					$info = $this->get_data("SELECT * FROM producto;");
+					break;
+			}
+			break;
 
 			
 			default: break;

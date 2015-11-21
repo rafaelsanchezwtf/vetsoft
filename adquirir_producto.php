@@ -59,7 +59,21 @@ class c_adquirir_producto extends super_controller {
 
         $producto = new producto($this->post);
 
-        $producto->set('fecha_de_adquisicion',date('Y-m-d'));
+        $hoy = getdate();
+        $año = $hoy['year'];
+        if ($hoy['mon']<10){
+            $mes = "0" . $hoy['mon'];
+        }else{
+            $mes = $hoy['mon'];
+        }
+        if ($hoy['mday']<10){
+            $dia = "0" . $hoy['mday'];
+        }else{
+            $dia = $hoy['mday'];
+        }
+        $fecha_actual = $año . "-" . $mes . "-" . $dia;
+
+        $producto->set('fecha_de_adquisicion',$fecha_actual);
 
         $incompletitud_producto = producto::validar_completitud($producto);
 
@@ -75,6 +89,20 @@ class c_adquirir_producto extends super_controller {
             self::asignar_invalidos($producto);
             self::mensaje("warning","Error","","Hay datos invalidos");
             throw_exception("");
+        }
+
+        $option['producto']['lvl2']="all";
+        $this->orm->connect();
+        $this->orm->read_data(array("producto"), $option);
+        $productos = $this->orm->get_objects("producto");
+        
+        if (!(is_empty($productos))){
+            foreach($productos as $prod_aux){
+                if (($prod_aux->get('nombre') == $producto->get('nombre')) AND ($prod_aux->get('marca') == $producto->get('marca'))){
+                    $this->mensaje("warning","Error","","Ya existe un producto con ese nombre y esa marca");
+                    throw_exception(""); 
+                }
+            }
         }
 
         $this->orm->connect();
