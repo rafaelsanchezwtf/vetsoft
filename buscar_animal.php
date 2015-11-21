@@ -7,37 +7,55 @@ class c_buscar_animal extends super_controller {
     public function buscar(){
         $opcion = $this->post->optradio;
         $valor = $_POST['codigo'];
-        if(is_empty($valor)){
-            $this->engine->assign('error1',1);
-            $this->mensaje("warning","Error","","El campo de busqueda está vacío");
-            throw_exception("");   
+        if(is_empty($valor) AND is_empty($opcion)){
+            $consulta = "all";   
         }
         else{
             switch ($opcion) {
                 case 'i':
                     if (is_numeric($valor)){
                         $consulta = "by_id";    
-                    }else{
+                    }elseif(!(is_numeric($valor))){
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");
+                    }elseif (is_empty($valor)){
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");
                     }
                     break;
 
                 case 'n':
-                    $consulta = "by_nombre";
+                    if (!(is_empty($valor))){
+                        $consulta = "by_nombre";    
+                    }else{
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
+                        throw_exception("");
+                    }
                     break;
 
                 case 'e':
-                    $consulta = "by_especie";
+                    if (!(is_empty($valor))){
+                        $consulta = "by_especie";    
+                    }else{
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
+                        throw_exception("");
+                    }
                     break;
 
                 case 'f':
                     if (is_numeric($valor)){
                         $consulta = "by_fecha";    
-                    }else{
+                    }elseif (!(is_numeric($valor))){
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");
+                    }elseif (is_empty($valor)){
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");
                     }
                     break;
@@ -47,21 +65,20 @@ class c_buscar_animal extends super_controller {
                     throw_exception(""); 
                     break;
             }
-            $options['animal']['lvl2'] = $consulta;
-            $cod['animal']['valor'] = $valor;
-            $this->orm->connect();
-            $this->orm->read_data(array("animal"), $options, $cod);
-            $animales = $this->orm->get_objects("animal");
-            $this->orm->close();
-            if (is_empty($animales)){
-                $this->engine->assign('error3',3);
-                $this->mensaje("warning","Error","","Codigo no existe o no ha sido asignado");
-                throw_exception("");
-            }else{
-                $this->engine->assign("animal",$animales);
-            }
         }
-
+        $options['animal']['lvl2'] = $consulta;
+        $cod['animal']['valor'] = $valor;
+        $this->orm->connect();
+        $this->orm->read_data(array("animal"), $options, $cod);
+        $animales = $this->orm->get_objects("animal");
+        $this->orm->close();
+        if (is_empty($animales)){
+            $this->engine->assign('error3',3);
+            $this->mensaje("warning","Error","","No existen coincidencias!");
+            throw_exception("");
+        }else{
+            $this->engine->assign("animal",$animales);
+        }
     }
     
     
