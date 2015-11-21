@@ -110,7 +110,7 @@ class object_standard
 	}
 
 	public static function validateTime($time){
-		$pattern="/^([0-1][0-9]|[2][0-3])[\:]([0-5][0-9])[\:]([0-5][0-9])$/";
+		$pattern="/^([0-1][0-9]|[2][0-3])[\:]([0-5][0-9])$/";
 	    if(preg_match($pattern,$time))
 	        return true;
 	    return false;

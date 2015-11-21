@@ -9,7 +9,7 @@
     <header>
     </header>
     <div>
-        <b>PACIENTE: {$nombre_animal} {$id_animal}</b><br/>
+        <b>PACIENTE: {$nombre_animal}</b><br/>
         <b>Por favor ingrese los datos de la cita:</b><br/>
     </div>
     <div class="container">
@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-2">
                         <h4>Hora* (24 hrs)</h4>
-                        <input type="text" {if isset($hora_c)}value="{$hora_c}"{/if} {if isset($hora_c_vacio) or isset($hora_c_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="hora" placeholder="HH:MM:SS">
+                        <input type="text" {if isset($hora_c)}value="{$hora_c}"{/if} {if isset($hora_c_vacio) or isset($hora_c_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="hora" placeholder="HH:MM">
                     </div>
                 </div>
                 <div class="form-group">
@@ -81,8 +81,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-2">
-                        <h4>Hora*</h4>
-                        <input type="text" {if isset($hora_c)}value="{$hora_c}"{/if} {if isset($hora_c_vacio) or isset($hora_c_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="hora" placeholder="HH:MM:SS">
+                        <h4>Hora* (24 hrs)</h4>
+                        <input type="text" {if isset($hora_c)}value="{$hora_c}"{/if} {if isset($hora_c_vacio) or isset($hora_c_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="hora" placeholder="HH:MM">
                     </div>
                 </div>
                 <div class="form-group">
