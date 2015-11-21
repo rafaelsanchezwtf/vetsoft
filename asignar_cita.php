@@ -128,7 +128,6 @@ class c_asignar_cita extends super_controller {
         }
 
         if (!(is_empty($citas))){
-            print_r2($citas);
             foreach($citas as $cita_aux){
                 if (($cita_aux->get('fecha') == $cita->get('fecha')) AND ($cita_aux->get('hora') == $hora_comp) AND ($cita_aux->get('veterinario') == $cita->get('veterinario'))){
                     $this->mensaje("warning","Error","","Ya existe una cita en esa fecha y hora para este veterinario");
@@ -164,7 +163,7 @@ class c_asignar_cita extends super_controller {
         $this->orm->insert_data("normal",$cita);
         $this->orm->close();
 
-        $dir=$gvar['l_global']."perfil_administrador.php";
+        $dir=$gvar['l_global']."buscar_animal.php";
         $this->mensaje("check-circle","Confirmación",$dir,"Cita asignada exitosamente!");
 
     }
@@ -216,7 +215,6 @@ class c_asignar_cita extends super_controller {
         }
 
         if (!(is_empty($citas))){
-            print_r2($citas);
             foreach($citas as $cita_aux){
                 if (($cita_aux->get('fecha') == $cita->get('fecha')) AND ($cita_aux->get('hora') == $hora_comp) AND ($cita_aux->get('veterinario') == $cita->get('veterinario'))){
                     $this->mensaje("warning","Error","","Ya existe una cita en esa fecha y hora para usted");
@@ -252,17 +250,13 @@ class c_asignar_cita extends super_controller {
         $this->orm->insert_data("normal",$cita);
         $this->orm->close();
 
-        $dir=$gvar['l_global']."perfil_veterinario.php";
+        $dir=$gvar['l_global']."buscar_animal.php";
         $this->mensaje("check-circle","Confirmación",$dir,"Cita asignada exitosamente!");
 
     }
 
     public function cancelar(){
-        if ($this->session['usuario']['tipo'] == "administrador") {
-            $msg_dir=$gvar['l_global']."perfil_administrador.php";
-        }elseif ($this->session['usuario']['tipo'] == "veterinario"){
-            $msg_dir=$gvar['l_global']."perfil_veterinario.php";
-        }
+        $msg_dir=$gvar['l_global']."buscar_animal.php";
         $this->mensaje("info","Informacion",$msg_dir,"Operacion cancelada por el administrador");
     }
 
