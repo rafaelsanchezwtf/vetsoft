@@ -115,6 +115,15 @@ class c_asignar_tratamiento extends super_controller {
             }
         }
 
+        if (!(is_empty($citas))){
+            foreach($citas as $cita_aux){
+                if (($cita_aux->get('fecha') == $tratamiento->get('fecha')) AND ($cita_aux->get('hora') == $hora_comp) AND ($cita_aux->get('veterinario') == $tratamiento->get('veterinario'))){
+                    $this->mensaje("warning","Error","","Ya existe una cita en esa fecha y hora para usted");
+                    throw_exception(""); 
+                }
+            }
+        }
+
         $option['tratamiento']['lvl2']="all";
         $this->orm->connect();
         $this->orm->read_data(array("tratamiento"), $option);
@@ -129,6 +138,15 @@ class c_asignar_tratamiento extends super_controller {
             }
         }
 
+        if (!(is_empty($tratamientos))){
+            foreach($tratamientos as $tr_aux){    
+                if (($tr_aux->get('fecha') == $tratamiento->get('fecha')) AND ($tr_aux->get('hora') == $hora_comp) AND ($tr_aux->get('veterinario') == $tratamiento->get('veterinario'))){
+                    $this->mensaje("warning","Error","","Ya existe un tratamiento en esa fecha y hora para usted");
+                    throw_exception("");
+                }
+            }
+        }
+
         $this->orm->connect();
         $this->orm->insert_data("normal",$tratamiento);
         $this->orm->close();
@@ -139,11 +157,7 @@ class c_asignar_tratamiento extends super_controller {
     }
 
     public function cancelar(){
-        if ($this->session['usuario']['tipo'] == "administrador") {
-            $msg_dir=$gvar['l_global']."perfil_administrador.php";
-        }elseif ($this->session['usuario']['tipo'] == "veterinario"){
-            $msg_dir=$gvar['l_global']."perfil_veterinario.php";
-        }
+        $msg_dir=$gvar['l_global']."buscar_animal.php";
         $this->mensaje("info","Informacion",$msg_dir,"Operacion cancelada por el administrador");
     }
 
