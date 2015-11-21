@@ -75,12 +75,7 @@
         	}else{
         		$minutos = $hoy['minutes'];
         	}
-        	if ($hoy['seconds']<10){
-            	$segundos = "0" . $hoy['seconds'];
-        	}else{
-        		$segundos = $hoy['seconds'];
-        	}
-        	$hora_actual = $hora . ":" . $minutos . ":" . $segundos;
+        	$hora_actual = $hora . ":" . $minutos;
         	if((!(parent::validateDate($tratamiento->get('fecha')))) or ($tratamiento->get('fecha') < $fecha_actual)){
     			$flag = TRUE;	
     		}
