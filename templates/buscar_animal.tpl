@@ -54,7 +54,7 @@
                     <tr>
                             <td>{$animal[$j]->get("id")}</td>
                             <td>{$animal[$j]->get("nombre")}</td>
-                            <td><img src="{$gvar.l_global}{$animal[$j]->get('foto')}" width="50" height="70"></td>
+                            <td><img src="{$gvar.l_global}{$animal[$j]->get("foto")}" width="50" height="70"></td>
                             <td>{$animal[$j]->get("fecha_de_nacimiento")}</dh>
                             <td>{$animal[$j]->get("peso")}</td>
                             <td>{$animal[$j]->get("talla")}</td>
