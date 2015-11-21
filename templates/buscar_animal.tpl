@@ -51,7 +51,6 @@
                             <td>{$animal[$j]->get("talla")}</td>
                             <td>{$animal[$j]->get("genero")}</td>
                             <td>{$animal[$j]->get("especie")}</td>
-                        
                         {if $tipo eq "administrador"}    
                         <form action="{$gvar.l_global}editar_animal.php" method="post">    
                             <input type="hidden" name="id" value="{$animal[$j]->get('id')}">
