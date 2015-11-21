@@ -66,7 +66,7 @@
                             <input type="hidden" name="fecha" value="{$cita[$j]->get('fecha')}">                            
                             <input type="hidden" name="hora" value="{$cita[$j]->get('hora')}">
                             <input type="hidden" name="animal" value="{$cita[$j]->get('animal')}">
-                            <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-edit"></span> Atender</button></td>
+                            <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-stethoscope"></span> Atender</button></td>
                         </form>
                         
                         
@@ -80,14 +80,14 @@
                             <input type="hidden" name="paciente" value="{$cita[$j]->get('paciente')}">
  
 
-                            <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-stethoscope"></span> Editar</button></td>
+                            <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-edit"></span> Editar</button></td>
                         </form>
                         
                         
                         
                         <form action="{$gvar.l_global}eliminar_cita.php" method="post">    
                             <input type="hidden" name="codigo" value="{$cita[$j]->get('codigo')}">
-                            <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-medkit"></span> Eliminar</button></td>
+                            <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-close"></span> Eliminar</button></td>
                         </form>
                          
 
