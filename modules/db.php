@@ -178,38 +178,45 @@ class db
 			case "cita":
 			switch($option['lvl2'])
 			{
-				case "all": 
-					//
-				break;
+				case "all":
+					$this->escape_string($data);
+					$identificacion=$data['identificacion']; 
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.animal = a.id AND c.veterinario = '$identificacion';"); 
+					break;
 				
 				case "by_codigo": 
 					$this->escape_string($data);
 					$codigo=$data['valor'];
-					$info=$this->get_data("SELECT * FROM cita where codigo like '%$codigo%';"); 
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.codigo like '%$codigo%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
 					break;
 
 				case "by_motivo": 
 					$this->escape_string($data);
 					$motivo=$data['valor'];
-					$info=$this->get_data("SELECT * FROM cita where motivo like '%$motivo%';"); 
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.motivo like '%$motivo%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
 					break;
 
 				case "by_fecha": 
 					$this->escape_string($data);
 					$fecha=$data['valor'];
-					$info=$this->get_data("SELECT * FROM cita where fecha like '%$fecha%';"); 
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.fecha like '%$fecha%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
 					break;
 
 				case "by_hora": 
 					$this->escape_string($data);
 					$hora=$data['valor'];
-					$info=$this->get_data("SELECT * FROM cita where hora like '%$hora%';"); 
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.hora like '%$hora%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
 					break;
 
 				case "by_animal": 
 					$this->escape_string($data);
 					$animal=$data['valor'];
-					$info=$this->get_data("SELECT * FROM cita where animal IN (SELECT id FROM animal WHERE nombre like '%$animal%');"); 
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE a.nombre like '%$animal%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
 					break;
 
 			}

@@ -54,7 +54,7 @@
                             <td>{$cita[$j]->get("hora")}</td>
                             <td>{$cita[$j]->get("lugar")}</td>
                             <td>{$cita[$j]->get("estado")}</td>
-                            <td>{$cita[$j]->get("animal")}</td>
+                            <td>{$cita[$j]->get("animal")} - {$cita[$j]->auxiliars['nombre_animal']}</td>
                             <td>{$cita[$j]->get("condicion")}</td>
                             <td>{$cita[$j]->get("diagnostico")}</td>
                             
