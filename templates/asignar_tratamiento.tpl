@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-2">
                         <h4>Hora* (24 hrs)</h4>
-                        <input type="text" {if isset($hora_t)}value="{$hora_t}"{/if} {if isset($hora_t_vacio) or isset($hora_t_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="hora" placeholder="HH:MM:SS">
+                        <input type="text" {if isset($hora_t)}value="{$hora_t}"{/if} {if isset($hora_t_vacio) or isset($hora_t_invalido)} style="background-color: #F78181" {/if} class="form-control default_color" name="hora" placeholder="HH:MM">
                     </div>
                 </div>
                 <div class="form-group">

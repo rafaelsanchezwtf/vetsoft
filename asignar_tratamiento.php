@@ -63,12 +63,7 @@ class c_asignar_tratamiento extends super_controller {
         }else{
             $minutos = $hoy['minutes'];
         }
-        if ($hoy['seconds']<10){
-            $segundos = "0" . $hoy['seconds'];
-        }else{
-            $segundos = $hoy['segundos'];
-        }
-        $hora_actual = $hora . ":" . $minutos . ":" . $segundos;
+        $hora_actual = $hora . ":" . $minutos;
 
         if((!($tratamiento->validateDate($tratamiento->get('fecha')))) OR ($tratamiento->get('fecha') < $fecha_actual)){
             $this->engine->assign('fecha_t_invalido',0);   
@@ -104,6 +99,8 @@ class c_asignar_tratamiento extends super_controller {
             throw_exception("");  
         }
 
+        $hora_comp = $tratamiento->get('hora') . ":00";
+
         $option['cita']['lvl2']="all";
         $this->orm->connect();
         $this->orm->read_data(array("cita"), $option);
@@ -111,8 +108,8 @@ class c_asignar_tratamiento extends super_controller {
         
         if (!(is_empty($citas))){
             foreach($citas as $cita){
-                if (($cita->get('fecha') == $tratamiento->get('fecha')) AND ($cita->get('hora') == $tratamiento->get('hora')) AND ($cita->get('animal') == $tratamiento->get('animal'))){
-                    $this->mensaje("warning","Error","","Ya existe una cita para en esa fecha y hora para este animal");
+                if (($cita->get('fecha') == $tratamiento->get('fecha')) AND ($cita->get('hora') == $hora_comp) AND ($cita->get('animal') == $tratamiento->get('animal'))){
+                    $this->mensaje("warning","Error","","Ya existe una cita en esa fecha y hora para este animal");
                     throw_exception(""); 
                 }
             }
@@ -125,8 +122,8 @@ class c_asignar_tratamiento extends super_controller {
 
         if (!(is_empty($tratamientos))){
             foreach($tratamientos as $tr_aux){    
-                if (($tr_aux->get('fecha') == $tratamiento->get('fecha')) AND ($tr_aux->get('hora') == $tratamiento->get('hora')) AND ($tr_aux->get('animal') == $tratamiento->get('animal'))){
-                    $this->mensaje("warning","Error","","Ya existe un tratamiento para en esa fecha y hora para este animal");
+                if (($tr_aux->get('fecha') == $tratamiento->get('fecha')) AND ($tr_aux->get('hora') == $hora_comp) AND ($tr_aux->get('animal') == $tratamiento->get('animal'))){
+                    $this->mensaje("warning","Error","","Ya existe un tratamiento en esa fecha y hora para este animal");
                     throw_exception(""); 
                 }
             }
