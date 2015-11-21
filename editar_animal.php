@@ -4,275 +4,212 @@ require('configs/include.php');
 
 class c_editar_animal extends super_controller {
     
-    
+    public function asignar_datos_animal($id,$nombre, $foto,$fecha_de_nacimiento, $peso, $talla, $genero, $especie){
+        $this->engine->assign('id',$id);
+        $this->engine->assign('nombre_animal',$nombre);
+        $this->engine->assign('foto_animal',$foto);
+        $this->engine->assign('fecha_de_nacimiento',$fecha_de_nacimiento);
+        $this->engine->assign('peso',$peso);
+        $this->engine->assign('talla',$talla);
+        $this->engine->assign('genero',$genero);
+        $this->engine->assign('especie',$especie); 
+
+        
+    }
     public function asignar_vacios_animal($nombre, $fecha_de_nacimiento, $peso, $talla, $genero, $especie){
+        $vs = false;
         if (is_empty($nombre)){
-            $this->engine->assign("nombre_vacio",0);
+            $this->engine->assign("nombre_vacio",0); $vs=true;
         }
         if (is_empty($fecha_de_nacimiento)){
-            $this->engine->assign("fecha_vacio",0);
+            $this->engine->assign("fecha_vacio",0); $vs=true;
         }
         if (is_empty($peso)){
-            $this->engine->assign("peso_vacio",0);
+            $this->engine->assign("peso_vacio",0); $vs=true;
         }
         if (is_empty($talla)){
-            $this->engine->assign("talla_vacio",0);
+            $this->engine->assign("talla_vacio",0); $vs=true;
         }
         if (is_empty($genero)){
-            $this->engine->assign("genero_vacio",0);
+            $this->engine->assign("genero_vacio",0); $vs=true;
         }
-        if (is_empty($tespecie)){
-            $this->engine->assign("especie_vacio",0);
+        if (is_empty($especie)){
+            $this->engine->assign("especie_vacio",0); $vs=true;
         }
-    
-    
-    
+    return $vs;
+ 
     }
     public function asignar_vacios_dueno( $nombre, $telefono, $email){
-        
+        $vs = false;
         if (is_empty($nombre)){
-            $this->engine->assign("nombre_dueno_vacio",0);
+            $this->engine->assign("nombre_dueno_vacio",0);$vs=true;
         }
         if (is_empty($telefono)){
-            $this->engine->assign("telefono_dueno_vacio",0);
+            $this->engine->assign("telefono_dueno_vacio",0);$vs=true;
         }
         if (is_empty($email)){
-            $this->engine->assign("email_dueno_vacio",0);
+            $this->engine->assign("email_dueno_vacio",0);$vs=true;
         }
+        return $vs;
     }
     
-    
-    
     public function asignar_invalidos_animal($animal){
+        $v=false;
         $fecha_actual = date('Y-m-d');
         if((!(animal::validateDate($animal->get('fecha_de_nacimiento')))) or ($animal->get('fecha_de_nacimiento') > $fecha_actual)){
             $this->engine->assign("fecha_invalido",0);
+            $v=true;
         }
         if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
             $this->engine->assign("peso_invalido",0); 
+            $v=true;
         }
         if ((!is_numeric($animal->get('talla'))) or ($animal->get('talla') <= 0)){
-            $this->engine->assign("talla_invalido",0);    
-        }             
+            $this->engine->assign("talla_invalido",0); 
+            $v=true;
+        } 
+        return $v;
     }
-
     public function asignar_invalidos_dueno($dueno){
-        if ((!is_numeric($dueno->get('cedula'))) or ($dueno->get('cedula') <= 0)){
-            $this->engine->assign("cedula_dueno_invalido",0);     
-        }
+        $v=false;
 
         if ((!is_numeric($dueno->get('telefono'))) or ($dueno->get('telefono') < 1000000)){
             $this->engine->assign("telefono_dueno_invalido",0);     
+            $v=true;
         }
         if (!filter_var($dueno->get('email'), FILTER_VALIDATE_EMAIL)){
             $this->engine->assign("email_dueno_invalido",0);   
+            $v=true;
         }
+        return $v;
     }
     
     
-    function validateDate($date, $format = 'Y-m-d'){
-        $d = DateTime::createFromFormat($format, $date);
-        return $d && $d->format($format) == $date;
+     public function verificar_fotografia($foto){
+        $mTmpFile = $_FILES[$foto]["tmp_name"];
+        $mTipo = exif_imagetype($mTmpFile);
+            if (($mTipo != IMAGETYPE_JPEG) && ($mTipo != IMAGETYPE_PNG)){
+                $this->mensaje("warning","Error","","Formato fotografia inválido");
+                throw_exception(""); 
+            }
+    }
+     public function insertar_fotografia($foto,$final){
+        $nombre_foto = $_FILES[$foto]["name"];
+        $ext = strtolower(substr(strrchr($nombre_foto, '.'), 1));
+    
+        $nombre_final = $final;
+        $nombre_final = $nombre_final . "." . $ext;
+
+        if ($foto=="fotonueva"){
+            move_uploaded_file($_FILES[$foto]["tmp_name"],"files/animal/" . $nombre_final);
+            $foto_atributo = "files/animal/" . $nombre_final;
+        }else{
+            
+                move_uploaded_file($_FILES[$foto]["tmp_name"],"files/dueno/" . $nombre_final);
+            
+            $foto_atributo = "files/dueno/" . $nombre_final;
+        }
+        RETURN $foto_atributo;
     }
 
     public function actualizar(){
         
-       
-        
-        if ($nombre_vacio<>""
-            || $fecha_vacio<>""
-            || $peso_vacio<>""
-            ||$talla_vacio<>""
-            || $genero_vacio<>""
-            || $especie_vacio<>""){
-            throw_exception("HAY DATOS INCOMPLETOS".$nombre_vacio.$fecha_vacio.
-            $peso_vacio.$talla_vacio.$genero_vacio.$especie_vacio);
-        }
-        if(!($this->validateDate($this->post->fecha_de_nacimiento))){
-            $this->engine->assign("fecha_invalido",0);
-            $fecha_invalido = " Campo fecha de nacimiento invalido";
-        }
+          
 
-        if (!is_numeric($this->post->peso)){
-            $this->engine->assign("peso_invalido",0);
-            $peso_invalido = " Campo peso invalido";      
-        }
-
-        if (!is_numeric($this->post->talla)){
-            $this->engine->assign("talla_invalido",0);
-            $talla_invalido = " Campo talla invalido";      
-        }
-
-        if ($fecha_invalido<>"" || $peso_invalido<>"" || $talla_invalido<>""){
-            throw_exception("HAY DATOS INVALIDOS".$fecha_invalido.
-            $peso_invalido.$talla_invalido);
-        }
+        
+        $vaciosanimal = self::asignar_vacios_animal($this->post->nombre_animal,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);  
+        
+        //No es modificable el atributo dueño de un animal
+        $animal = new animal();
+        $animal->set('id',$this->post->id);
+        $animal->set('nombre',$this->post->nombre_animal);
+        $animal->set('fecha_de_nacimiento',$this->post->fecha_de_nacimiento);
+        $animal->set('peso',$this->post->peso);
+        $animal->set('talla',$this->post->talla);
+        $animal->set('genero',$this->post->genero);
+        $animal->set('especie',$this->post->especie);
+        $incorrectosanimal = self::asignar_invalidos_animal($animal);
         
         
         
-        $cambiofoto = false;
+        
+        if($vaciosanimal){
+            $this->mensaje("warning","Error","","Hay campos vacíos");
+            throw_exception("");
+        }
+        if($incorrectosanimal){
+            $this->mensaje("warning","Error","","Hay datos invalidos");
+            throw_exception("");
+        }
+        
+        // si se selecciono una foto nueva para el animal
         if ($_FILES['fotonueva']['name'] <> "") {
-            if ($_FILES['fotonueva']['type'] != "image/png"
-            && $_FILES['fotonueva']['type'] != "image/jpeg"
-            && $_FILES["fotonueva"]["type"] != "image/pjpeg"){ 
-                throw_exception("Archivo inválido");
-            }
-            
-            $this->post->foto = $_FILES['fotonueva']['name'];
-            $cambiofoto=true;
+                  self::verificar_fotografia('fotonueva');
+                  $animal->set('foto',self::insertar_fotografia('fotonueva',$this->post->id));
         }
         else{
-         $this->post->foto =  $this->post->fotovieja;
+                  $animal->set('foto',$this->post->fotovieja);
         }
         
         
-        $animal = new animal($this->post);
         $this->orm->connect();
-        
-        // solo se almacenara la foto si es nueva
-        if($cambiofoto){
-            $nombre_foto = $this->post->foto;
-            $ext = strtolower(substr(strrchr($nombre_foto, '.'), 1));
-            $nombre_final = $this->post->id;
-            $nombre_final = $nombre_final . "." . $ext;
-            
-            
-            
-            
-                move_uploaded_file($_FILES["fotonueva"]["tmp_name"],"files/animal/" . $nombre_final);
-                 $foto_para_subir = "http://localhost/vetsoft/files/animal/" . $nombre_final;
-                $animal->set('foto',$foto_para_subir);
-            
-        }
-        
-        
         $this->orm->update_data("normal",$animal);
         
-        $_SESSION['mensaje']['tipo'] = 'Confirmación: ';
-        $_SESSION['mensaje']['texto'] = 'Animal editado';
         
-        $_SESSION['mensaje']['texto'] .= ' y dueño editado';
-        $_SESSION['mensaje']['codigo'] = $mensaje;
-        $this->session = $_SESSION;
         
         // se mostraron los inputs para editar dueño
-        if(isset($this->post->cedula) && !is_empty($this->post->cedula)){
+        if(isset($this->post->sidueno)){
+            
+            
+            
+            
+            
+            
+        $vaciosdueno = self::asignar_vacios_dueno($this->post->nombre_dueno,$this->post->telefono,$this->post->email);  
         
+        //No es modificable el atributo cedula del dueno
+        $dueno = new dueno();
+        $dueno->set('cedula',$this->post->cedula);
+        $dueno->set('nombre',$this->post->nombre_dueno);
+        $dueno->set('telefono',$this->post->telefono);
+        $dueno->set('email',$this->post->email);
+        $incorrectosdueno = self::asignar_invalidos_dueno($dueno);
             
-            $nombred_vacio = "";
-            $cedula_vacio = "";
-            $telefono_vacio = "";
-            $email_vacio = "";
-
-            $cedula_invalido = "";
-            $telefono_invalido = "";
-            $email_invalido = "";
-       
-            if(is_empty($this->post->cedula)){ 
-            
-            $this->engine->assign("cedula_vacio",0);
-            $cedula_vacio = " Campo cedula vacío";
-            } 
-            if(is_empty($this->post->nombred)){ 
-                
-                $this->engine->assign("nombred_vacio",0);
-                $nombred_vacio = " Campo nombre de dueño vacío";
-                } 
-            if(is_empty($this->post->telefono)){ 
-                $this->engine->assign("telefono_vacio",0);
-                $telefono_vacio = " Campo telefono vacío";
-            } 
-            if(is_empty($this->post->email)){ 
-                    $this->engine->assign("email_vacio",0);
-                    $email_vacio = " Campo email vacío";
-                } 
-            //if(is_empty($this->post->fotod)){ throw_exception('Debes ingresar un valor en el campo fotod.');} 
-        
-            
-            if ($nombred_vacio<>"" || $telefono_vacio<>"" || $cedula_vacio<>"" || $email_vacio<>""){
-            throw_exception("HAY DATOS INCOMPLETOS".$nombred_vacio.$cedula_vacio.
-            $telefono_vacio.$email_vacio);
-                
-            }
-            
-               // verificacion de tipo de datos   
-            if (!is_numeric($this->post->telefono)){
-                $this->engine->assign("telefono_invalido",0);
-                $telefono_invalido = " Campo telefono invalido";      
-            }
-
-            if (!is_numeric($this->post->cedula)){
-                $this->engine->assign("cedula_invalido",0);
-                $cedula_invalido = " Campo cedula invalido";      
-            }
-
-            if (!filter_var($this->post->email, FILTER_VALIDATE_EMAIL)){
-                $this->engine->assign("email_invalido",0);
-                $email_invalido = " Campo email invalido";    
-            }
-
-            if ($telefono_invalido<>"" || $cedula_invalido<>"" || $email_invalido<>""){
-                throw_exception("HAY DATOS INVALIDOS".$cedula_invalido.
-                $telefono_invalido.$email_invalido);
-            }
+        if($vaciosdueno){
+        $this->mensaje("warning","Error","","Hay campos vacíos");
+        throw_exception("");
+        }
+        if($incorrectosdueno){
+            $this->mensaje("warning","Error","","Hay datos invalidos");
+            throw_exception("");
+        }
             
             
-            $cambiofotod = false;
-            if ($_FILES['fotod']['name'] <> "") {
-                if ($_FILES['fotod']['type'] != "image/png"
-                && $_FILES['fotod']['type'] != "image/jpeg"
-                && $_FILES["fotod"]["type"] != "image/pjpeg"){ 
-                throw_exception("Archivo inválido");
-            }
             
-            $this->post->foto = $_FILES['fotod']['name'];
-            $cambiofotod=true;
+             // si se selecciono una foto nueva para el dueno
+        if ($_FILES['fotonuevad']['name'] <> "") {
+                  self::verificar_fotografia('fotonuevad');
+                  $dueno->set('foto',self::insertar_fotografia('fotonuevad',$this->post->cedula));
         }
         else{
-         $this->post->foto =  $this->post->fotoviejad;
+                  $dueno->set('foto',$this->post->fotoviejad);
         }
             
+        $this->orm->update_data("normal",$dueno);
+      
             
-    
-    
-
-            $this->post->nombre = $this->post->nombred;
-            $dueno = new dueno($this->post);
-            
-            
-            // solo se almacenara la foto si es nueva
-        if($cambiofotod){
-            $nombre_foto = $this->post->foto;
-            $ext = strtolower(substr(strrchr($nombre_foto, '.'), 1));
-            $nombre_final = $this->post->cedula;
-            $nombre_final = $nombre_final . "." . $ext;
-            
-            
-           
-                move_uploaded_file($_FILES["fotod"]["tmp_name"],"files/dueno/" . $nombre_final);
-                 $foto_para_subir = "http://localhost/vetsoft/files/dueno/" . $nombre_final;
-                $dueno->set('foto',$foto_para_subir);
             
         }
-            
-            
-            
-            $this->orm->update_data("normal",$dueno);
-            $_SESSION['mensaje']['texto'] .= ' y dueño editado';
-        
-        
-            $_SESSION['mensaje']['codigo'] = $mensaje;
-        
-        
-        }
+               
         
         
         
         $this->orm->close();
-        $this->session = $_SESSION;
         
         
-        header('Location: buscar_animal.php'); 
+        
+        $dir = $gvar['l_global']."buscar_animal.php";
+        $this->mensaje("warning","Confirmacion",$dir,"Edicion exitosa"); 
     
     }
     public function mostrarEditables(){
@@ -281,39 +218,24 @@ class c_editar_animal extends super_controller {
         if(!is_empty($this->post->dueno)) {
             $this->engine->assign('dueno',$this->post->dueno);
             
-            
-            $cod['dueno']['cedula'] = $this->post->dueno;
-            
+            // hace la consulta del dueño por el id
+            $cod['dueno']['cedula'] = $this->post->dueno; 
             $options['dueno']['lvl2'] = 'one';
-            $this->orm->connect();
-            
+            $this->orm->connect(); 
             $this->orm->read_data(array("dueno"),$options,$cod);
             $duenio = $this->orm->get_objects("dueno");
-            
             $this->orm->close();
 
             if(isset($duenio)){
-                $this->engine->assign('duenio',$duenio[0]);
-                
-                
+                $this->engine->assign('duenio',$duenio[0]);     
             }
             else{
                 throw_exception('Debes ingresar una Cedula existente');
-            }
-            
-            
+            }   
         }
-        $this->engine->assign('id',$this->post->id);
-        $this->engine->assign('nombrec',$this->post->nombre);
-        $this->engine->assign('fotoc',$this->post->foto);
-        $this->engine->assign('peso',$this->post->peso);
-        $this->engine->assign('talla',$this->post->talla);
-        $this->engine->assign('genero',$this->post->genero);
-        $this->engine->assign('especie',$this->post->especie);
-        $this->engine->assign('fecha_de_nacimiento',$this->post->fecha_de_nacimiento);
-       
-       
-     
+        
+        self::asignar_datos_animal($this->post->id,$this->post->nombre,$this->post->foto,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);
+        
     
     }
 
@@ -343,12 +265,13 @@ class c_editar_animal extends super_controller {
             if(isset($this->get->option)){
                 if($this->get->option=="cancelar"){
                     $this->{$this->get->option}();}
+                else if($this->get->option=="actualizar"){
+                    $this->{$this->get->option}();
+                }
+                
                 else{throw_exception("Opción ". $this->get->option." no disponible");}
             }
-            
-            else if (isset($this->post->fotovieja)) {
-                $this->actualizar();                
-            }
+           
             else if(isset($this->post->id)){ 
                 $this->mostrarEditables();
             }
@@ -361,7 +284,8 @@ class c_editar_animal extends super_controller {
             $this->temp_aux = 'message.tpl';
             $this->engine->assign('type_warning',$this->type_warning);
             $this->engine->assign('msg_warning',$this->msg_warning);
-            
+            $this->post->foto = $this->post->fotovieja;
+            $this->post->nombre = $this->post->nombre_animal;
             $this->mostrarEditables();
             }
         $this->display();
