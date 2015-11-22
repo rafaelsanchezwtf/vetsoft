@@ -4,12 +4,19 @@ require('configs/include.php');
 
 class c_editar_cita extends super_controller {
     
-    public function asignar_datos_cita($codigo,$motivo, $fecha,$hora, $lugar, $animal){
+    public function asignar_datos_cita($codigo,$motivo, $fecha,$hora, $lugar, $animal,$veterinario){
         $this->engine->assign('codigo',$codigo);
         $this->engine->assign('motivo',$motivo);
         $this->engine->assign('fecha',$fecha);
+        
+        if(strlen($hora)==8){
+            $hora = substr($hora,0,-3);
+        }
+        
         $this->engine->assign('hora',$hora);
-        $this->engine->assign('lugar',$lugar);    
+        $this->engine->assign('lugar',$lugar); 
+        $this->engine->assign('animal',$animal); 
+         $this->engine->assign('veterinario',$veterinario);
     }
     public function asignar_vacios_cita($motivo, $fecha,$hora, $lugar){
         $vs = false;
@@ -30,16 +37,59 @@ class c_editar_cita extends super_controller {
     }
       
     public function asignar_invalidos_cita($cita){
+        $cont = 0;
         $v=false;
-        $fecha_actual = date('Y-m-d');
+        $hoy = getdate();
+        $año = $hoy['year'];
+        if ($hoy['mon']<10){
+            $mes = "0" . $hoy['mon'];
+        }else{
+            $mes = $hoy['mon'];
+        }
+        if ($hoy['mday']<10){
+            $dia = "0" . $hoy['mday'];
+        }else{
+            $dia = $hoy['mday'];
+        }
+        
+        $fecha_actual = $año . "-" . $mes . "-" . $dia;
+        
+        $hoy['hours'] = $hoy['hours']-6;
+        if ($hoy['hours']<0){
+            $hora = 24  +  $hoy['hours'];
+        }elseif ($hoy['hours']>=0 AND $hoy['hours']<10){
+            $hora = "0" . $hoy['hours'];
+        }else{
+            $hora = $hoy['hours'];
+        }
+        if ($hoy['hours'] == "0"){
+            $hora = "00";
+        }
+        if ($hoy['minutes']<10){
+            $minutos = "0" . $hoy['minutes'];
+        }else{
+            $minutos = $hoy['minutes'];
+        }
+        if ($hoy['seconds']<10){
+            $segundos = "0" . $hoy['seconds'];
+        }else{
+            $segundos = $hoy['seconds'];
+        }
+        $hora_actual = $hora . ":" . $minutos . ":" . $segundos;
+
+        
         if((!(cita::validateDate($cita->get('fecha')))) or ($cita->get('fecha') < $fecha_actual)){
             $this->engine->assign("fecha_invalido",0);
             $v=true;
         }
-        if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
-            $this->engine->assign("peso_invalido",0); 
+        // Validacion del formato de entrada HH:mm
+        if((!($cita->validateTime($cita->get('hora')))) OR (($cita->get('fecha') == $fecha_actual) AND ($cita->get('hora') <= $hora_actual))){
+            $this->engine->assign('hora_c_invalido',0);
             $v=true;
         }
+       
+        
+  
         return $v;
     }
    
@@ -47,44 +97,67 @@ class c_editar_cita extends super_controller {
     public function actualizar(){
         
           
-
-        
-        $vaciosanimal = self::asignar_vacios_animal($this->post->nombre_animal,$this->post->fecha_de_nacimiento,$this->post->peso,$this->post->talla,$this->post->genero,$this->post->especie);  
-        
-        //No es modificable el atributo dueño de un animal
-        $animal = new animal();
-        $animal->set('id',$this->post->id);
-        $animal->set('nombre',$this->post->nombre_animal);
-        $animal->set('fecha_de_nacimiento',$this->post->fecha_de_nacimiento);
-        $animal->set('peso',$this->post->peso);
-        $animal->set('talla',$this->post->talla);
-        $animal->set('genero',$this->post->genero);
-        $animal->set('especie',$this->post->especie);
-        $incorrectosanimal = self::asignar_invalidos_animal($animal);
+        $option['veterinario']['lvl2']="all";
+        $this->orm->connect();
+        $this->orm->read_data(array("veterinario"), $option);
+        $variable = $this->orm->get_objects("veterinario");
         
         
         
+        $vacioscita = self::asignar_vacios_cita($this->post->motivo,$this->post->fecha,$this->post->hora,$this->post->lugar);  
         
-        if($vaciosanimal){
+        
+        $cita = new cita($this->post);
+        
+        //print_r2($cita);
+        $incorrectoscita = self::asignar_invalidos_cita($cita);
+        
+        
+        
+        
+        if($vacioscita){
             $this->mensaje("warning","Error","","Hay campos vacíos");
             throw_exception("");
         }
-        if($incorrectosanimal){
+        if($incorrectoscita){
             $this->mensaje("warning","Error","","Hay datos invalidos");
             throw_exception("");
         }
         
-        // si se selecciono una foto nueva para el animal
-        if ($_FILES['fotonueva']['name'] <> "") {
-                  self::verificar_fotografia('fotonueva');
-                  $animal->set('foto',self::insertar_fotografia('fotonueva',$this->post->id));
-        }
-        else{
-                  $animal->set('foto',$this->post->fotovieja);
-        }
-        
-        
+         $option['cita']['lvl2']="all";
         $this->orm->connect();
+        $this->orm->read_data(array("cita"), $option);
+        $citas = $this->orm->get_objects("cita");
+        
+        if (!(is_empty($citas))){
+            //print_r2($citas);
+            foreach($citas as $cita_aux){
+                if (($cita_aux->get('fecha') == $cita->get('fecha')) AND ($cita_aux->get('hora') == $cita->get('hora')) AND ($cita_aux->get('animal') == $cita->get('animal'))){
+                    $this->mensaje("warning","Error","","Ya existe una cita en esa fecha y hora para este animal");
+                    throw_exception(""); 
+                }
+            }
+        }
+        
+        
+        $option['tratamiento']['lvl2']="all";
+        $this->orm->connect();
+        $this->orm->read_data(array("tratamiento"), $option);
+        $tratamientos = $this->orm->get_objects("tratamiento");
+
+        if (!(is_empty($tratamientos))){
+            //print_r2($tratamientos);
+            foreach($tratamientos as $tr_aux){    
+                if (($tr_aux->get('fecha') == $cita->get('fecha')) AND ($tr_aux->get('hora') == $cita->get('hora')) AND ($tr_aux->get('animal') == $cita->get('animal'))){
+                    $this->mensaje("warning","Error","","Ya existe un tratamiento en esa fecha y hora para este animal");
+                    throw_exception(""); 
+                }
+            }
+        }
+        
+        
+        
+        $this->orm->connect();       
         $this->orm->update_data("normal",$cita);
         $this->orm->close();
         
@@ -96,7 +169,8 @@ class c_editar_cita extends super_controller {
         
         // Se realizan los assign para mostrarsen en el tpl, los valores son los que se tenian
         // en los inputs en el ultimo submit
-        self::asignar_datos_cita($this->post->codigo,$this->post->motivo,$this->post->fecha,$this->post->hora,$this->post->lugar,$this->post->animal);
+        
+        self::asignar_datos_cita($this->post->codigo,$this->post->motivo,$this->post->fecha,$this->post->hora,$this->post->lugar,$this->post->animal,$this->post->veterinario);
     }
 
     public function cancelar(){

@@ -114,15 +114,14 @@ class db
                 switch($options['lvl2'])
 			{
 				case "normal":
-					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
-                    $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
-                    $fecha_de_nacimiento=mysqli_real_escape_string($this->cn, $object->get('fecha_de_nacimiento'));
-                    $peso=mysqli_real_escape_string($this->cn,$object->get('peso'));
-                    $talla=mysqli_real_escape_string($this->cn,$object->get('talla'));
-                    $genero=mysqli_real_escape_string($this->cn,$object->get('genero'));
-                    $especie=mysqli_real_escape_string($this->cn,$object->get('especie'));
-                    $fotonueva=mysqli_real_escape_string($this->cn,$object->get('foto'));
-                    $this->do_operation("UPDATE animal SET nombre ='$nombre',peso= '$peso', talla='$talla', genero='$genero', especie='$especie',  fecha_de_nacimiento='$fecha_de_nacimiento', foto='$fotonueva' WHERE id='$id';");
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+                    $motivo=mysqli_real_escape_string($this->cn,$object->get('motivo'));
+                    $fecha=mysqli_real_escape_string($this->cn, $object->get('fecha'));
+                    $hora=mysqli_real_escape_string($this->cn,$object->get('hora'));
+                    $lugar=mysqli_real_escape_string($this->cn,$object->get('lugar'));
+          
+                    
+                    $this->do_operation("UPDATE cita SET motivo ='$motivo',hora= '$hora', lugar='$lugar', fecha='$fecha'  WHERE codigo='$codigo';");
 					break;
 			}
 			break;
@@ -181,7 +180,7 @@ class db
 			switch($option['lvl2'])
 			{
 				case "all": 
-					//
+					$info=$this->get_data("SELECT * FROM veterinario;");
 				break;
 
 				case "one_login":
@@ -242,6 +241,18 @@ class db
 
 			}
 			break;
+            
+            
+            			case "tratamiento":
+			switch($option['lvl2'])
+			{
+				case "all":
+					$info=$this->get_data("SELECT * FROM tratamiento;");
+					break;
+			}
+			break;
+            
+            
 			
 			default: break;
 		}
