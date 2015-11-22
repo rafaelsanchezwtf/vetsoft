@@ -172,6 +172,31 @@ class db
 						$info = $this->get_data("SELECT * FROM veterinario WHERE user = '$user';");
 					unset($hasher);
 					break;
+				case "by_nombre": 
+					$this->escape_string($data);
+					$nombre=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE nombre like '%$nombre%';"); 
+					break;
+				case "by_identificacion": 
+					$this->escape_string($data);
+					$identificacion=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE identificacion like '%$identificacion%';"); 
+					break;
+				case "by_telefono": 
+					$this->escape_string($data);
+					$telefono=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE telefono like '%$telefono%';"); 
+					break;
+				case "by_email": 
+					$this->escape_string($data);
+					$email=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE email like '%$email%';"); 
+					break;
+				case "by_user": 
+					$this->escape_string($data);
+					$user=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE user like '%$user%';"); 
+					break;
 			}
 			break;
 
