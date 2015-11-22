@@ -41,7 +41,7 @@
                         <th>Paciente</th>
                         <th>Condición</th>
                         <th>Diagnóstico</th>
-                        <th>Estad</th>
+                        <th>Estado</th>
                         <th>Atender</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
