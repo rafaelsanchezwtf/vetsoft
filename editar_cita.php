@@ -96,7 +96,7 @@ class c_editar_cita extends super_controller {
     
     public function actualizar(){
         
-          
+         
         $option['veterinario']['lvl2']="all";
         $this->orm->connect();
         $this->orm->read_data(array("veterinario"), $option);
@@ -124,15 +124,22 @@ class c_editar_cita extends super_controller {
             throw_exception("");
         }
         
-         $option['cita']['lvl2']="all";
+       
+         $option['cita']['lvl2']="all_2";
         $this->orm->connect();
         $this->orm->read_data(array("cita"), $option);
         $citas = $this->orm->get_objects("cita");
         
+        
         if (!(is_empty($citas))){
+            
             //print_r2($citas);
+           
             foreach($citas as $cita_aux){
-                if (($cita_aux->get('fecha') == $cita->get('fecha')) AND ($cita_aux->get('hora') == $cita->get('hora')) AND ($cita_aux->get('animal') == $cita->get('animal'))){
+                
+                
+                if (($cita_aux->get('fecha') == $cita->get('fecha')) AND (substr($cita_aux->get('hora'),0,-3) == $cita->get('hora')) AND ($cita_aux->get('animal') == $cita->get('animal')) AND ($cita_aux->get('codigo')<> $cita->get('codigo'))){
+                    
                     $this->mensaje("warning","Error","","Ya existe una cita en esa fecha y hora para este animal");
                     throw_exception(""); 
                 }
@@ -144,11 +151,12 @@ class c_editar_cita extends super_controller {
         $this->orm->connect();
         $this->orm->read_data(array("tratamiento"), $option);
         $tratamientos = $this->orm->get_objects("tratamiento");
+        
 
         if (!(is_empty($tratamientos))){
             //print_r2($tratamientos);
             foreach($tratamientos as $tr_aux){    
-                if (($tr_aux->get('fecha') == $cita->get('fecha')) AND ($tr_aux->get('hora') == $cita->get('hora')) AND ($tr_aux->get('animal') == $cita->get('animal'))){
+                if (($tr_aux->get('fecha') == $cita->get('fecha')) AND (substr($tr_aux->get('hora'),0,-3) == $cita->get('hora')) AND ($tr_aux->get('animal') == $cita->get('animal'))){
                     $this->mensaje("warning","Error","","Ya existe un tratamiento en esa fecha y hora para este animal");
                     throw_exception(""); 
                 }
@@ -157,8 +165,10 @@ class c_editar_cita extends super_controller {
         
         
         
-        $this->orm->connect();       
+        $this->orm->connect();    
+        
         $this->orm->update_data("normal",$cita);
+        
         $this->orm->close();
         
         $dir = $gvar['l_global']."buscar_cita.php";

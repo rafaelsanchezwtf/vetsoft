@@ -201,7 +201,13 @@ class db
 				case "all":
 					$this->escape_string($data);
 					$identificacion=$data['identificacion']; 
+                
 					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.animal = a.id AND c.veterinario = '$identificacion';"); 
+					break;
+                
+                case "all_2":
+					
+					$info=$this->get_data("SELECT * FROM cita;"); 
 					break;
 				
 				case "by_codigo": 
