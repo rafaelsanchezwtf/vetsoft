@@ -117,11 +117,12 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																												
-			case "user":
+			case "cita":
 			switch($options['lvl2'])
 			{
-				case "normal": 
-					//
+				case "normal":
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+					$this->do_operation("DELETE FROM cita WHERE codigo = '$codigo';");
 					break;
 			}
 			break;
@@ -177,7 +178,13 @@ class db
 
 			case "cita":
 			switch($option['lvl2'])
-			{
+			{	
+				case "por_codigo": 
+					$this->escape_string($data);
+					$codigo=$data['codigo'];
+					$info=$this->get_data("SELECT * FROM cita WHERE codigo = '$codigo';");
+					break;
+
 				case "all":
 					$this->escape_string($data);
 					$identificacion=$data['identificacion']; 

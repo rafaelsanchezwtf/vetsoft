@@ -62,10 +62,7 @@
                            
                         <form action="{$gvar.l_global}atender_cita.php" method="post">    
                             <input type="hidden" name="codigo" value="{$cita[$j]->get('codigo')}">
-                            <input type="hidden" name="motivo" value="{$cita[$j]->get('motivo')}">
-                            <input type="hidden" name="fecha" value="{$cita[$j]->get('fecha')}">                            
-                            <input type="hidden" name="hora" value="{$cita[$j]->get('hora')}">
-                            <input type="hidden" name="animal" value="{$cita[$j]->get('animal')}">
+                            <input type="hidden" name="nombre" value="{$cita[$j]->auxiliars['nombre_animal']}">
                             <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-stethoscope"></span> Atender</button></td>
                         </form>
                         
@@ -77,7 +74,7 @@
                             <input type="hidden" name="fecha" value="{$cita[$j]->get('fecha')}">
                             <input type="hidden" name="hora" value="{$cita[$j]->get('hora')}">
                             <input type="hidden" name="lugar" value="{$cita[$j]->get('lugar')}">
-                            <input type="hidden" name="paciente" value="{$cita[$j]->get('paciente')}">
+                            <input type="hidden" name="animal" value="{$cita[$j]->get('animal')}">
  
 
                             <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-edit"></span> Editar</button></td>
