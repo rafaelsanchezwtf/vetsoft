@@ -77,7 +77,7 @@
                             <input type="hidden" name="fecha" value="{$cita[$j]->get('fecha')}">
                             <input type="hidden" name="hora" value="{$cita[$j]->get('hora')}">
                             <input type="hidden" name="lugar" value="{$cita[$j]->get('lugar')}">
-                            <input type="hidden" name="paciente" value="{$cita[$j]->get('paciente')}">
+                            <input type="hidden" name="animal" value="{$cita[$j]->get('animal')}">
  
 
                             <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-edit"></span> Editar</button></td>

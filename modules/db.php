@@ -107,6 +107,27 @@ class db
 					break;
 			}
 			break;
+            
+            
+            
+             case "cita":
+                switch($options['lvl2'])
+			{
+				case "normal":
+					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
+                    $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+                    $fecha_de_nacimiento=mysqli_real_escape_string($this->cn, $object->get('fecha_de_nacimiento'));
+                    $peso=mysqli_real_escape_string($this->cn,$object->get('peso'));
+                    $talla=mysqli_real_escape_string($this->cn,$object->get('talla'));
+                    $genero=mysqli_real_escape_string($this->cn,$object->get('genero'));
+                    $especie=mysqli_real_escape_string($this->cn,$object->get('especie'));
+                    $fotonueva=mysqli_real_escape_string($this->cn,$object->get('foto'));
+                    $this->do_operation("UPDATE animal SET nombre ='$nombre',peso= '$peso', talla='$talla', genero='$genero', especie='$especie',  fecha_de_nacimiento='$fecha_de_nacimiento', foto='$fotonueva' WHERE id='$id';");
+					break;
+			}
+			break;
+            
+            
 			
 			default: break;
 		}
