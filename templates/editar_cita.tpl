@@ -1,6 +1,6 @@
 <div class="container">
     <section class="main row" >
-    
+    <h1>Editar Cita</h1><br>
     <form action="{$gvar.l_global}editar_cita.php?option=actualizar" method="post" >
     
     
