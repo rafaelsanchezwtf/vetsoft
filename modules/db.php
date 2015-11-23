@@ -99,11 +99,15 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																																		
-			case "user":
+			case "cita":
 			switch($options['lvl2'])
 			{
 				case "normal":
-					//
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+					$condicion=mysqli_real_escape_string($this->cn,$object->get('condicion'));
+					$diagnostico=mysqli_real_escape_string($this->cn,$object->get('diagnostico'));
+					$estado=mysqli_real_escape_string($this->cn,$object->get('estado'));
+					$this->do_operation("UPDATE cita SET condicion = '$condicion', diagnostico = '$diagnostico', estado = '$estado' WHERE codigo = '$codigo';");
 					break;
 			}
 			break;

@@ -38,10 +38,10 @@
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Lugar</th>
-                        <th>Estado</th>
                         <th>Paciente</th>
                         <th>Condición</th>
                         <th>Diagnóstico</th>
+                        <th>Estad</th>
                         <th>Atender</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
@@ -53,10 +53,10 @@
                             <td>{$cita[$j]->get("fecha")}</dh>
                             <td>{$cita[$j]->get("hora")}</td>
                             <td>{$cita[$j]->get("lugar")}</td>
-                            <td>{$cita[$j]->get("estado")}</td>
                             <td>{$cita[$j]->get("animal")} - {$cita[$j]->auxiliars['nombre_animal']}</td>
                             <td>{$cita[$j]->get("condicion")}</td>
                             <td>{$cita[$j]->get("diagnostico")}</td>
+                            <td>{$cita[$j]->get("estado")}</td>
                             
                         
                            

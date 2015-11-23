@@ -6,7 +6,31 @@ require('modules/m_phpass/PasswordHash.php');
 class c_atender_cita extends super_controller {
 
     public function finalizar(){
-        
+        $cita = new cita($this->post);
+
+        $this->engine->assign('condicion_c',$cita->get('condicion'));
+        $this->engine->assign('diagnostico_c',$cita->get('diagnostico'));
+
+        if (is_empty($cita->get('condicion')) OR is_empty($cita->get('diagnostico'))){
+            if (is_empty($cita->get('condicion'))){
+                $this->engine->assign('condicion_c_vacio',0);
+            }
+            if (is_empty($cita->get('diagnostico'))){
+                $this->engine->assign('diagnostico_c_vacio',0);
+            }
+            $this->mensaje("warning","Error","","Hay campos vacíos");
+            throw_exception("");  
+        }
+
+        $cita->set('estado','finalizado');
+
+        $this->orm->connect();
+        $this->orm->update_data("normal",$cita);
+        $this->orm->close();
+
+        $msg = "Cita finalizada correctamente!";
+        $dir=$gvar['l_global']."buscar_cita.php";
+        $this->mensaje("check-circle","Confirmación",$dir,$msg);
     }
 
     public function display(){

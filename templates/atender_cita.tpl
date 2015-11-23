@@ -14,7 +14,7 @@
         <b>id: {$mi_cita->get('codigo')}</b><br/>
         <b>Fecha: {$mi_cita->get('fecha')}</b><br/>
         <b>Hora: {$mi_cita->get('hora')}</b><br/>
-        <b>Motivo {$mi_cita->get('motivo')}</b><br/>
+        <b>Motivo: {$mi_cita->get('motivo')}</b><br/>
     </div>
     <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-2">
+                    <div class="col-sm-offset-3 col-sm-8">
                         <h4>Diagnostico*</h4>
                         <input type="text" {if isset($diagnostico_c)}value="{$diagnostico_c}"{/if} {if isset($diagnostico_c_vacio)} style="background-color: #F78181" {/if} class="form-control default_color" name="diagnostico" placeholder="Observacion y/o valoración del veterinario">
                     </div>
@@ -37,6 +37,7 @@
             </div>
             </br>
             </br>
+                <input type="hidden" name="codigo" value="{$mi_cita->get('codigo')}">
                 <div class="col-sm-offset-5 col-sm-6">              
                     <button class="btn btn-default" type="submit"><span class="fa fa-check"></span> Finalizar</button>
                     <a href="{$gvar.l_global}atender_cita.php?option=cancelar" class="btn btn-default" role="button"><span class="fa fa-close"></span> Cancelar</a>
