@@ -1,3 +1,4 @@
+<h1>BIENVENIDO</h1>
 <div class="container">
 <section class="main row">                   
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"  style="margin-top: 10px;">
