@@ -13,10 +13,13 @@
         
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-6">
+                            
+                            
                             <label class="radio-inline"><input type="radio" name="optradio" value="n">Nombre</label>
-                            <label class="radio-inline"><input type="radio" name="optradio" value="i">Identificación</label> 
-                            <label class="radio-inline"><input type="radio" name="optradio" value="t">Teléfono</label>                            
-                            <label class="radio-inline"><input type="radio" name="optradio" value="e">email</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" value="f">Fecha de adquisición</label>                            
+                            <label class="radio-inline"><input type="radio" name="optradio" value="m">Marca</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" value="p">Precio</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" value="t">Tipo</label>
                             
                             
                         </div>
@@ -29,35 +32,33 @@
 </section>
 </div>
 <div class="container">
-    {if isset($veterinarios)}
+    {if isset($productos)}
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tr class="info">
-                        <th>Identificación</th>
+                        
                         <th>Nombre</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                        <th>Sueldo</th>
-                        
-                        <th>Editar</th>
-                        <th>Eliminar</th>
-                        
+                        <th>Fecha de adquisición</th>
+                        <th>Marca</th>
+                        <th>Precio</th>
+                        <th>Tipo</th>  
                     </tr>
-                    {for $j=0 to count($veterinarios)-1}
+                    {for $j=0 to count($productos)-1}
                     <tr>
-                            <td>{$veterinarios[$j]->get("identificacion")}</td>
-                            <td>{$veterinarios[$j]->get("nombre")}</td>
-                            <td>{$veterinarios[$j]->get("telefono")}</dh>
-                            <td>{$veterinarios[$j]->get("email")}</td>
-                            <td>{$veterinarios[$j]->get("sueldo")}</td>
+                            
+                            <td>{$productos[$j]->get("nombre")}</td>
+                            <td>{$productos[$j]->get("fecha_de_adquisicion")}</dh>
+                            <td>{$productos[$j]->get("marca")}</td>
+                            <td>{$productos[$j]->get("precio")}</td>
+                            <td>{$productos[$j]->get("tipo")}</td>
                           
                        
-                        <form action="{$gvar.l_global}editar_veterinario.php" method="post">    
-                            <input type="hidden" name="identificacion" value="{$veterinarios[$j]->get('identificacion')}">
-                            <input type="hidden" name="nombre" value="{$veterinarios[$j]->get('nombre')}">
-                            <input type="hidden" name="telefono" value="{$veterinarios[$j]->get('telefono')}">
-                            <input type="hidden" name="email" value="{$veterinarios[$j]->get('email')}">
-                            <input type="hidden" name="sueldo" value="{$veterinarios[$j]->get('sueldo')}">
+                        <form action="{$gvar.l_global}editar_producto.php" method="post">    
+                            <input type="hidden" name="id" value="{$productos[$j]->get('id')}">
+                            <input type="hidden" name="nombre" value="{$productos[$j]->get('nombre')}">
+                            
+                            
+                            <input type="hidden" name="sueldo" value="{$productos[$j]->get('sueldo')}">
                             
  
 
@@ -66,8 +67,8 @@
                         
                         
                         
-                        <form action="{$gvar.l_global}eliminar_veterinario.php" method="post">    
-                            <input type="hidden" name="codigo" value="{$veterinarios[$j]->get('identificacion')}">
+                        <form action="{$gvar.l_global}eliminar_producto.php" method="post">    
+                            <input type="hidden" name="id" value="{$productos[$j]->get('id')}">
                             <td><button type ="submit" class="btn btn-primary"><span class="fa fa-close"></span> Eliminar</button></td>
                         </form>
                          

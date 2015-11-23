@@ -22,9 +22,9 @@ class c_buscar_cita extends super_controller {
                     }
                     break;
 
-                case 'i':
+                case 'p':
                     if (is_numeric($valor)){
-                        $consulta = "by_identificacion";    
+                        $consulta = "by_precio";    
                     }elseif (!(is_numeric($valor))){
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
@@ -36,23 +36,25 @@ class c_buscar_cita extends super_controller {
                     }
                     break;
 
-                case 't':
-                    if (is_numeric($valor)){
-                        $consulta = "by_telefono";    
-                    }elseif (!(is_numeric($valor))){
-                        $this->engine->assign('error2',2);
-                        $this->mensaje("warning","Error","","Dato incorrecto");
-                        throw_exception("");
-                    }elseif (is_empty($valor)){
-                        $this->engine->assign('error1',1);
-                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
-                        throw_exception("");
-                    }
-                    break;
-
-                case 'e':
+                case 'm':
                     if (!(is_empty($valor))){
-                        $consulta = "by_email";    
+                        $consulta = "by_marca";    
+                    }else{
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
+                        throw_exception("");
+                    }
+                    break;
+                case 't':
+                    if (!(is_empty($valor))){
+                        if((strcmp ( $valor , "medicamento" )==0) or (strcmp ( $valor , "implemento" )==0)){
+                            $consulta = "by_tipo";
+                        }else{
+                            $this->engine->assign('error1',2);
+                            $this->mensaje("warning","Error","","El creterio de búsqueda según solo recibe las opciones implemneto o medicamento.");
+                            throw_exception("");  
+                        }
+                            
                     }else{
                         $this->engine->assign('error1',1);
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
@@ -85,13 +87,13 @@ class c_buscar_cita extends super_controller {
     
     
     public function display(){
-        $this->engine->assign('title', "Buscar Veterinario");
+        $this->engine->assign('title', "Buscar Producto");
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
         if (($this->session['usuario']['tipo'] == "administrador")){
             $this->engine->display($this->temp_aux);
-            $this->engine->display('buscar_veterinario.tpl');
+            $this->engine->display('buscar_producto.tpl');
         }else{
             $direccion=$gvar['l_global']."index.php";
             $this->mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
