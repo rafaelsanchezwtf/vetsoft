@@ -17,7 +17,7 @@
                             <label class="radio-inline"><input type="radio" name="optradio" value="i">Identificación</label> 
                             <label class="radio-inline"><input type="radio" name="optradio" value="t">Teléfono</label>                            
                             <label class="radio-inline"><input type="radio" name="optradio" value="e">email</label>
-                            <label class="radio-inline"><input type="radio" name="optradio" value="u">User</label>
+                            
                             
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         <th>Teléfono</th>
                         <th>Email</th>
                         <th>Sueldo</th>
-                        <th>User</th>
+                        
                         <th>Editar</th>
                         <th>Eliminar</th>
                         
@@ -50,7 +50,7 @@
                             <td>{$veterinarios[$j]->get("telefono")}</dh>
                             <td>{$veterinarios[$j]->get("email")}</td>
                             <td>{$veterinarios[$j]->get("sueldo")}</td>
-                            <td>{$veterinarios[$j]->get("user")}</td>
+                          
                        
                         <form action="{$gvar.l_global}editar_veterinario.php" method="post">    
                             <input type="hidden" name="identificacion" value="{$veterinarios[$j]->get('identificacion')}">

@@ -192,11 +192,6 @@ class db
 					$email=$data['valor'];					
 					$info=$this->get_data("SELECT * FROM veterinario WHERE email like '%$email%';"); 
 					break;
-				case "by_user": 
-					$this->escape_string($data);
-					$user=$data['valor'];					
-					$info=$this->get_data("SELECT * FROM veterinario WHERE user like '%$user%';"); 
-					break;
 			}
 			break;
 

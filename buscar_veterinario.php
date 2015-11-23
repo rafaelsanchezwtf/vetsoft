@@ -59,16 +59,6 @@ class c_buscar_cita extends super_controller {
                         throw_exception("");
                     }
                     break;
-
-                case 'u':
-                    if (!(is_empty($valor))){
-                        $consulta = "by_user";    
-                    }else{
-                        $this->engine->assign('error1',1);
-                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
-                        throw_exception("");
-                    }
-                    break;
                 
                 default:
                     $this->mensaje("warning","Error","","Debe seleccionar un criterio de busqueda");
