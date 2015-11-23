@@ -38,10 +38,10 @@
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Lugar</th>
-                        <th>Estado</th>
                         <th>Paciente</th>
                         <th>Duracion</th>
                         <th>Resultado</th>
+                        <th>Estado</th>
                         <th>Atender</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
@@ -54,10 +54,10 @@
                             <td>{$tratamiento[$j]->get("fecha")}</dh>
                             <td>{$tratamiento[$j]->get("hora")}</td>
                             <td>{$tratamiento[$j]->get("lugar")}</td>
-                            <td>{$tratamiento[$j]->get("estado")}</td>
                             <td>{$tratamiento[$j]->get("animal")} - {$tratamiento[$j]->auxiliars['nombre_animal']}</td>
                             <td>{$tratamiento[$j]->get("duracion")}</td>
-                            <td>{$tratamiento[$j]->get("especie")}</td>
+                            <td>{$tratamiento[$j]->get("resultado")}</td>
+                            <td>{$tratamiento[$j]->get("estado")}</td>
                          
                         <form action="{$gvar.l_global}atender_tratamiento.php" method="post">    
                             <input type="hidden" name="codigo" value="{$tratamiento[$j]->get('codigo')}">
