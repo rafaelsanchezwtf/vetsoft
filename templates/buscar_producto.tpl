@@ -1,7 +1,7 @@
 <div class="container">
 <section class="main row">                   
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"  style="margin-top: 10px;">
-                <form class="form-horizontal" method="post" action="{$gvar.l_global}buscar_veterinario.php?option=buscar">
+                <form class="form-horizontal" method="post" action="{$gvar.l_global}buscar_producto.php?option=buscar">
                     <div class="form-group">
                         <h3 align="center"><b>Ingrese un valor en el campo de busqueda</b></h3>
                         <div class="col-sm-offset-4 col-sm-4">
@@ -36,29 +36,31 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tr class="info">
-                        
+                        <th>Código</th>
                         <th>Nombre</th>
                         <th>Fecha de adquisición</th>
                         <th>Marca</th>
                         <th>Precio</th>
-                        <th>Tipo</th>  
+                        <th>Tipo</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>   
                     </tr>
                     {for $j=0 to count($productos)-1}
                     <tr>
-                            
+                            <td>{$productos[$j]->get("id")}</td>
                             <td>{$productos[$j]->get("nombre")}</td>
                             <td>{$productos[$j]->get("fecha_de_adquisicion")}</dh>
                             <td>{$productos[$j]->get("marca")}</td>
-                            <td>{$productos[$j]->get("precio")}</td>
+                            <td>{$productos[$j]->get("precio_neto")}</td>
                             <td>{$productos[$j]->get("tipo")}</td>
                           
                        
                         <form action="{$gvar.l_global}editar_producto.php" method="post">    
                             <input type="hidden" name="id" value="{$productos[$j]->get('id')}">
                             <input type="hidden" name="nombre" value="{$productos[$j]->get('nombre')}">
-                            
-                            
-                            <input type="hidden" name="sueldo" value="{$productos[$j]->get('sueldo')}">
+                            <input type="hidden" name="marca" value="{$productos[$j]->get('marca')}">
+                            <input type="hidden" name="cantidad" value="{$productos[$j]->get('cantidad')}">
+                            <input type="hidden" name="fecha_de_adquisicion" value="{$productos[$j]->get('fecha_de_adquisicion')}">
                             
  
 

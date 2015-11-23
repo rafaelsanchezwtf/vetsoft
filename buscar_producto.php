@@ -36,6 +36,20 @@ class c_buscar_cita extends super_controller {
                     }
                     break;
 
+                case 'f':
+                    if (is_numeric($valor)){
+                        $consulta = "by_fecha";    
+                    }elseif (!(is_numeric($valor))){
+                        $this->engine->assign('error2',2);
+                        $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");
+                    }elseif (is_empty($valor)){
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
+                        throw_exception("");
+                    }
+                    break;
+
                 case 'm':
                     if (!(is_empty($valor))){
                         $consulta = "by_marca";    
@@ -51,7 +65,7 @@ class c_buscar_cita extends super_controller {
                             $consulta = "by_tipo";
                         }else{
                             $this->engine->assign('error1',2);
-                            $this->mensaje("warning","Error","","El creterio de búsqueda según solo recibe las opciones implemneto o medicamento.");
+                            $this->mensaje("warning","Error","","El creterio de búsqueda solo recibe los tipos implemneto o medicamento.");
                             throw_exception("");  
                         }
                             
@@ -68,20 +82,17 @@ class c_buscar_cita extends super_controller {
                     break;
             }
         }
-        $options['veterinario']['lvl2'] = $consulta;
-        $cod['veterinario']['valor'] = $valor;
-        $cod['veterinario']['identificacion']=$this->session['usuario']['identificacion'];
+        $options['producto']['lvl2'] = $consulta;
         $this->orm->connect();
-        $this->orm->read_data(array("veterinario"), $options, $cod);
-        $veterinarios = $this->orm->get_objects("veterinario");
-
+        $this->orm->read_data(array("producto"), $options, $cod);
+        $productos = $this->orm->get_objects("producto");        
         $this->orm->close();
-        if (is_empty($veterinarios)){
+        if (is_empty($productos)){
             $this->engine->assign('error3',3);
             $this->mensaje("warning","Error","","No existen coincidencias!");
             throw_exception("");
         }else{
-            $this->engine->assign("veterinarios",$veterinarios);
+            $this->engine->assign("productos",$productos);
         }
     }
     
