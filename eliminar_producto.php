@@ -4,6 +4,10 @@ require('configs/include.php');
         
 class c_buscar_cita extends super_controller {
 
+    public function eliminar(){
+
+    }
+
     public function buscar(){
         $opcion = $this->post->optradio;
         $valor = $_POST['codigo'];
@@ -99,13 +103,13 @@ class c_buscar_cita extends super_controller {
     
     
     public function display(){
-        $this->engine->assign('title', "Buscar Producto");
+        $this->engine->assign('title', "Eliminar Producto");
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
         if (($this->session['usuario']['tipo'] == "administrador")){
             $this->engine->display($this->temp_aux);
-            $this->engine->display('buscar_producto.tpl');
+            $this->engine->display('eliminar_producto.tpl');
         }else{
             $direccion=$gvar['l_global']."index.php";
             $this->mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
@@ -115,6 +119,10 @@ class c_buscar_cita extends super_controller {
     }
     
     public function run(){
+        $nombre=$this->post->nombre_p;
+        echo $nombre;
+        echo "holii";
+        
         try {
             if (isset($this->get->option)) {
                 if ($this->get->option == "buscar")
