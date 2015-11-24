@@ -1,5 +1,5 @@
 <div class="container">
-            <h2>¿Realmente deseas eliminar esta cita?</h2>
+    <h2><div class="alert alert-danger">¿Realmente deseas eliminar esta cita?</div></h2>
     
             <div class="table-responsive">
                 <table class="table table-hover">
