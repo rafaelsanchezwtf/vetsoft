@@ -108,6 +108,22 @@ class db
 			}
 			break;
 			
+             case "producto":
+                switch($options['lvl2'])
+                {
+				case "normal":
+					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
+                    $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+                    $marca=mysqli_real_escape_string($this->cn,$object->get('marca'));
+                    $cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+                    $fecha_de_adquisicion=mysqli_real_escape_string($this->cn,$object->get('fecha_de_adquisicion')); 
+                    $precio_unidad=mysqli_real_escape_string($this->cn,$object->get('precio_unidad'));
+                    $this->do_operation("UPDATE producto SET nombre= '$nombre', marca='$marca', cantidad='$cantidad',  fecha_de_adquisicion='$fecha_de_adquisicion', precio_unidad='$precio_unidad' WHERE id='$id';");
+					break;
+				}
+			break;
+            
+            
 			default: break;
 		}
 	}
@@ -211,7 +227,7 @@ class db
 				case "by_precio": 
 					$this->escape_string($data);
 					$precio=$data['valor'];					
-					$info=$this->get_data("SELECT * FROM producto WHERE precio_neto <= '$precio';"); 
+					$info=$this->get_data("SELECT * FROM producto WHERE precio_unidad <= '$precio';"); 
 					break;
 				case "by_fecha": 
 					$this->escape_string($data);
