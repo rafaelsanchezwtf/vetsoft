@@ -205,23 +205,28 @@ class db
 					break;
 				case "by_nombre": 
 					$this->escape_string($data);
-					$nombre=$data['valor'];					
+					$nombre=$data['valor'];	
+					print_r2($nombre);				
 					$info=$this->get_data("SELECT * FROM producto WHERE nombre like '%$nombre%';"); 
+					print_r2($nombre);
 					break;
 				case "by_precio": 
 					$this->escape_string($data);
 					$precio=$data['valor'];					
 					$info=$this->get_data("SELECT * FROM producto WHERE precio_neto <= '$precio';"); 
+					print_r2($precio);
 					break;
 				case "by_fecha": 
 					$this->escape_string($data);
 					$fecha=$data['valor'];					
-					$info=$this->get_data("SELECT * FROM producto WHERE fecha_de_adquisicion like '%$fecha%';"); 
+					$info=$this->get_data("SELECT * FROM producto WHERE fecha_de_adquisicion like '%$fecha%';");
+					print_r2($fecha); 
 					break;
 				case "by_marca": 
 					$this->escape_string($data);
 					$marca=$data['valor'];					
-					$info=$this->get_data("SELECT * FROM producto WHERE marca like '%$marca%';"); 
+					$info=$this->get_data("SELECT * FROM producto WHERE marca like '%$marca%';");
+					print_r2($marca); 
 					break;
 				case "by_tipo": 
 					$this->escape_string($data);
