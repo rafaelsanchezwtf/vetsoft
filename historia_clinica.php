@@ -2,7 +2,7 @@
 
 require('configs/include.php');
         
-class c_buscar_tratamiento extends super_controller {
+class c_historia_clinica extends super_controller {
 
     public function buscar(){
         $opcion = $this->post->optradio;
@@ -100,13 +100,13 @@ class c_buscar_tratamiento extends super_controller {
     
     
     public function display(){
-        $this->engine->assign('title', "Buscar Tratamiento");
+        $this->engine->assign('title', "Historia Clinica");
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
         if (($this->session['usuario']['tipo'] == "veterinario")){
             $this->engine->display($this->temp_aux);
-            $this->engine->display('buscar_tratamiento.tpl');
+            $this->engine->display('historia_clinica.tpl');
         }else{
             $direccion=$gvar['l_global']."index.php";
             $this->mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
@@ -135,7 +135,7 @@ class c_buscar_tratamiento extends super_controller {
         
 }
 
-    $call = new c_buscar_tratamiento();
+    $call = new c_historia_clinica();
     $call->run();
 
 
