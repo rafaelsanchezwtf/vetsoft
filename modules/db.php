@@ -117,7 +117,22 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																												
-			case "user":
+			case "cita":
+			switch($options['lvl2'])
+			{
+				case "normal": 
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+                    $hora=mysqli_real_escape_string($this->cn,$object->get('hora'));
+                    $fecha=mysqli_real_escape_string($this->cn,$object->get('fecha'));
+               
+                $this->do_operation("DELETE FROM cita WHERE codigo='$codigo' AND hora= '$hora' AND fecha= '$fecha';");
+			
+					break;
+			}
+			break;
+			
+            
+            case "cita":
 			switch($options['lvl2'])
 			{
 				case "normal": 
@@ -125,7 +140,8 @@ class db
 					break;
 			}
 			break;
-			
+            
+            
 			default: break;			  
 		}
 	}
@@ -189,6 +205,12 @@ class db
 					$codigo=$data['valor'];
 					$identificacion=$data['identificacion'];
 					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.codigo like '%$codigo%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
+					break;
+                
+                case "one":
+              
+                $codigo = mysqli_real_escape_string($this->cn,$data['codigo']);
+					$info=$this->get_data("SELECT * FROM cita WHERE codigo ='$codigo' ;"); 
 					break;
 
 				case "by_motivo": 
