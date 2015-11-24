@@ -1,5 +1,5 @@
 <div class="container">
-
+            <h2>¿Realmente deseas eliminar esta cita?</h2>
     
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -33,7 +33,7 @@
                             <input type="hidden" name="codigo" value="{$cita->get('codigo')}">
                             <input type="hidden" name="hora" value="{$cita->get('hora')}">
                             <input type="hidden" name="fecha" value="{$cita->get('fecha')}">
-                            <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Eliminar</button>         
+                            <button type="submit" class="btn btn-primary"><span class="fa fa-exclamation-triangle"></span> Eliminar</button>         
                     
                 </form>
                 </div>
