@@ -7,7 +7,7 @@
 		protected $cantidad;
 		protected $fecha_de_adquisicion;
 		protected $marca;
-		protected $precio_neto;
+		protected $precio_unidad;
 		protected $tipo;
 
 		var $components = array();
@@ -15,7 +15,7 @@
 		var $auxiliars = array();
 
 		public function metadata(){
-			return array("id" => array(), "nombre" => array(), "cantidad" => array(), "fecha_de_adquisicion" => array(), "marca" => array(), "tipo" => array(), "precio_neto" => array()); 
+			return array("id" => array(), "nombre" => array(), "cantidad" => array(), "fecha_de_adquisicion" => array(), "marca" => array(), "tipo" => array(), "precio_unidad" => array()); 
 		}
 
 		public function primary_key(){

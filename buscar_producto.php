@@ -83,6 +83,7 @@ class c_buscar_cita extends super_controller {
             }
         }
         $options['producto']['lvl2'] = $consulta;
+        $cod['producto']['valor'] = $valor;
         $this->orm->connect();
         $this->orm->read_data(array("producto"), $options, $cod);
         $productos = $this->orm->get_objects("producto");        
