@@ -125,6 +125,24 @@ class db
 					break;
 			}
 			break;
+            
+            
+            
+            case "tratamiento":
+			switch($options['lvl2'])
+			{
+				case "normal": 
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+                    $animal=mysqli_real_escape_string($this->cn,$object->get('animal'));
+               
+                $this->do_operation("DELETE FROM tratamiento WHERE codigo='$codigo' AND animal= '$animal';");
+			
+					break;
+			}
+			break;
+            
+            
+            
 			
 			default: break;			  
 		}
@@ -217,6 +235,14 @@ class db
 					$animal=$data['valor'];
 					$identificacion=$data['identificacion'];
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.nombre like '%$animal%' AND t.animal = a.id AND t.veterinario = '$identificacion';"); 
+					break;
+                
+                
+                
+                case "one":
+              
+                $codigo = mysqli_real_escape_string($this->cn,$data['codigo']);
+					$info=$this->get_data("SELECT * FROM tratamiento WHERE codigo ='$codigo' ;"); 
 					break;
 
 			}
