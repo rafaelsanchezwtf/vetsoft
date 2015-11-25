@@ -16,7 +16,14 @@ class c_buscar_animal extends super_controller {
             switch ($opcion) {
                 case 'i':
                     if (is_numeric($valor)){
-                        $consulta = "by_id";    
+                        if($valor<0){
+                            $this->engine->assign('error2',2);
+                            $this->mensaje("warning","Error","","Dato incorrecto");
+                            throw_exception("");
+                        }else{
+                            $consulta = "by_id"; 
+                        }
+                           
                     }else{
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
@@ -34,7 +41,14 @@ class c_buscar_animal extends super_controller {
 
                 case 'f':
                     if (is_numeric($valor)){
-                        $consulta = "by_fecha";    
+                        if($valor<0){
+                            $this->engine->assign('error2',2);
+                            $this->mensaje("warning","Error","","Dato incorrecto");
+                            throw_exception("");
+                        }else{
+                            $consulta = "by_fecha";
+                        }
+                            
                     }else{
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
