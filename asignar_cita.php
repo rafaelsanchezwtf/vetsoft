@@ -46,8 +46,6 @@ class c_asignar_cita extends super_controller {
         }
         
         $fecha_actual = $año . "-" . $mes . "-" . $dia;
-
-        echo $fecha_actual;
         
         $hoy['hours'] = $hoy['hours']-6;
         if ($hoy['hours']<0){
