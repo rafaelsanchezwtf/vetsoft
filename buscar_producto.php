@@ -24,7 +24,14 @@ class c_buscar_cita extends super_controller {
 
                 case 'p':
                     if (is_numeric($valor)){
-                        $consulta = "by_precio";    
+                        if($valor<0){
+                            $this->engine->assign('error2',2);
+                            $this->mensaje("warning","Error","","Dato incorrecto");
+                            throw_exception("");
+                        }else{
+                            $consulta = "by_precio"; 
+                        }
+                           
                     }elseif (!(is_numeric($valor))){
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
@@ -38,7 +45,14 @@ class c_buscar_cita extends super_controller {
 
                 case 'f':
                     if (is_numeric($valor)){
-                        $consulta = "by_fecha";    
+                        if($valor<0){
+                            $this->engine->assign('error2',2);
+                            $this->mensaje("warning","Error","","Dato incorrecto");
+                            throw_exception("");
+                        }else{
+                           $consulta = "by_fecha";  
+                        }
+                           
                     }elseif (!(is_numeric($valor))){
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
