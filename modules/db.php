@@ -99,11 +99,15 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																																		
-			case "user":
+			case "tratamiento":
 			switch($options['lvl2'])
 			{
 				case "normal":
-					//
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+					$duracion=mysqli_real_escape_string($this->cn,$object->get('duracion'));
+					$resultado=mysqli_real_escape_string($this->cn,$object->get('resultado'));
+					$estado=mysqli_real_escape_string($this->cn,$object->get('estado'));
+					$this->do_operation("UPDATE tratamiento SET duracion = '$duracion', resultado = '$resultado', estado = '$estado' WHERE codigo = '$codigo';");
 					break;
 			}
 			break;
@@ -117,11 +121,12 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																												
-			case "user":
+			case "tratamiento":
 			switch($options['lvl2'])
 			{
-				case "normal": 
-					//
+				case "normal":
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+					$this->do_operation("DELETE FROM tratamiento WHERE codigo = '$codigo';");
 					break;
 			}
 			break;
@@ -178,6 +183,12 @@ class db
 			case "tratamiento":
 			switch($option['lvl2'])
 			{
+				case "por_codigo": 
+					$this->escape_string($data);
+					$codigo=$data['codigo'];
+					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.codigo = '$codigo';"); 
+					break;
+
 				case "by_all":
 					$this->escape_string($data);
 					$identificacion=$data['identificacion']; 

@@ -59,14 +59,10 @@
                             <td>{$tratamiento[$j]->get("resultado")}</td>
                             <td>{$tratamiento[$j]->get("estado")}</td>
                          
-                        <form action="{$gvar.l_global}atender_tratamiento.php" method="post">    
+                        <form action="{$gvar.l_global}completar_tratamiento.php" method="post">    
                             <input type="hidden" name="codigo" value="{$tratamiento[$j]->get('codigo')}">
-                            <input type="hidden" name="titulo" value="{$tratamiento[$j]->get('titulo')}">
-                            <input type="hidden" name="fecha" value="{$tratamiento[$j]->get('fecha')}">
-                            <input type="hidden" name="hora" value="{$tratamiento[$j]->get('hora')}">
-                            <input type="hidden" name="descripcion" value="{$tratamiento[$j]->get('animal')}">
 
-                            <td><button {if $tratamiento[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-medkit"></span> Atender</button></td>
+                            <td><button {if $tratamiento[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-medkit"></span> Completar</button></td>
                         </form>
                         
                         <form action="{$gvar.l_global}editar_tratamiento.php" method="post">    
