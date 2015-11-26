@@ -79,6 +79,8 @@ class c_completar_tratamiento extends super_controller {
             
             $fecha_actual = $año . "-" . $mes . "-" . $dia;
 
+            
+
             $tiempo_actual = $hora . ":" . $minutos . ":" . $segundos;
 
             $option['tratamiento']['lvl2']= "por_codigo";

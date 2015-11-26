@@ -81,13 +81,23 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																													
-			case "user":
-			switch($options['lvl2'])
-			{
-				case "normal":
-					//
+			case "uso_de_producto":
+				switch($options['lvl2']){
+				
+				case "desde_cita":
+					$cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+					$producto=mysqli_real_escape_string($this->cn,$object->get('producto'));
+					$cita=mysqli_real_escape_string($this->cn, $object->get('cita'));
+					$this->do_operation("INSERT INTO uso_de_producto (id, cantidad, producto, cita, tratamiento) VALUES (NULL, '$cantidad', '$producto', '$cita', NULL);");
 					break;
-			}
+
+				case "desde_tratamiento":
+					$cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+					$producto=mysqli_real_escape_string($this->cn,$object->get('producto'));
+					$tratamiento=mysqli_real_escape_string($this->cn, $object->get('tratamiento'));
+					$this->do_operation("INSERT INTO uso_de_producto (id, cantidad, producto, cita, tratamiento) VALUES (NULL, '$cantidad', '$producto', NULL, '$tratamiento');");
+					break;
+			}	
 			break;
 			
 			default: break;
@@ -108,6 +118,17 @@ class db
 					$resultado=mysqli_real_escape_string($this->cn,$object->get('resultado'));
 					$estado=mysqli_real_escape_string($this->cn,$object->get('estado'));
 					$this->do_operation("UPDATE tratamiento SET duracion = '$duracion', resultado = '$resultado', estado = '$estado' WHERE codigo = '$codigo';");
+					break;
+			}
+			break;
+
+			case "producto":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
+					$cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+					$this->do_operation("UPDATE producto SET cantidad = '$cantidad' WHERE id = '$id';");
 					break;
 			}
 			break;
@@ -230,6 +251,33 @@ class db
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.nombre like '%$animal%' AND t.animal = a.id AND t.veterinario = '$identificacion';"); 
 					break;
 
+			}
+			break;
+
+			case "producto":
+			switch($option['lvl2'])
+			{	
+
+				case "por_id": 
+					$this->escape_string($data);
+					$id=$data['id'];
+					$info=$this->get_data("SELECT * FROM producto WHERE id = '$id';"); 
+					break;
+
+				case "by_nombre": 
+					$this->escape_string($data);
+					$nombre=$data['nombre'];
+					$tipo=$data['tipo'];
+					$info=$this->get_data("SELECT * FROM producto WHERE nombre like '%$nombre%' AND tipo = '$tipo';"); 
+					break;
+
+
+
+				case "by_all":
+					$this->escape_string($data);
+					$tipo=$data['tipo']; 
+					$info=$this->get_data("SELECT * FROM producto WHERE tipo = '$tipo';"); 
+					break;
 			}
 			break;
 			
