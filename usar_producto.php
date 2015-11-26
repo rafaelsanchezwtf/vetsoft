@@ -46,7 +46,6 @@ class c_atender_cita extends super_controller {
     }
 
     public function buscar_implemento(){
-        echo "inner join";
         $nombre = $_POST['nombre_prod'];
         $_SESSION['nombre_prod'] = $nombre;
         
@@ -105,11 +104,9 @@ class c_atender_cita extends super_controller {
 
             $mi_producto = $producto[0];
             $mi_producto->set('cantidad',$unidades);
-            echo "codigo: " . $this->session['desde_cod_prod'] . " desdE: " . $this->session['desde_prod'];
             $uso_de_producto = new uso_de_producto();
             $uso_de_producto->set('cantidad',$unidades);
             $uso_de_producto->set('producto',$this->post->id_prod);
-            print_r2($uso_de_producto);
                 if($this->session['desde_prod'] == "tratamiento"){
                     $uso_de_producto->set('tratamiento',$this->session['desde_cod_prod']);
                     $this->orm->connect();
