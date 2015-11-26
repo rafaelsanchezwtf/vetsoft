@@ -10,6 +10,7 @@ class c_buscar_animal extends super_controller {
         if(is_empty($valor) AND is_empty($opcion)){
             $consulta = "all";   
         }
+        
         else{
             switch ($opcion) {
                 case 'i':
@@ -19,14 +20,15 @@ class c_buscar_animal extends super_controller {
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
                         throw_exception("");
-                    }elseif (is_empty($valor)){
+                    }
+                elseif (is_empty($valor)){
                         $this->engine->assign('error1',1);
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
-                        throw_exception("");
-                    }
+                        throw_exception("");}
                     break;
 
                 case 'n':
+
                     if (!(is_empty($valor))){
                         $consulta = "by_nombre";    
                     }else{
@@ -44,10 +46,15 @@ class c_buscar_animal extends super_controller {
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");
                     }
+
+                    
                     break;
+
+               
 
                 case 'f':
                     if (is_numeric($valor)){
+
                         if($valor<=0){
                             $this->engine->assign('error2',2);
                             $this->mensaje("warning","Error","","Dato incorrecto");
@@ -63,15 +70,18 @@ class c_buscar_animal extends super_controller {
                         $this->engine->assign('error1',1);
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");
+                          
                     }
-                    break;
+                 break;
                 
                 default:
                     $this->mensaje("warning","Error","","Debe seleccionar un criterio de busqueda");
                     throw_exception(""); 
                     break;
             }
+
         }
+        
         $options['animal']['lvl2'] = $consulta;
         $cod['animal']['valor'] = $valor;
         $this->orm->connect();
@@ -85,7 +95,12 @@ class c_buscar_animal extends super_controller {
         }else{
             $this->engine->assign("animal",$animales);
         }
-    }
+
+            
+        }
+
+
+    
     
     
     public function display(){

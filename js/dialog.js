@@ -11,11 +11,13 @@ function CustomAlert(){
 	    dialogbox.style.display = "block";
 		document.getElementById('dialogboxhead').innerHTML = title;
 	    document.getElementById('dialogboxbody').innerHTML = dialog;
+
 		if(dir == ""){
 	  		document.getElementById('dialogboxfoot').innerHTML = '<a onclick="Alert.ok()" class="btn btn-default opcion" role="button">Aceptar</a>';
 		}else{
 			document.getElementById('dialogboxfoot').innerHTML = '<a href='+dir+' class="btn btn-default opcion" role="button">Aceptar</a>';
 		}	
+
 	}
 	this.ok = function(){
 		document.getElementById('dialogbox').style.display = "none";

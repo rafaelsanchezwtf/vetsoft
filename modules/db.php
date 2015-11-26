@@ -98,16 +98,39 @@ class db
 	public function update($options,$object) 
 	{
 		switch($options['lvl1'])
-		{																																																																																																		
-			case "user":
-			switch($options['lvl2'])
+		{																																																																					
+			
+            case "animal":
+                switch($options['lvl2'])
 			{
 				case "normal":
-					//
+					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
+                    $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+                    $fecha_de_nacimiento=mysqli_real_escape_string($this->cn, $object->get('fecha_de_nacimiento'));
+                    $peso=mysqli_real_escape_string($this->cn,$object->get('peso'));
+                    $talla=mysqli_real_escape_string($this->cn,$object->get('talla'));
+                    $genero=mysqli_real_escape_string($this->cn,$object->get('genero'));
+                    $especie=mysqli_real_escape_string($this->cn,$object->get('especie'));
+                    $fotonueva=mysqli_real_escape_string($this->cn,$object->get('foto'));
+                    $this->do_operation("UPDATE animal SET nombre ='$nombre',peso= '$peso', talla='$talla', genero='$genero', especie='$especie',  fecha_de_nacimiento='$fecha_de_nacimiento', foto='$fotonueva' WHERE id='$id';");
 					break;
 			}
 			break;
-			
+            
+            case "dueno":
+                switch($options['lvl2'])
+                {
+				case "normal":
+					$cedula=mysqli_real_escape_string($this->cn,$object->get('cedula'));
+                    $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+                    $telefono=mysqli_real_escape_string($this->cn,$object->get('telefono'));
+                    $email=mysqli_real_escape_string($this->cn,$object->get('email'));
+                    $foto=mysqli_real_escape_string($this->cn,$object->get('foto'));        
+                    $this->do_operation("UPDATE dueno SET nombre= '$nombre', telefono='$telefono', email='$email',  foto='$foto' WHERE cedula='$cedula';");
+					break;
+				}
+			break;
+            
 			default: break;
 		}
 	}
@@ -135,6 +158,7 @@ class db
 	{
 		$info = array();
 		switch($option['lvl1'])
+
 		{	
 
 			case "administrador":
@@ -153,15 +177,71 @@ class db
 						$info = $this->get_data("SELECT * FROM administrador WHERE user = '$user';");
 					unset($hasher);
 					break;
+                
+                
 			}
 			break;
+
+
+			case "animal":
+
+			switch($option['lvl2'])
+			{
+				case "all": 
+					//
+				break;
+
+  
+                case "all": 
+					$info=$this->get_data("SELECT * FROM animal;"); 
+					break;
+				
+				case "by_id": 
+					$this->escape_string($data);
+					$id=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal where id like '%$id%';"); 
+					break;
+
+				case "by_nombre": 
+					$this->escape_string($data);
+					$nombre=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal where nombre like '%$nombre%';"); 
+					break;
+
+				case "by_especie": 
+					$this->escape_string($data);
+					$especie=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal where especie like '%$especie%';"); 
+					break;
+
+				case "by_fecha": 
+					$this->escape_string($data);
+					$fecha=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal where fecha_de_nacimiento like '%$fecha%';"); 
+
+					break;
+			}
+			break;
+
+
+            case "dueno":
+			switch($option['lvl2'])
+			{
+                case "one":
+					$cedula=mysqli_real_escape_string($this->cn,$data['cedula']);
+					$info=$this->get_data("SELECT * FROM dueno WHERE cedula='$cedula';");
+                break;
+
+            }break;
+            
+          
 
 			case "veterinario":
 			switch($option['lvl2'])
 			{
 				case "all": 
 					//
-				break;
+					break;
 
 				case "one_login":
 					$user = mysqli_real_escape_string($this->cn, $data['user']);
@@ -172,47 +252,18 @@ class db
 						$info = $this->get_data("SELECT * FROM veterinario WHERE user = '$user';");
 					unset($hasher);
 					break;
-			}
-			break;
-
-			case "animal":
-			switch($option['lvl2'])
-			{
-				case "all": 
-					$info=$this->get_data("SELECT * FROM animal;"); 
-					break;
-				
-				case "by_id": 
-					$this->escape_string($data);
-					$id=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal WHERE id like '%$id%';"); 
-					break;
-
-				case "by_nombre": 
-					$this->escape_string($data);
-					$nombre=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal WHERE nombre like '%$nombre%';"); 
-					break;
-
-				case "by_especie": 
-					$this->escape_string($data);
-					$especie=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal WHERE especie like '%$especie%';"); 
-					break;
-
-				case "by_fecha": 
-					$this->escape_string($data);
-					$fecha=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal WHERE fecha_de_nacimiento like '%$fecha%';"); 
-					break;
 
 			}
 			break;
-			
-			default: break;
-		}
+
+            default: break;
+
+        }
+
 		return $info;
 	}
+		
+	
 	
 	//close the db connection
 	public function close()

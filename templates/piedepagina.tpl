@@ -16,6 +16,9 @@
 
     {literal}
     <script src="{/literal}{$gvar.l_global}{literal}js/sidebar_menu.js" language="Javascript"></script>
+    
+    
+   
     {/literal}
 
 </body>
