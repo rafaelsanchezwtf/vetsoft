@@ -11,7 +11,7 @@
     <div>
         <b>RESULTADOS DEL TRATAMIENTO</b><br/><br/>
         PACIENTE: {$mi_tratamiento->auxiliars['nombre_animal']}<br/>
-        Fecha: {$mi_tratamiento->get('codigo')}<br/>
+        Fecha: {$mi_tratamiento->get('fecha')}<br/>
         Hora: {$mi_tratamiento->get('hora')}<br/>
         Titulo: {$mi_tratamiento->get('titulo')}<br/>
         Descripción: {$mi_tratamiento->get('descripcion')}<br/>

@@ -271,8 +271,6 @@ class db
 					$info=$this->get_data("SELECT * FROM producto WHERE nombre like '%$nombre%' AND tipo = '$tipo';"); 
 					break;
 
-
-
 				case "by_all":
 					$this->escape_string($data);
 					$tipo=$data['tipo']; 

@@ -31,7 +31,7 @@
             <br/>
             <br/>
         </div>
-        <a href="{$gvar.l_global}usar_producto.php?option=cancelar" class="btn btn-default" role="button"><span class="fa fa-close"></span> Cancelar</a>
+        <a href="{$gvar.l_global}usar_producto.php?option=finalizar" class="btn btn-default" role="button"><span class="fa fa-check"></span> Finalizar</a>
     {else}
         {if $opciones_datos eq "medicamento"}
             <form class="form-horizontal" action="{$gvar.l_global}usar_producto.php?option=buscar_medicamento" method="post">
@@ -52,6 +52,7 @@
             </div>
             </form>
         {/if}
+
         {if isset($producto)}
         <div class="container">
                     <div class="table-responsive">
@@ -81,6 +82,7 @@
                 </div>
         </div>
          {/if}
+         <a href="{$gvar.l_global}usar_producto.php?option=atras" class="btn btn-default" role="button"><span class="fa fa-close"></span> Atras</a>
     {/if}
     <script type="text/javascript">
         $(".default_color").focus(function(){

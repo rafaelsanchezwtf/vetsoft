@@ -140,6 +140,9 @@ class c_completar_tratamiento extends super_controller {
                 $this->engine->display($this->temp_aux);     
             }
 
+            $_SESSION['desde_cod_prod'] = $codigo;
+            $_SESSION['desde_prod'] = "tratamiento";
+            $this->session = $_SESSION;
             $this->engine->assign('mi_tratamiento',$mi_tratamiento);
             $this->engine->display($this->temp_aux);
             $this->engine->display('completar_tratamiento.tpl');

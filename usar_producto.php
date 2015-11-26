@@ -46,7 +46,35 @@ class c_atender_cita extends super_controller {
     }
 
     public function buscar_implemento(){
+        echo "inner join";
+        $nombre = $_POST['nombre_prod'];
+        $_SESSION['nombre_prod'] = $nombre;
         
+        if(is_empty($nombre)){
+            $consulta = "by_all";   
+        }else{
+            $consulta = "by_nombre";    
+        }
+        $_SESSION['consulta_prod'] = $consulta;
+        $_SESSION['consulta_tipo'] = "implemento";
+        $options['producto']['lvl2'] = $consulta;
+
+        $cod['producto']['nombre'] = $nombre;
+        $cod['producto']['tipo'] = "implemento";
+        $this->orm->connect();
+        $this->orm->read_data(array("producto"), $options, $cod);
+        $productos = $this->orm->get_objects("producto");
+        $this->orm->close();
+        $this->session = $_SESSION;
+        if (is_empty($productos)){
+            $this->mensaje("warning","Error","","No existen coincidencias");
+            throw_exception("");
+        }else{
+
+            $this->engine->assign("producto",$productos);
+            $this->engine->assign('opciones_datos',"implemento");
+            $this->engine->assign('opciones',"si");
+        }    
     }
 
     public function usar(){     
@@ -77,12 +105,12 @@ class c_atender_cita extends super_controller {
 
             $mi_producto = $producto[0];
             $mi_producto->set('cantidad',$unidades);
-
+            echo "codigo: " . $this->session['desde_cod_prod'] . " desdE: " . $this->session['desde_prod'];
             $uso_de_producto = new uso_de_producto();
             $uso_de_producto->set('cantidad',$unidades);
             $uso_de_producto->set('producto',$this->post->id_prod);
             print_r2($uso_de_producto);
-                if($this->session['desde_prod'] == 'tratamiento'){
+                if($this->session['desde_prod'] == "tratamiento"){
                     $uso_de_producto->set('tratamiento',$this->session['desde_cod_prod']);
                     $this->orm->connect();
                     $this->orm->insert_data("desde_tratamiento",$uso_de_producto);
@@ -112,6 +140,10 @@ class c_atender_cita extends super_controller {
         }
     }
 
+    public function atras(){
+        $this->engine->assign('opciones',"no");    
+    }
+
     public function display(){
         $this->engine->assign('title', "Usar Producto");
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
@@ -119,10 +151,6 @@ class c_atender_cita extends super_controller {
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
         if (($this->session['usuario']['tipo'] == "veterinario")) {
-            $_SESSION['desde_prod'] = $this->post->desde;
-            $_SESSION['desde_cod_prod'] = $this->post->codigo;
-            $this->session = $_SESSION;
-            echo $this->session['desde_prod'] . " " . $this->session['desde_cod_rod'];
             $this->engine->display($this->temp_aux);
             $this->engine->display('usar_producto.tpl');
        
@@ -140,6 +168,10 @@ class c_atender_cita extends super_controller {
                 if ($this->get->option == "mostrar_buscar"){
                     $this->{$this->get->option}();
                 }elseif ($this->get->option == "buscar_medicamento"){
+                    $this->{$this->get->option}();
+                }elseif ($this->get->option == "buscar_implemento"){
+                    $this->{$this->get->option}();
+                }elseif ($this->get->option == "atras"){
                     $this->{$this->get->option}();
                 }elseif ($this->get->option == "usar"){
                     $this->{$this->get->option}();
