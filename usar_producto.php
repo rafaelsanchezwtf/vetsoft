@@ -90,7 +90,20 @@ class c_atender_cita extends super_controller {
             $this->engine->assign("producto",$productos);
             $this->engine->assign('opciones_datos',$this->session['consulta_tipo']);
             $this->engine->assign('opciones',"si");
-            $this->mensaje("warning","Error","","No se pueden usar menos de las unidades disponibles");
+            $this->mensaje("warning","Error","","No se pueden usar más de las unidades disponibles");
+            throw_exception("");   
+        }elseif (is_empty($unidades_usar)) {
+            $options['producto']['lvl2'] = $this->session['consulta_prod'];
+            $cod['producto']['nombre'] = $this->session['nombre_prod'];
+            $cod['producto']['tipo'] = $this->session['consulta_tipo'];
+            $this->orm->connect();
+            $this->orm->read_data(array("producto"), $options, $cod);
+            $productos = $this->orm->get_objects("producto");
+            $this->orm->close();
+            $this->engine->assign("producto",$productos);
+            $this->engine->assign('opciones_datos',$this->session['consulta_tipo']);
+            $this->engine->assign('opciones',"si");
+            $this->mensaje("warning","Error","","El campo unidades a usar no puede ser vacío");
             throw_exception("");   
         }else{
             $unidades = $unidades_disponibles - $unidades_usar;
@@ -138,6 +151,10 @@ class c_atender_cita extends super_controller {
     }
 
     public function atras(){
+        $this->engine->assign('opciones',"no");    
+    }
+
+    public function finalizar(){
         $this->engine->assign('opciones',"no");    
     }
 

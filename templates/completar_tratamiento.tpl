@@ -18,7 +18,7 @@
     </div>
     <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" action="{$gvar.l_global}usar_producto.php" method="post">
+            <form class="form-horizontal" action="{$gvar.l_global}completar_tratamiento.php?option=usar_producto" method="post">
                 <input type="hidden" name="desde" value="tratamiento">
                 <input type="hidden" name="codigo" value="{$mi_tratamiento->get('codigo')}">
                 <div class="col-sm-offset-5 col-sm-6">              

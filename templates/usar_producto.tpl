@@ -83,8 +83,9 @@
         </div>
          {/if}
          <br/>
-         asdfj;sadflakjsdfasdf LKAD;LFASJDF;AKDSF
-         <a href="{$gvar.l_global}usar_producto.php?option=atras" class="btn btn-default" role="button"><span class="fa fa-close"></span> Atras</a>
+         <div class="col-sm-offset-4 col-sm-4">
+            <a href="{$gvar.l_global}usar_producto.php?option=atras" class="btn btn-default" role="button"><span class="fa fa-close"></span> Atras</a>
+         </div>
     {/if}
     <script type="text/javascript">
         $(".default_color").focus(function(){
