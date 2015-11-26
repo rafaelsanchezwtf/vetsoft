@@ -108,6 +108,25 @@ class db
 			}
 			break;
 			
+            
+            case "tratamiento":
+                switch($options['lvl2'])
+			{
+				case "normal":
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+                    $titulo=mysqli_real_escape_string($this->cn,$object->get('titulo'));
+                    $descripcion=mysqli_real_escape_string($this->cn,$object->get('descripcion'));
+                    $fecha=mysqli_real_escape_string($this->cn, $object->get('fecha'));
+                    $hora=mysqli_real_escape_string($this->cn,$object->get('hora'));
+                    $lugar=mysqli_real_escape_string($this->cn,$object->get('lugar'));
+          
+                    
+                    $this->do_operation("UPDATE tratamiento SET titulo ='$titulo',descripcion ='$descripcion',hora= '$hora', lugar='$lugar', fecha='$fecha'  WHERE codigo='$codigo';");
+					break;
+			}
+			break;
+            
+            
 			default: break;
 		}
 	}
@@ -173,6 +192,18 @@ class db
 					break;
 			}
 			break;
+            
+            
+            case "cita":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					$info = $this->get_data("SELECT * FROM cita;");
+				break;
+
+				
+			}
+			break;
 
 			case "veterinario":
 			switch($option['lvl2'])
@@ -193,6 +224,12 @@ class db
 			}
 			break;
 
+            
+            
+            
+            
+            
+            
 			case "tratamiento":
 			switch($option['lvl2'])
 			{
@@ -200,6 +237,9 @@ class db
 					$this->escape_string($data);
 					$identificacion=$data['identificacion']; 
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.animal = a.id AND t.veterinario = '$identificacion';"); 
+					break;
+                case "all_2":
+					$info=$this->get_data("SELECT * FROM tratamiento;"); 
 					break;
 				
 				case "by_codigo": 

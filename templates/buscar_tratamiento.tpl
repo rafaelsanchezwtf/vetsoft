@@ -77,6 +77,7 @@
                             <input type="hidden" name="hora" value="{$tratamiento[$j]->get('hora')}">
                             <input type="hidden" name="lugar" value="{$tratamiento[$j]->get('lugar')}">
                             <input type="hidden" name="animal" value="{$tratamiento[$j]->get('animal')}">
+                            <input type="hidden" name="veterinario" value="{$tratamiento[$j]->get('veterinario')}">
 
                             <td><button {if $tratamiento[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-edit"></span> Editar</button></td>
                         </form>
