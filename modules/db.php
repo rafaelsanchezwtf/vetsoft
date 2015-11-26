@@ -175,6 +175,23 @@ class db
 			}
 			break;
 
+            
+            case "cita":
+			switch($option['lvl2'])
+			{
+                
+                
+                case "by_animal_hist": 
+					$this->escape_string($data);
+					$animal=$data['valor'];
+					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM cita t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' AND t.estado='finalizado';"); 
+                
+
+					break;
+                
+            }
+            break;
+            
 			case "tratamiento":
 			switch($option['lvl2'])
 			{
@@ -211,13 +228,14 @@ class db
 					$identificacion=$data['identificacion'];
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.hora like '%$hora%' AND t.animal = a.id AND t.veterinario = '$identificacion';"); 
 					break;
+                
                 // no borrar el by_animal que exista en otra rama
 				case "by_animal_hist": 
 					$this->escape_string($data);
 					$animal=$data['valor'];
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' AND t.estado='finalizado';"); 
                 
-                echo "SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' ORDER BY t.fecha;";
+                
 					break;
 
 			}

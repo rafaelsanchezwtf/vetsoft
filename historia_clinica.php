@@ -24,7 +24,7 @@ class c_historia_clinica extends super_controller {
         
          $consulta = "by_animal_hist";
         
-  
+        // trataientos
         $options['tratamiento']['lvl2'] = $consulta;
         $auxiliars['tratamiento']=array("nombre_animal");
         $cod['tratamiento']['valor'] = $this->post->id;
@@ -33,14 +33,28 @@ class c_historia_clinica extends super_controller {
         $tratamientos = $this->orm->get_objects("tratamiento",NULL,$auxiliars);
         $this->orm->close();
         
-        print_r2($tratamientos);
-        if (is_empty($tratamientos)){
+     
+        // citas
+        $options['cita']['lvl2'] = $consulta;
+        $auxiliars['cita']=array("nombre_animal");
+        $cod['cita']['valor'] = $this->post->id;
+        $this->orm->connect();
+        $this->orm->read_data(array("cita"), $options, $cod);
+        $citas = $this->orm->get_objects("cita",NULL,$auxiliars);
+        $this->orm->close();
+        
+       
+        if (is_empty($tratamientos) && is_empty($citas) ){
             $this->engine->assign('error3',3);
             $this->mensaje("warning","Error","","No existen coincidencias");
             throw_exception("");
         }else{
             $this->engine->assign("tratamiento",$tratamientos);
+            $this->engine->assign("citas",$citas);
         }
+        
+        
+        
     }
     
     

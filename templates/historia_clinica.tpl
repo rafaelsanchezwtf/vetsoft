@@ -20,6 +20,7 @@
 
 <div class="container">
     {if isset($tratamiento)}
+           <h3>Tratamientos</h3>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tr class="info">
@@ -54,6 +55,44 @@
 </div>
 
 
+<div class="container">
+    {if isset($citas)}
+           <h3>Citas</h3>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr class="info">
+                        <th>Fecha</th>
+                        <th>Motivo</th>
+                        
+                        <th>Hora</th>
+                        <th>Lugar</th>
+                        <th>Paciente</th>
+                        <th>Condición</th>
+                        <th>Diagnóstico</th>
+                    </tr>
+                    {for $j=0 to count($citas)-1}
+                    <tr>
+                            <td>{$citas[$j]->get("fecha")}</dh>
+                            <td>{$citas[$j]->get("motivo")}</td>
+                            
+                            <td>{$citas[$j]->get("hora")}</td>
+                            <td>{$citas[$j]->get("lugar")}</td>
+                            <td>{$citas[$j]->auxiliars['nombre_animal']}</td>
+                            <td>{$citas[$j]->get("condicion")}</td>
+                            <td>{$citas[$j]->get("diagnostico")}</td>
+                           
+                     
+                        
+                   
+
+                      </tr>    
+                    {/for}
+                </table>
+
+
+        </div>
+    {/if}
+</div>
 
 
 
