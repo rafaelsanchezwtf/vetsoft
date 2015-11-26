@@ -238,7 +238,7 @@ class db
 					$identificacion=$data['identificacion']; 
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.animal = a.id AND t.veterinario = '$identificacion';"); 
 					break;
-                case "all_2":
+                case "all":
 					$info=$this->get_data("SELECT * FROM tratamiento;"); 
 					break;
 				

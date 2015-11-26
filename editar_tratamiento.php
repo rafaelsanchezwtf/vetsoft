@@ -89,6 +89,7 @@ class c_editar_tratamiento extends super_controller {
         }
         // Validacion del formato de entrada HH:mm
         if((!($tratamiento->validateTime($tratamiento->get('hora')))) OR (($tratamiento->get('fecha') == $fecha_actual) AND ($tratamiento->get('hora') <= $hora_actual))){
+            
             $this->engine->assign('hora_t_invalido',0);
             $v=true;
         }

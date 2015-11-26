@@ -40,7 +40,7 @@
                       <div class="camposeditar">
                         <div class="input-group">
                             <span class="input-group-addon" >Hora* (HH:MM)</span>
-                            <input  class="form-control " type="time" value="{$hora}" required name="hora" aria-describedby="basic-addon1" {if isset($hora_vacio) or isset($hora_c_invalido)} style="background-color: #F78181" {/if}>
+                            <input  class="form-control " type="time" value="{$hora}" required name="hora" aria-describedby="basic-addon1" {if isset($hora_vacio) or isset($hora_t_invalido)} style="background-color: #F78181" {/if}>
                         </div>
                     </div> 
                        
