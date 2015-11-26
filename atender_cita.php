@@ -6,6 +6,7 @@ require('modules/m_phpass/PasswordHash.php');
 class c_atender_cita extends super_controller {
 
     public function finalizar(){
+
         $cita = new cita($this->post);
 
         $this->engine->assign('condicion_c',$cita->get('condicion'));
@@ -28,22 +29,33 @@ class c_atender_cita extends super_controller {
         $this->orm->update_data("normal",$cita);
         $this->orm->close();
 
-        $msg = "Cita finalizada correctamente!";
-        $dir=$gvar['l_global']."buscar_cita.php";
-        $this->mensaje("check-circle","Confirmación",$dir,$msg);
+        if isset($this->post->flagncita){
+            $_SESSION['idcita'] = $cita->get('codigo');
+            $this->session = $_SESSION;
+            $msg = "Cita finalizada correctamente, redirigiendo a asignar cita...";
+            $dir=$gvar['l_global']."asignar_cita.php";
+            $this->mensaje("check-circle","Confirmación",$dir,$msg);    
+        }elseif isset($this->post->flagntratamiento){
+            $_SESSION['idcita'] = $cita->get('codigo');
+            $this->session = $_SESSION;
+            $msg = "Cita finalizada correctamente, redirigiendo a asignar tratamiento...";
+            $dir=$gvar['l_global']."asignar_tratamiento.php";
+            $this->mensaje("check-circle","Confirmación",$dir,$msg); 
+        }else{
+            $msg = "Cita finalizada correctamente!";
+            $dir=$gvar['l_global']."buscar_cita.php";
+            $this->mensaje("check-circle","Confirmación",$dir,$msg);
+        }
     }
 
     public function display(){
         $this->engine->assign('title', "Atender Cita");
         $codigo = $this->post->codigo;
-        $nombre = $this->post->nombre;
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('identificacion',$this->session['usuario']['identificacion']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
-        $this->engine->assign('id_animal',$this->post->animal);
         $this->engine->display('cabecera.tpl');
         if (($this->session['usuario']['tipo'] == "veterinario")) {
-
             $hoy = getdate();
             $hoy['hours'] = $hoy['hours']-6;
             if ($hoy['hours']<0){
@@ -85,9 +97,10 @@ class c_atender_cita extends super_controller {
 
             $option['cita']['lvl2']= "por_codigo";
             $cod['cita']['codigo'] = $codigo;
+            $auxiliars['cita']=array("nombre_animal");
             $this->orm->connect();
             $this->orm->read_data(array("cita"), $option, $cod);
-            $mi_cita = $this->orm->get_objects("cita");
+            $mi_cita = $this->orm->get_objects("cita", NULL, $auxiliars);
             $mi_cita = $mi_cita[0];
 
             $horac = substr($mi_cita->get('hora'), 0, 2);
@@ -140,7 +153,6 @@ class c_atender_cita extends super_controller {
             }
 
             $this->engine->assign('mi_cita',$mi_cita);
-            $this->engine->assign('nombre',$nombre);
             $this->engine->display($this->temp_aux);
             $this->engine->display('atender_cita.tpl');
        
@@ -158,6 +170,10 @@ class c_atender_cita extends super_controller {
                 if ($this->get->option == "finalizar"){
                     $this->{$this->get->option}();
                 }elseif ($this->get->option == "cancelar"){
+                    $this->{$this->get->option}();
+                }elseif ($this->get->option == "finalizar_asignar_cita"){
+                    $this->{$this->get->option}();
+                }elseif ($this->get->option == "finalizar_asignar_tratamiento"){
                     $this->{$this->get->option}();
                 }else{
                     throw_exception("Opción ". $this->get->option." no disponible");

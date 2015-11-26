@@ -186,7 +186,8 @@ class db
 				case "por_codigo": 
 					$this->escape_string($data);
 					$codigo=$data['codigo'];
-					$info=$this->get_data("SELECT * FROM cita WHERE codigo = '$codigo';");
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.codigo = '$codigo';"); 
 					break;
 
 				case "all":

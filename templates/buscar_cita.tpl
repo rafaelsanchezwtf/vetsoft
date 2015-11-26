@@ -62,12 +62,9 @@
                            
                         <form action="{$gvar.l_global}atender_cita.php" method="post">    
                             <input type="hidden" name="codigo" value="{$cita[$j]->get('codigo')}">
-                            <input type="hidden" name="nombre" value="{$cita[$j]->auxiliars['nombre_animal']}">
                             <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-stethoscope"></span> Atender</button></td>
                         </form>
                         
-                        
-                       
                         <form action="{$gvar.l_global}editar_cita.php" method="post">    
                             <input type="hidden" name="codigo" value="{$cita[$j]->get('codigo')}">
                             <input type="hidden" name="motivo" value="{$cita[$j]->get('motivo')}">
