@@ -211,12 +211,13 @@ class db
 					$identificacion=$data['identificacion'];
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.hora like '%$hora%' AND t.animal = a.id AND t.veterinario = '$identificacion';"); 
 					break;
-
-				case "by_animal": 
+                // no borrar el by_animal que exista en otra rama
+				case "by_animal_hist": 
 					$this->escape_string($data);
 					$animal=$data['valor'];
-					$identificacion=$data['identificacion'];
-					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.nombre like '%$animal%' AND t.animal = a.id AND t.veterinario = '$identificacion';"); 
+					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' AND t.estado='finalizado';"); 
+                
+                echo "SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' ORDER BY t.fecha;";
 					break;
 
 			}
