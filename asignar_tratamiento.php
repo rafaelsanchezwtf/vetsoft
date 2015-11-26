@@ -79,9 +79,23 @@ class c_asignar_tratamiento extends super_controller {
         $n = $this->post->nombre_animal;
         $tratamiento = new tratamiento($this->post);
         $tratamiento->set('estado','pendiente');
-        $tratamiento->set('animal',$this->post->id);
-        $tratamiento->set('veterinario',$this->session['usuario']['identificacion']);
-
+        
+        if ($this->session['idcita'] != ""){
+            $option['cita']['lvl2']= "por_codigo";
+            $cod['cita']['codigo'] = $this->session['idcita'];
+            $this->orm->connect();
+            $this->orm->read_data(array("cita"), $option, $cod);
+            $citaux = $this->orm->get_objects("cita");
+            
+            $tratamiento->set('animal',$citaux[0]->get('animal'));
+            $tratamiento->set('veterinario',$citaux[0]->get('veterinario'));
+            $_SESSION['idcita'] = "";
+            $this->session = $_SESSION;
+        }else{
+            $tratamiento->set('animal',$this->post->id);
+            $tratamiento->set('veterinario',$this->session['usuario']['identificacion']);    
+        }
+        
         self::asignar_datos($tratamiento);
         $incompletitud_tratamiento = tratamiento::validar_completitud($tratamiento);
 
