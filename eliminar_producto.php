@@ -2,10 +2,24 @@
 
 require('configs/include.php');
         
-class c_buscar_cita extends super_controller {
+class c_eliminar_producto extends super_controller {
+
 
     public function eliminar(){
-
+        $producto = new producto($this->post);
+        $this->orm->connect();  
+        $this->orm->delete_data("normal",$producto);   
+        $this->orm->close();
+        
+        $dir = $gvar['l_global']."buscar_producto.php";
+        $this->mensaje("warning","Información",$dir,"Borrado exitoso"); 
+        
+        // para evitar el display de un error por inexistencia del registro recien borrado
+        $this->get->option='cancelar';
+    }
+    public function cancelar(){
+        $dir = $gvar['l_global']."buscar_producto.php";
+        $this->mensaje("warning","Información",$dir,"Operacion cancelada por el adminsitardor");
     }
 
     public function buscar(){
@@ -103,11 +117,23 @@ class c_buscar_cita extends super_controller {
     
     
     public function display(){
+        
+
         $this->engine->assign('title', "Eliminar Producto");
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
         if (($this->session['usuario']['tipo'] == "administrador")){
+            settype($data,'object');
+            $data->id=$this->post->id;
+            $data->nombre=$this->post->nombre_p;
+            $data->marca=$this->post->marca;
+            $data->cantidad=$this->post->cantidad_viejo;
+            $data->precio_unidad=$this->post->precio_unidad;
+            $data->fecha_de_adquisicion=$this->post->fecha_de_adquisicion;
+            $data->tipo=$this->post->tipo;
+            $producto=new producto($data);
+            $this->engine->assign('producto',$producto);
             $this->engine->display($this->temp_aux);
             $this->engine->display('eliminar_producto.tpl');
         }else{
@@ -119,14 +145,15 @@ class c_buscar_cita extends super_controller {
     }
     
     public function run(){
-        $nombre=$this->post->nombre_p;
-        echo $nombre;
-        echo "holii";
-        
+                
         try {
             if (isset($this->get->option)) {
-                if ($this->get->option == "buscar")
+                if ($this->get->option == "cancelar")
                     $this->{$this->get->option}();
+                elseif($this->get->option == "eliminar"){
+                    $this->{$this->get->option}();
+                }
+
                 else
                     throw_exception("Opción ". $this->get->option." no disponible");
             }
@@ -142,7 +169,7 @@ class c_buscar_cita extends super_controller {
         
 }
 
-    $call = new c_buscar_cita();
+    $call = new c_eliminar_producto();
     $call->run();
 
 

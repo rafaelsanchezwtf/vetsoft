@@ -1,6 +1,6 @@
 <div class="container">
 
-    
+     <h2><div class="alert alert-danger">¿Realmente deseas eliminar este producto?</div></h2>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tr class="info">
@@ -12,32 +12,32 @@
                         <th>Tipo</th>
                           
                     </tr>
-                    {for $j=0 to count($productos)-1}
+                    
                     <tr>
-                            <td>{$productos[$j]->get("id")}</td>
-                            <td>{$productos[$j]->get("nombre")}</td>
-                            <td>{$productos[$j]->get("fecha_de_adquisicion")}</dh>
-                            <td>{$productos[$j]->get("marca")}</td>
-                            <td>{$productos[$j]->get("precio_unidad")}</td>
-                            <td>{$productos[$j]->get("tipo")}</td>
+                            <td>{$producto->get("id")}</td>
+                            <td>{$producto->get("nombre")}</td>
+                            <td>{$producto->get("fecha_de_adquisicion")}</dh>
+                            <td>{$producto->get("marca")}</td>
+                            <td>{$producto->get("precio_unidad")}</td>
+                            <td>{$producto->get("tipo")}</td>
                          
 
                       </tr>    
-                    {/for}
+                    
                 </table>
         </div>
     
                  
             <div class="row" >
                 <div class="col-xs-6" align="center">
-                    <form class="form-group" method="post" action="{$gvar.l_global}buscar_producto.php?option=eliminar">
-                    
+                    <form class="form-group" method="post" action="{$gvar.l_global}eliminar_producto.php?option=eliminar">
+                            <input type="hidden" name="id" value="{$producto->get('id')}">
                             <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Eliminar</button>         
                     
                 </form>
                 </div>
                 <div align="center">
-                    <form class="form-group" method="post" action="{$gvar.l_global}eliminar_producto.php?option=">
+                    <form class="form-group" method="post" action="{$gvar.l_global}eliminar_producto.php?option=cancelar">
                     
                             <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Cancelar</button>         
                     
