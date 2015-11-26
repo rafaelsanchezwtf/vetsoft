@@ -257,7 +257,7 @@ class c_asignar_cita extends super_controller {
 
     public function cancelar(){
         $msg_dir=$gvar['l_global']."buscar_animal.php";
-        $this->mensaje("info","Informacion",$msg_dir,"Operacion cancelada por el administrador");
+        $this->mensaje("info","Informacion",$msg_dir,"Operacion cancelada");
     }
 
     public function display(){
