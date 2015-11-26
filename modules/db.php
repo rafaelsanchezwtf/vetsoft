@@ -230,7 +230,8 @@ class db
 					$codigo=$data['valor'];
 					$identificacion=$data['identificacion'];
 					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.codigo like '%$codigo%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
-					break;
+
+					
 
 				case "by_motivo": 
 					$this->escape_string($data);
@@ -267,13 +268,38 @@ class db
 			switch($option['lvl2'])
 			{
 				case "all": 
-					//
+					$info=$this->get_data("SELECT * FROM animal;"); 
+					break;
 				break;
-				
-				case "some": 
+
+				case "by_id": 
 					$this->escape_string($data);
-					$id=$data['id'];
-					$info=$this->get_data("SELECT * FROM animal where id like '%$id%';"); 
+					$id=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal WHERE id like '%$id%';"); 
+					break;
+				
+				case "by_id": 
+					$this->escape_string($data);
+					$id=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal WHERE id like '%$id%';"); 
+					break;
+
+				case "by_nombre": 
+					$this->escape_string($data);
+					$nombre=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal WHERE nombre like '%$nombre%';"); 
+					break;
+
+				case "by_especie": 
+					$this->escape_string($data);
+					$especie=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal WHERE especie like '%$especie%';"); 
+					break;
+					
+				case "by_fecha": 
+					$this->escape_string($data);
+					$fecha=$data['valor'];
+					$info=$this->get_data("SELECT * FROM animal WHERE fecha_de_nacimiento like '%$fecha%';"); 
 					break;
 			}
 			break;
