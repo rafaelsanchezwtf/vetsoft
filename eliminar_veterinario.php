@@ -10,7 +10,7 @@ class c_eliminar_producto extends super_controller {
         $this->orm->connect();  
         $this->orm->delete_data("normal",$veterinario);   
         $this->orm->close();
-        
+        $bandera=$this->post->bandera;
         $dir = $gvar['l_global']."buscar_veterinario.php";
         $this->mensaje("warning","Información",$dir,"Borrado exitoso"); 
         
@@ -41,8 +41,9 @@ class c_eliminar_producto extends super_controller {
             $this->orm->close();
             #print_r2($veterinario);
             $this->engine->assign('veterinario',$veterinario[0]);
-            $this->engine->display($this->temp_aux);
-            $this->engine->display('eliminar_veterinario.tpl');
+            $this->engine->display($this->temp_aux);            
+            $this->engine->display('eliminar_veterinario.tpl');            
+            
         }else{
             $direccion=$gvar['l_global']."index.php";
             $this->mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
