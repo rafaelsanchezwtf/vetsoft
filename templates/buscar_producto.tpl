@@ -71,6 +71,12 @@
                         
                         <form action="{$gvar.l_global}eliminar_producto.php" method="post">    
                             <input type="hidden" name="id" value="{$productos[$j]->get('id')}">
+                            <input type="hidden" name="nombre_p" value="{$productos[$j]->get('nombre')}">
+                            <input type="hidden" name="marca" value="{$productos[$j]->get('marca')}">
+                            <input type="hidden" name="cantidad_viejo" value="{$productos[$j]->get('cantidad')}">
+                            <input type="hidden" name="fecha_de_adquisicion" value="{$productos[$j]->get('fecha_de_adquisicion')}">
+                            <input type="hidden" name="precio_unidad" value="{$productos[$j]->get('precio_unidad')}">
+                            <input type="hidden" name="tipo" value="{$productos[$j]->get('tipo')}">
                             <td><button type ="submit" class="btn btn-primary"><span class="fa fa-close"></span> Eliminar</button></td>
                         </form>
                          

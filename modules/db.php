@@ -125,6 +125,17 @@ class db
 					break;
 			}
 			break;
+			case "producto":
+			switch($options['lvl2'])
+			{
+				case "normal": 
+					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
+               
+                $this->do_operation("DELETE FROM producto WHERE id='$id';");
+			
+					break;
+			}
+			break;
 			
 			default: break;			  
 		}
