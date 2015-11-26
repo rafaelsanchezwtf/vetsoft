@@ -8,7 +8,7 @@ class c_buscar_tratamiento extends super_controller {
         $opcion = $this->post->optradio;
         $valor = $_POST['codigo'];
         if(is_empty($valor) AND is_empty($opcion)){
-            $consulta = "all";   
+            $consulta = "by_all";   
         }else{
             switch ($opcion) {
                 case 'c':

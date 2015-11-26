@@ -178,7 +178,7 @@ class db
 			case "tratamiento":
 			switch($option['lvl2'])
 			{
-				case "all":
+				case "by_all":
 					$this->escape_string($data);
 					$identificacion=$data['identificacion']; 
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.animal = a.id AND t.veterinario = '$identificacion';"); 
