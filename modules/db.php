@@ -179,31 +179,31 @@ class db
 			switch($option['lvl2'])
 			{
 				case "all": 
-					//
-				break;
+					$info=$this->get_data("SELECT * FROM animal;"); 
+					break;
 				
 				case "by_id": 
 					$this->escape_string($data);
 					$id=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where id like '%$id%';"); 
+					$info=$this->get_data("SELECT * FROM animal WHERE id like '%$id%';"); 
 					break;
 
 				case "by_nombre": 
 					$this->escape_string($data);
 					$nombre=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where nombre like '%$nombre%';"); 
+					$info=$this->get_data("SELECT * FROM animal WHERE nombre like '%$nombre%';"); 
 					break;
 
 				case "by_especie": 
 					$this->escape_string($data);
 					$especie=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where especie like '%$especie%';"); 
+					$info=$this->get_data("SELECT * FROM animal WHERE especie like '%$especie%';"); 
 					break;
 
 				case "by_fecha": 
 					$this->escape_string($data);
 					$fecha=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where fecha_de_nacimiento like '%$fecha%';"); 
+					$info=$this->get_data("SELECT * FROM animal WHERE fecha_de_nacimiento like '%$fecha%';"); 
 					break;
 
 			}
