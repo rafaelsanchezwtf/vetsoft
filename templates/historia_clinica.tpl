@@ -1,28 +1,27 @@
 <div class="container">
 <section class="main row">                   
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"  style="margin-top: 10px;">
-                <form class="form-horizontal" method="post" action="{$gvar.l_global}buscar_tratamiento.php?option=buscar">
+               
+                <form class="form-inline" role="form" method="post" action="{$gvar.l_global}historia_clinica.php?option=buscar">
+  <h3 align="center"><b>Ingrese el código completo del animal</b></h3>
+                 
+                  <div class="form-group center" >
+                    
+                    <input {if isset($error1)} style="background-color: #F78181" {/if} {if isset($error2)} style="background-color: #F78181" {/if} title="Ingrese un valor numérico." type="text" class="form-control default_color" name="codigo" placeholder="Código del animal"/>
+                  </div>
+
+                  <button type="submit" class="btn btn-default" >Buscar</button>
+                </form>
+                <form class="form-inline" method="post" action="{$gvar.l_global}historia_clinica.php?option=buscar">
                     <div class="form-group">
-                        <h3 align="center"><b>Ingrese un valor en el campo de busqueda</b></h3>
-                        <div class="col-sm-offset-4 col-sm-4">
-                            
-                            <input {if isset($error1)} style="background-color: #F78181" {/if} {if isset($error2)} style="background-color: #F78181" {/if} title="Ingrese un valor numérico." type="text" class="form-control default_color" name="codigo" placeholder="Campo de busqueda"/>
-                        </div>
+                        
+                        <br><br><br><br>
                     </div>
-                        <h4 align="center">Criterio de busqueda</h4>
+                     
+                       <hr>
+                       
         
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-6">
-                            <label class="radio-inline"><input type="radio" name="optradio" value="c">Codigo</label>
-                            <label class="radio-inline"><input type="radio" name="optradio" value="t">Titulo</label>
-                            <label class="radio-inline"><input type="radio" name="optradio" value="f">Fecha</label>
-                            <label class="radio-inline"><input type="radio" name="optradio" value="h">Hora (HH:mm 24 hrs)</label>
-                            <label class="radio-inline"><input type="radio" name="optradio" value="a">Animal (nombre)</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                            <button type="submit" class="col-sm-offset-5 col-sm-2 btn btn-primary"><span class="fa fa-search"></span> Buscar</button>         
-                    </div>
+                 
                 </form>
             </div>
 </section>

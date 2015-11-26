@@ -101,17 +101,13 @@ class c_historia_clinica extends super_controller {
     
     public function display(){
         $this->engine->assign('title', "Historia Clinica");
-        $this->engine->assign('nombre',$this->session['usuario']['nombre']);
-        $this->engine->assign('tipo',$this->session['usuario']['tipo']);
+        
         $this->engine->display('cabecera.tpl');
-        if (($this->session['usuario']['tipo'] == "veterinario")){
+       
             $this->engine->display($this->temp_aux);
             $this->engine->display('historia_clinica.tpl');
-        }else{
-            $direccion=$gvar['l_global']."index.php";
-            $this->mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
-            $this->engine->display($this->temp_aux); 
-        }
+       
+            
         $this->engine->display('piedepagina.tpl');
     }
     
