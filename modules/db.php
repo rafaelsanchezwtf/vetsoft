@@ -107,6 +107,26 @@ class db
 					break;
 			}
 			break;
+            
+            
+            
+             case "cita":
+                switch($options['lvl2'])
+			{
+				case "normal":
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+                    $motivo=mysqli_real_escape_string($this->cn,$object->get('motivo'));
+                    $fecha=mysqli_real_escape_string($this->cn, $object->get('fecha'));
+                    $hora=mysqli_real_escape_string($this->cn,$object->get('hora'));
+                    $lugar=mysqli_real_escape_string($this->cn,$object->get('lugar'));
+          
+                    
+                    $this->do_operation("UPDATE cita SET motivo ='$motivo',hora= '$hora', lugar='$lugar', fecha='$fecha'  WHERE codigo='$codigo';");
+					break;
+			}
+			break;
+            
+            
 			
 			default: break;
 		}
@@ -176,7 +196,7 @@ class db
 			switch($option['lvl2'])
 			{
 				case "all": 
-					//
+					$info=$this->get_data("SELECT * FROM veterinario;");
 				break;
 
 				case "one_login":
@@ -197,7 +217,13 @@ class db
 				case "all":
 					$this->escape_string($data);
 					$identificacion=$data['identificacion']; 
+                
 					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.animal = a.id AND c.veterinario = '$identificacion';"); 
+					break;
+                
+                case "all_2":
+					
+					$info=$this->get_data("SELECT * FROM cita;"); 
 					break;
 				
 				case "by_codigo": 
@@ -243,6 +269,18 @@ class db
 
 			}
 			break;
+            
+            
+            			case "tratamiento":
+			switch($option['lvl2'])
+			{
+				case "all":
+					$info=$this->get_data("SELECT * FROM tratamiento;");
+					break;
+			}
+			break;
+            
+            
 			
 			default: break;
 		}
