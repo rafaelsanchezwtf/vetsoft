@@ -58,8 +58,8 @@
             <div class="col-sm-offset-5 col-sm-4">
                 <form class="form-horizontal" action="{$gvar.l_global}atender_cita.php?option=finalizar" method="post">
                     <input type="hidden" name="flagntratamiento">
-                    <input type="hidden" id="condicion2" name="condicion">
-                    <input type="hidden" id="diagnostico2" name="diagnostico">
+                    <input type="hidden" id="condicion3" name="condicion">
+                    <input type="hidden" id="diagnostico3" name="diagnostico">
                     <input type="hidden" name="codigo" value="{$mi_cita->get('codigo')}">
                     <button class="btn btn-default" type="submit"><span class="fa fa-check"></span> Finalizar y asignar nuevo Tratamiento</button>
                 </form>
@@ -73,11 +73,13 @@
     </script>
     <script type="text/javascript">
         function cambio1(){
-        document.getElementById("condicion2").value=document.getElementById("condicion1").value}
+        document.getElementById("condicion2").value=document.getElementById("condicion1").value;
+        document.getElementById("condicion3").value=document.getElementById("condicion1").value}
     </script>
     <script type="text/javascript">
         function cambio2(){
-        document.getElementById("diagnostico2").value=document.getElementById("diagnostico1").value}
+        document.getElementById("diagnostico2").value=document.getElementById("diagnostico1").value;
+        document.getElementById("diagnostico3").value=document.getElementById("diagnostico1").value}
     </script>
 </body>
 </html>
