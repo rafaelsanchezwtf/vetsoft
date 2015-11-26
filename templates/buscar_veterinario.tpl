@@ -67,7 +67,7 @@
                         
                         
                         <form action="{$gvar.l_global}eliminar_veterinario.php" method="post">    
-                            <input type="hidden" name="codigo" value="{$veterinarios[$j]->get('identificacion')}">
+                            <input type="hidden" name="identificacion" value="{$veterinarios[$j]->get('identificacion')}">
                             <td><button type ="submit" class="btn btn-primary"><span class="fa fa-close"></span> Eliminar</button></td>
                         </form>
                          

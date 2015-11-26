@@ -125,6 +125,15 @@ class db
 					break;
 			}
 			break;
+			case "veterinario":
+			switch($options['lvl2'])
+			{
+				case "normal": 
+					$identificacion=mysqli_real_escape_string($this->cn,$object->get('identificacion'));
+                	$this->do_operation("DELETE FROM veterinario WHERE identificacion='$identificacion';");
+					break;
+			}
+			break;
 			
 			default: break;			  
 		}
@@ -181,6 +190,11 @@ class db
 					$this->escape_string($data);
 					$identificacion=$data['valor'];					
 					$info=$this->get_data("SELECT * FROM veterinario WHERE identificacion like '%$identificacion%';"); 
+					break;
+				case "por_identificacion": 
+					$this->escape_string($data);
+					$identificacion=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE identificacion = '$identificacion';"); 
 					break;
 				case "by_telefono": 
 					$this->escape_string($data);
