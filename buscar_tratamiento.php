@@ -12,7 +12,14 @@ class c_buscar_tratamiento extends super_controller {
         }else{
             switch ($opcion) {
                 case 'c':
-                    if (is_numeric($valor)){
+                    if (is_numeric($valor) ){
+                        
+                        if($valor<0){$this->engine->assign('error2',2);
+                        $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");}
+                        
+                        
+                        
                         $consulta = "by_codigo";    
                     }elseif (!(is_numeric($valor))){
                         $this->engine->assign('error2',2);
@@ -37,6 +44,10 @@ class c_buscar_tratamiento extends super_controller {
 
                 case 'f':
                     if (is_numeric($valor)){
+                        
+                         if($valor<0){$this->engine->assign('error2',2);
+                        $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");}
                         $consulta = "by_fecha";    
                     }elseif (!(is_numeric($valor))){
                         $this->engine->assign('error2',2);
