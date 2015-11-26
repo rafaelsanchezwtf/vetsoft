@@ -57,20 +57,17 @@
                             <td>{$cita[$j]->get("condicion")}</td>
                             <td>{$cita[$j]->get("diagnostico")}</td>
                             <td>{$cita[$j]->get("estado")}</td>
-                           
+
                         <form action="{$gvar.l_global}atender_cita.php" method="post">    
                             <input type="hidden" name="codigo" value="{$cita[$j]->get('codigo')}">
                             <input type="hidden" name="motivo" value="{$cita[$j]->get('motivo')}">
                             <input type="hidden" name="fecha" value="{$cita[$j]->get('fecha')}">                            
                             <input type="hidden" name="hora" value="{$cita[$j]->get('hora')}">
                             <input type="hidden" name="animal" value="{$cita[$j]->get('animal')}">
-                            <!--No borrar en el merge-->
                             <input type="hidden" name="veterinario" value="{$cita[$j]->get('veterinario')}">
                             <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-stethoscope"></span> Atender</button></td>
                         </form>
                         
-                        
-                       
                         <form action="{$gvar.l_global}editar_cita.php" method="post">    
                             <input type="hidden" name="codigo" value="{$cita[$j]->get('codigo')}">
                             <input type="hidden" name="motivo" value="{$cita[$j]->get('motivo')}">
@@ -79,8 +76,6 @@
                             <input type="hidden" name="lugar" value="{$cita[$j]->get('lugar')}">
                             <input type="hidden" name="animal" value="{$cita[$j]->get('animal')}">
                             <input type="hidden" name="veterinario" value="{$cita[$j]->get('veterinario')}">
- 
-
                             <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-edit"></span> Editar</button></td>
                         </form>
                         
