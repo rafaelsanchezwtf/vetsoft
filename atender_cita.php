@@ -29,13 +29,13 @@ class c_atender_cita extends super_controller {
         $this->orm->update_data("normal",$cita);
         $this->orm->close();
 
-        if isset($this->post->flagncita){
+        if (isset($this->post->flagncita)){
             $_SESSION['idcita'] = $cita->get('codigo');
             $this->session = $_SESSION;
             $msg = "Cita finalizada correctamente, redirigiendo a asignar cita...";
             $dir=$gvar['l_global']."asignar_cita.php";
             $this->mensaje("check-circle","Confirmación",$dir,$msg);    
-        }elseif isset($this->post->flagntratamiento){
+        }elseif (isset($this->post->flagntratamiento)){
             $_SESSION['idcita'] = $cita->get('codigo');
             $this->session = $_SESSION;
             $msg = "Cita finalizada correctamente, redirigiendo a asignar tratamiento...";
