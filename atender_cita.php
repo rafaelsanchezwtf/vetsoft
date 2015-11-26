@@ -48,6 +48,11 @@ class c_atender_cita extends super_controller {
         }
     }
 
+    public function cancelar(){
+        $dir = $gvar['l_global']."buscar_cita.php";
+        $this->mensaje("warning","Información",$dir,"Operacion cancelada por el veterinario");
+    }
+
     public function display(){
         $this->engine->assign('title', "Atender Cita");
         if (isset($this->session['desde_cod_prod'])){

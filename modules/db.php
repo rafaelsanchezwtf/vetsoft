@@ -450,7 +450,6 @@ class db
 			}
 			break;
 
->>>>>>> cu19
 			default: break;
 		}
 		return $info;
