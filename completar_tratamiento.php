@@ -41,14 +41,12 @@ class c_completar_tratamiento extends super_controller {
     }
 
     public function display(){
-        echo "entro aquí";
         $this->engine->assign('title', "Completar Tratamiento");
         if (isset($this->session['desde_cod_prod'])){
             $codigo = $this->session['desde_cod_prod'];   
         }else{
             $codigo = $this->post->codigo;
         }
-        echo $codigo;
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('identificacion',$this->session['usuario']['identificacion']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
@@ -91,11 +89,8 @@ class c_completar_tratamiento extends super_controller {
             
             $fecha_actual = $año . "-" . $mes . "-" . $dia;
 
-            echo $fecha_actual;
 
             $tiempo_actual = $hora . ":" . $minutos . ":" . $segundos;
-
-            echo " " . $tiempo_actual;
 
             $option['tratamiento']['lvl2']= "por_codigo";
             $cod['tratamiento']['codigo'] = $codigo;
@@ -104,7 +99,6 @@ class c_completar_tratamiento extends super_controller {
             $this->orm->read_data(array("tratamiento"), $option, $cod);
             $mi_tratamiento = $this->orm->get_objects("tratamiento", NULL, $auxiliars);
             $mi_tratamiento = $mi_tratamiento[0];
-            print_r2($mi_tratamiento);
 
             $horat = substr($mi_tratamiento->get('hora'), 0, 2);
             $minutost = substr($mi_tratamiento->get('hora'), 3, 2);
@@ -142,7 +136,6 @@ class c_completar_tratamiento extends super_controller {
             $tiempo_antes = $hora_antes . ":" . $minutos_antes . ":00";
             $tiempo_despues = $hora_despues . ":" . $minutos_despues . ":00";
 
-            echo " " . $tiempo_antes . " " . $tiempo_despues; 
 
             if(($fecha_actual < $mi_tratamiento->get('fecha')) OR (($fecha_actual == $mi_tratamiento->get('fecha')) AND ($tiempo_actual<$tiempo_antes))){
                 

@@ -104,7 +104,6 @@ class c_atender_cita extends super_controller {
 
             $tiempo_actual = $hora . ":" . $minutos . ":" . $segundos;
 
-            echo $fecha_actual . " " . $tiempo_actual; 
             $option['cita']['lvl2']= "por_codigo";
             $cod['cita']['codigo'] = $codigo;
             $auxiliars['cita']=array("nombre_animal");
@@ -144,8 +143,6 @@ class c_atender_cita extends super_controller {
             
             $tiempo_antes = $hora_antes . ":" . $minutos_antes . ":00";
             $tiempo_despues = $hora_despues . ":" . $minutos_despues . ":00";
-
-            echo " " . $tiempo_antes . " " . $tiempo_despues; 
 
             if(($fecha_actual < $mi_cita->get('fecha')) OR (($fecha_actual == $mi_cita->get('fecha')) AND ($tiempo_actual<$tiempo_antes))){
                 

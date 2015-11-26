@@ -118,7 +118,7 @@ class c_atender_cita extends super_controller {
             $mi_producto = $producto[0];
             $mi_producto->set('cantidad',$unidades);
             $uso_de_producto = new uso_de_producto();
-            $uso_de_producto->set('cantidad',$unidades);
+            $uso_de_producto->set('cantidad',$unidades_usar);
             $uso_de_producto->set('producto',$this->post->id_prod);
                 if($this->session['desde_prod'] == "tratamiento"){
                     $uso_de_producto->set('tratamiento',$this->session['desde_cod_prod']);
