@@ -155,11 +155,19 @@ class c_atender_cita extends super_controller {
     }
 
     public function finalizar(){
-        $this->engine->assign('opciones',"no");    
+        if($this->session['desde_prod'] == "tratamiento"){
+            header('Location: completar_tratamiento.php');
+        }else{
+            header('Location: atender_cita.php');
+        }
     }
+
 
     public function display(){
         $this->engine->assign('title', "Usar Producto");
+        $_SESSION['duracion_trata'] = $this->post->duracion;
+        $_SESSION['resultado_trata'] = $this->post->resultado;
+        $this->session = $_SESSION;
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('identificacion',$this->session['usuario']['identificacion']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
@@ -188,6 +196,8 @@ class c_atender_cita extends super_controller {
                 }elseif ($this->get->option == "atras"){
                     $this->{$this->get->option}();
                 }elseif ($this->get->option == "usar"){
+                    $this->{$this->get->option}();
+                }elseif ($this->get->option == "finalizar"){
                     $this->{$this->get->option}();
                 }else{
                     throw_exception("Opción ". $this->get->option." no disponible");

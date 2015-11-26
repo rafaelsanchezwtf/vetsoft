@@ -34,9 +34,23 @@ class c_completar_tratamiento extends super_controller {
         $this->mensaje("check-circle","Confirmación",$dir,$msg);
     }
 
+    public function cancelar(){
+        $msg = "Operacion cancelada por el veterinario";
+        $dir=$gvar['l_global']."buscar_tratamiento.php";
+        $this->mensaje("info","Informacion",$dir,$msg); 
+    }
+
     public function display(){
         $this->engine->assign('title', "Completar Tratamiento");
-        $codigo = $this->post->codigo;
+        if (isset($this->session['desde_cod_prod'])){
+            $codigo = $this->session['desde_cod_prod'];   
+        }else{
+            $codigo = $this->post->codigo;
+        }
+        if (isset($this->session['duracion_trata']) AND isset($this->session['resultado_trata'])){
+            $this->engine->assign('duracion_t',$this->session['duracion_trata']);
+            $this->engine->assign('resultado_t',$this->session['resultado_trata']);
+        }
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('identificacion',$this->session['usuario']['identificacion']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
@@ -133,21 +147,19 @@ class c_completar_tratamiento extends super_controller {
 
             if(($fecha_actual < $mi_tratamiento->get('fecha')) OR (($fecha_actual == $mi_tratamiento->get('fecha')) AND ($tiempo_actual<$tiempo_antes))){
                 
-                echo " aqui1";
-                // $dir=$gvar['l_global']."buscar_tratamiento.php";
-                // $this->mensaje("warning","Error",$dir,"No puede acceder a este tratamiento ya que se anticipó a su horario");
-                // $this->engine->display($this->temp_aux);     
+                $dir=$gvar['l_global']."buscar_tratamiento.php";
+                $this->mensaje("warning","Error",$dir,"No puede acceder a este tratamiento ya que se anticipó a su horario");
+                $this->engine->display($this->temp_aux);     
             }
             if(($fecha_actual > $mi_tratamiento->get('fecha')) OR (($fecha_actual == $mi_tratamiento->get('fecha')) AND ($tiempo_actual>$tiempo_despues))){
                 
-                echo " aquí2";
-                // $this->orm->connect();
-                // $this->orm->delete_data("normal",$mi_tratamiento);
-                // $this->orm->close();
+                $this->orm->connect();
+                $this->orm->delete_data("normal",$mi_tratamiento);
+                $this->orm->close();
 
-                // $dir=$gvar['l_global']."buscar_tratamiento.php";
-                // $this->mensaje("warning","Error",$dir,"No puede acceder a este tratamiento ya que se excedió a su horario. El tratamiento será eliminada");
-                // $this->engine->display($this->temp_aux);     
+                $dir=$gvar['l_global']."buscar_tratamiento.php";
+                $this->mensaje("warning","Error",$dir,"No puede acceder a este tratamiento ya que se excedió a su horario. El tratamiento será eliminada");
+                $this->engine->display($this->temp_aux);     
             }
 
             $_SESSION['desde_cod_prod'] = $codigo;
