@@ -17,6 +17,13 @@
     </div>
     <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <form class="form-horizontal" action="{$gvar.l_global}usar_producto.php" method="post">
+                <input type="hidden" name="desde" value="cita">
+                <input type="hidden" name="codigo" value="{$mi_cita->get('codigo')}">
+                <div class="col-sm-offset-5 col-sm-6">              
+                    <button class="btn btn-default" type="submit"><span class="fa fa-star"></span> Usar Producto</button>
+                </div>
+            </form>
             <form class="form-horizontal" action="{$gvar.l_global}atender_cita.php?option=finalizar" method="post">
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">

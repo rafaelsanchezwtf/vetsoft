@@ -50,7 +50,11 @@ class c_atender_cita extends super_controller {
 
     public function display(){
         $this->engine->assign('title', "Atender Cita");
-        $codigo = $this->post->codigo;
+        if (isset($this->session['desde_cod_prod'])){
+            $codigo = $this->session['desde_cod_prod'];   
+        }else{
+            $codigo = $this->post->codigo;
+        }
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('identificacion',$this->session['usuario']['identificacion']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
@@ -154,6 +158,10 @@ class c_atender_cita extends super_controller {
                 $this->mensaje("warning","Error",$dir,"No puede acceder a esta cita ya que se excedió a su horario. La cita será eliminada");
                 $this->engine->display($this->temp_aux);     
             }
+
+            $_SESSION['desde_cod_prod'] = $codigo;
+            $_SESSION['desde_prod'] = "cita";
+            $this->session = $_SESSION;
 
             $this->engine->assign('mi_cita',$mi_cita);
             $this->engine->display($this->temp_aux);
