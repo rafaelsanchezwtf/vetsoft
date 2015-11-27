@@ -160,6 +160,7 @@
 }
 .glyphicon-th-large{
     color:dimgray;
+
 }
 .opcion{
   width: 200px;
@@ -182,18 +183,23 @@
     color:white;
     border-color:#404040;
 }
+
+
 .panelperfil{
     margin-top: 20px;
     margin-left: 275px;
     background-color: rgba(0,0,0,0.7);
 }
+
 .paneladmin{
     background-color: rgba(0,0,0,0.6);
     border-color:#404040;
 }
+
 .titulobienvenida{
     color: #AFAFAF;
 }
+
 .parcito{
     margin-left: 80px;
 }
@@ -201,7 +207,11 @@
 .centrardiv{
     margin-left: 380px;
 }
-    
+
+.datosdeldueno{
+    visibility: hidden;
+    display: none;
+}
 
     
     
