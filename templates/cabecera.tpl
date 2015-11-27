@@ -79,6 +79,7 @@
             {/if}
                 
             {if (not isset($tipo))}
+                HOLI
                 <li>
                       <a href="{$gvar.l_global}acerca_de.php"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span>Acerca De</a>  
                 </li>
