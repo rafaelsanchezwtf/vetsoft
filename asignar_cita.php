@@ -83,7 +83,7 @@ class c_asignar_cita extends super_controller {
      }
 
     public function asignar_por_administrador(){
-        
+        $dir=$gvar['l_global']."buscar_animal.php";
         $option['veterinario']['lvl2']="all";
         $this->orm->connect();
         $this->orm->read_data(array("veterinario"), $option);
@@ -92,7 +92,22 @@ class c_asignar_cita extends super_controller {
         $this->engine->assign('nombre_animal',$this->post->nombre_animal);
         $cita = new cita($this->post);
         $cita->set('estado','pendiente');
-        $cita->set('animal',$this->post->id);
+
+        if ($this->session['idcita'] != ""){
+            $dir=$gvar['l_global']."buscar_cita.php";
+            $option['cita']['lvl2']= "por_codigo";
+            $cod['cita']['codigo'] = $this->session['idcita'];
+            $this->orm->connect();
+            $this->orm->read_data(array("cita"), $option, $cod);
+            $citaux = $this->orm->get_objects("cita");
+            
+            $cita->set('animal',$citaux[0]->get('animal'));
+            $cita->set('veterinario',$citaux[0]->get('veterinario'));
+            $_SESSION['idcita'] = "";
+            $this->session = $_SESSION;
+        }else{
+            $cita->set('animal',$this->post->id);   
+        }
 
         self::asignar_datos($cita);
         $incompletitud_cita = cita::validar_completitud($cita);
@@ -163,12 +178,12 @@ class c_asignar_cita extends super_controller {
         $this->orm->insert_data("normal",$cita);
         $this->orm->close();
 
-        $dir=$gvar['l_global']."buscar_animal.php";
         $this->mensaje("check-circle","Confirmación",$dir,"Cita asignada exitosamente!");
 
     }
 
     public function asignar_por_veterinario(){
+        $dir=$gvar['l_global']."buscar_animal.php";
 
         $option['veterinario']['lvl2']="all";
         $this->orm->connect();
@@ -178,8 +193,23 @@ class c_asignar_cita extends super_controller {
         $this->engine->assign('nombre_animal',$this->post->nombre_animal);
         $cita = new cita($this->post);
         $cita->set('estado','pendiente');
-        $cita->set('animal',$this->post->id);
-        $cita->set('veterinario',$this->session['usuario']['identificacion']);
+
+        if ($this->session['idcita'] != ""){
+            $dir=$gvar['l_global']."buscar_cita.php";
+            $option['cita']['lvl2']= "por_codigo";
+            $cod['cita']['codigo'] = $this->session['idcita'];
+            $this->orm->connect();
+            $this->orm->read_data(array("cita"), $option, $cod);
+            $citaux = $this->orm->get_objects("cita");
+            
+            $cita->set('animal',$citaux[0]->get('animal'));
+            $cita->set('veterinario',$citaux[0]->get('veterinario'));
+            $_SESSION['idcita'] = "";
+            $this->session = $_SESSION;
+        }else{
+            $cita->set('animal',$this->post->id);
+            $cita->set('veterinario',$this->session['usuario']['identificacion']);  
+        }
 
         self::asignar_datos($cita);
         $incompletitud_cita = cita::validar_completitud($cita);
@@ -250,7 +280,6 @@ class c_asignar_cita extends super_controller {
         $this->orm->insert_data("normal",$cita);
         $this->orm->close();
 
-        $dir=$gvar['l_global']."buscar_animal.php";
         $this->mensaje("check-circle","Confirmación",$dir,"Cita asignada exitosamente!");
 
     }
@@ -261,6 +290,7 @@ class c_asignar_cita extends super_controller {
     }
 
     public function display(){
+        echo $this->session['idcita'];
         $this->engine->assign('title', "Asignar Cita");
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('identificacion',$this->session['usuario']['identificacion']);

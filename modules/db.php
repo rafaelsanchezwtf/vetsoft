@@ -81,7 +81,6 @@ class db
 	{
 		switch($options['lvl1'])
 		{	
-
 			case "dueno":
 			switch($options['lvl2'])
 			{	
@@ -118,7 +117,8 @@ class db
 			break;
 
 			case "tratamiento":
-				switch($options['lvl2']){
+			switch($options['lvl2'])
+			{
 				
 				case "normal":
 					$titulo=mysqli_real_escape_string($this->cn,$object->get('titulo'));
@@ -135,7 +135,8 @@ class db
 			break;
 
 			case "cita":
-				switch($options['lvl2']){
+			switch($options['lvl2'])
+			{
 				
 				case "normal":
 					$motivo=mysqli_real_escape_string($this->cn,$object->get('motivo'));
@@ -149,10 +150,30 @@ class db
 					break;
 			}
 			break;
+
+			case "uso_de_producto":
+			switch($options['lvl2'])
+			{
+				
+				case "desde_cita":
+					$cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+					$producto=mysqli_real_escape_string($this->cn,$object->get('producto'));
+					$cita=mysqli_real_escape_string($this->cn, $object->get('cita'));
+					$this->do_operation("INSERT INTO uso_de_producto (id, cantidad, producto, cita, tratamiento) VALUES (NULL, '$cantidad', '$producto', '$cita', NULL);");
+					break;
+				
+				case "desde_tratamiento":
+					$cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+					$producto=mysqli_real_escape_string($this->cn,$object->get('producto'));
+					$tratamiento=mysqli_real_escape_string($this->cn, $object->get('tratamiento'));
+					$this->do_operation("INSERT INTO uso_de_producto (id, cantidad, producto, cita, tratamiento) VALUES (NULL, '$cantidad', '$producto', NULL, '$tratamiento');");
+					break;
+			}	
+			break;
 																																																																																												
 			case "veterinario":
-				switch($options['lvl2'])
-				{
+			switch($options['lvl2'])
+			{
 				case "normal":
 					$identificacion=mysqli_real_escape_string($this->cn,$object->get('identificacion'));
 					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
@@ -177,7 +198,7 @@ class db
 		{																																																																					
 			
             case "animal":
-                switch($options['lvl2'])
+            switch($options['lvl2'])
 			{
 				case "normal":
 					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
@@ -189,6 +210,52 @@ class db
                     $especie=mysqli_real_escape_string($this->cn,$object->get('especie'));
                     $fotonueva=mysqli_real_escape_string($this->cn,$object->get('foto'));
                     $this->do_operation("UPDATE animal SET nombre ='$nombre',peso= '$peso', talla='$talla', genero='$genero', especie='$especie',  fecha_de_nacimiento='$fecha_de_nacimiento', foto='$fotonueva' WHERE id='$id';");
+                    break;
+            }
+            break;
+
+			case "cita":
+			switch($options['lvl2'])
+			{
+				case "normal_atender":
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+					$condicion=mysqli_real_escape_string($this->cn,$object->get('condicion'));
+					$diagnostico=mysqli_real_escape_string($this->cn,$object->get('diagnostico'));
+					$estado=mysqli_real_escape_string($this->cn,$object->get('estado'));
+					$this->do_operation("UPDATE cita SET condicion = '$condicion', diagnostico = '$diagnostico', estado = '$estado' WHERE codigo = '$codigo';");
+					break;
+
+				case "normal":
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+                    $motivo=mysqli_real_escape_string($this->cn,$object->get('motivo'));
+                    $fecha=mysqli_real_escape_string($this->cn, $object->get('fecha'));
+                    $hora=mysqli_real_escape_string($this->cn,$object->get('hora'));
+                    $lugar=mysqli_real_escape_string($this->cn,$object->get('lugar'));
+                    $this->do_operation("UPDATE cita SET motivo ='$motivo',hora= '$hora', lugar='$lugar', fecha='$fecha'  WHERE codigo='$codigo';");
+					break;
+			}
+			break;
+
+			case "tratamiento":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+					$duracion=mysqli_real_escape_string($this->cn,$object->get('duracion'));
+					$resultado=mysqli_real_escape_string($this->cn,$object->get('resultado'));
+					$estado=mysqli_real_escape_string($this->cn,$object->get('estado'));
+					$this->do_operation("UPDATE tratamiento SET duracion = '$duracion', resultado = '$resultado', estado = '$estado' WHERE codigo = '$codigo';");
+					break;
+			}
+			break;
+
+			case "producto":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
+					$cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+					$this->do_operation("UPDATE producto SET cantidad = '$cantidad' WHERE id = '$id';");
 					break;
 			}
 			break;
@@ -208,8 +275,8 @@ class db
 			break;
 
             case "dueno":
-                switch($options['lvl2'])
-                {
+            switch($options['lvl2'])
+            {
 				case "normal":
 					$cedula=mysqli_real_escape_string($this->cn,$object->get('cedula'));
                     $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
@@ -218,7 +285,7 @@ class db
                     $foto=mysqli_real_escape_string($this->cn,$object->get('foto'));        
                     $this->do_operation("UPDATE dueno SET nombre= '$nombre', telefono='$telefono', email='$email',  foto='$foto' WHERE cedula='$cedula';");
 					break;
-				}
+			}
 			break;
             
 			default: break;
@@ -230,11 +297,12 @@ class db
 	{
 		switch($options['lvl1'])
 		{																																																																																												
-			case "user":
+			case "cita":
 			switch($options['lvl2'])
 			{
-				case "normal": 
-					//
+				case "normal":
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+					$this->do_operation("DELETE FROM cita WHERE codigo = '$codigo';");
 					break;
 			}
 			break;
@@ -249,6 +317,16 @@ class db
 			}
 			break;
 			
+			case "tratamiento":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+					$this->do_operation("DELETE FROM tratamiento WHERE codigo = '$codigo';");
+					break;
+			}
+			break;
+            
 			default: break;			  
 		}
 	}
@@ -264,7 +342,7 @@ class db
 			{
 				case "all": 
 					//
-					break;
+				break;
 
 				case "one_login":
 					$user = mysqli_real_escape_string($this->cn, $data['user']);
@@ -283,8 +361,8 @@ class db
 			switch($option['lvl2'])
 			{
 				case "all": 
-					$info=$this->get_data("SELECT * FROM veterinario;");
-					break;
+				$info=$this->get_data("SELECT * FROM veterinario;");
+				break;
 
 				case "one_login":
 					$user = mysqli_real_escape_string($this->cn, $data['user']);
@@ -331,32 +409,35 @@ class db
 			case "animal":
 			switch($option['lvl2'])
 			{
-                case "all": 
+				 case "all": 
 					$info=$this->get_data("SELECT * FROM animal;"); 
 					break;
-				
+
+				case "max": 
+					$info=$this->get_data("SELECT * FROM animal WHERE id = (SELECT MAX(id) FROM animal);");
+
 				case "by_id": 
 					$this->escape_string($data);
 					$id=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where id like '%$id%';"); 
+					$info=$this->get_data("SELECT * FROM animal WHERE id like '%$id%';"); 
 					break;
 
 				case "by_nombre": 
 					$this->escape_string($data);
 					$nombre=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where nombre like '%$nombre%';"); 
+					$info=$this->get_data("SELECT * FROM animal WHERE nombre like '%$nombre%';"); 
 					break;
 
 				case "by_especie": 
 					$this->escape_string($data);
 					$especie=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where especie like '%$especie%';"); 
+					$info=$this->get_data("SELECT * FROM animal WHERE especie like '%$especie%';"); 
 					break;
-
+					
 				case "by_fecha": 
 					$this->escape_string($data);
 					$fecha=$data['valor'];
-					$info=$this->get_data("SELECT * FROM animal where fecha_de_nacimiento like '%$fecha%';"); 
+					$info=$this->get_data("SELECT * FROM animal WHERE fecha_de_nacimiento like '%$fecha%';"); 
 					break;
 
 				case "some": 
@@ -381,6 +462,16 @@ class db
 					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE a.nombre like '%$animal%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
 					break;
 
+				case "por_codigo":
+					$codigo=$data['codigo'];
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.codigo = '$codigo';"); 
+					break;
+
+                case "all_2":
+					$info=$this->get_data("SELECT * FROM cita;"); 
+					break;
+
 				case "by_fecha": 
 					$this->escape_string($data);
 					$fecha=$data['valor'];
@@ -392,8 +483,7 @@ class db
 					$this->escape_string($data);
 					$animal=$data['valor'];
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM cita t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' AND t.estado='finalizado';"); 
-					break;
-
+				
 				case "by_all":
 					$this->escape_string($data);
 					$identificacion=$data['identificacion']; 
@@ -418,12 +508,13 @@ class db
 					$this->escape_string($data);
 					$hora=$data['valor'];
 					$identificacion=$data['identificacion'];
-					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.hora like '%$hora%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
-
-				case "max": 
-					$info=$this->get_data("SELECT * FROM animal WHERE id = (SELECT MAX(id) FROM animal);");
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.hora like '%$hora%' AND c.animal = a.id AND c.veterinario = '$identificacion';");
 					break;
-		
+
+				case "one":
+                	$codigo = mysqli_real_escape_string($this->cn,$data['codigo']);
+					$info=$this->get_data("SELECT * FROM cita WHERE codigo ='$codigo';"); 
+					break; 
 			}
 			break;
 
@@ -444,7 +535,7 @@ class db
 			case "tratamiento":
 			switch($option['lvl2'])
 			{
-				case "all":
+				case "by_all":
 					$this->escape_string($data);
 					$identificacion=$data['identificacion']; 
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.animal = a.id AND t.veterinario = '$identificacion';"); 
@@ -480,8 +571,13 @@ class db
 
 				case "all": 
 					$info=$this->get_data("SELECT * FROM tratamiento;");
-					break;
 
+				case "por_codigo": 
+					$this->escape_string($data);
+					$codigo=$data['codigo'];
+					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.codigo = '$codigo';"); 
+					break;
+				
 				case "by_animal": 
 					$this->escape_string($data);
 					$animal=$data['valor'];
@@ -494,10 +590,33 @@ class db
 					$animal=$data['valor'];
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' AND t.estado='finalizado';");
 					break; 
-
 			}
 			break;
-			
+
+			case "producto":
+			switch($option['lvl2'])
+			{	
+				case "por_id": 
+					$this->escape_string($data);
+					$id=$data['id'];
+					$info=$this->get_data("SELECT * FROM producto WHERE id = '$id';"); 
+					break;
+
+				case "by_nombre": 
+					$this->escape_string($data);
+					$nombre=$data['nombre'];
+					$tipo=$data['tipo'];
+					$info=$this->get_data("SELECT * FROM producto WHERE nombre like '%$nombre%' AND tipo = '$tipo';"); 
+					break;
+
+				case "by_all":
+					$this->escape_string($data);
+					$tipo=$data['tipo']; 
+					$info=$this->get_data("SELECT * FROM producto WHERE tipo = '$tipo';"); 
+					break;
+			}
+			break;
+
 			default: break;
 		}
 		return $info;

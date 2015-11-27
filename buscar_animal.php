@@ -21,7 +21,8 @@ class c_buscar_animal extends super_controller {
                     }elseif (is_empty($valor)){
                         $this->engine->assign('error1',1);
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
-                        throw_exception("");}
+                        throw_exception("");
+                    }
                     break;
 
                 case 'n':
@@ -46,7 +47,6 @@ class c_buscar_animal extends super_controller {
 
                 case 'f':
                     if (is_numeric($valor)){
-
                         if($valor<=0){
                             $this->engine->assign('error2',2);
                             $this->mensaje("warning","Error","","Dato incorrecto");
@@ -54,6 +54,7 @@ class c_buscar_animal extends super_controller {
                         }else{
                             $consulta = "by_fecha";
                         }   
+                        $consulta = "by_fecha";    
                     }elseif (!(is_numeric($valor))){
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
@@ -62,7 +63,6 @@ class c_buscar_animal extends super_controller {
                         $this->engine->assign('error1',1);
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");
-                          
                     }
                 break;
                 
@@ -71,8 +71,8 @@ class c_buscar_animal extends super_controller {
                     throw_exception(""); 
                     break;
             }
-
         }  
+
         $options['animal']['lvl2'] = $consulta;
         $cod['animal']['valor'] = $valor;
         $this->orm->connect();

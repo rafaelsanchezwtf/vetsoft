@@ -74,13 +74,14 @@ class c_asignar_tratamiento extends super_controller {
      }
 
     public function asignar(){
-
+        $dir=$gvar['l_global']."buscar_animal.php";
         $this->engine->assign('nombre_animal',$this->post->nombre_animal);
         $n = $this->post->nombre_animal;
         $tratamiento = new tratamiento($this->post);
         $tratamiento->set('estado','pendiente');
         
         if ($this->session['idcita'] != ""){
+            $dir=$gvar['l_global']."buscar_cita.php";
             $option['cita']['lvl2']= "por_codigo";
             $cod['cita']['codigo'] = $this->session['idcita'];
             $this->orm->connect();
@@ -165,7 +166,6 @@ class c_asignar_tratamiento extends super_controller {
         $this->orm->insert_data("normal",$tratamiento);
         $this->orm->close();
 
-        $dir=$gvar['l_global']."buscar_animal.php";
         $this->mensaje("check-circle","Confirmación",$dir,"Tratamiento Asignado exitosamente!");
 
     }
@@ -176,6 +176,7 @@ class c_asignar_tratamiento extends super_controller {
     }
 
     public function display(){
+        echo $this->session['idcita'];
         $this->engine->assign('title', "Asignar Tratamiento");
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('identificacion',$this->session['usuario']['identificacion']);
