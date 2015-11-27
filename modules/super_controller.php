@@ -75,7 +75,6 @@ class super_controller
         $msg_dir=$dir;
         $msg_type=$type;
         $msg_content=$content;
-
         $this->temp_aux = 'message.tpl';
         $this->engine->assign('msg_icon',$msg_icon);
         $this->engine->assign('msg_dir',$msg_dir);

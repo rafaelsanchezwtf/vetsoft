@@ -83,8 +83,8 @@ class db
 		{	
 
 			case "dueno":
-				switch($options['lvl2']){
-				
+			switch($options['lvl2'])
+			{	
 				case "normal":
 					$cedula=mysqli_real_escape_string($this->cn,$object->get('cedula'));
 					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
@@ -93,13 +93,13 @@ class db
 					$foto=mysqli_real_escape_string($this->cn,$object->get('foto'));
 					$this->do_operation("INSERT INTO dueno (cedula, nombre, telefono, email, foto) VALUES ('$cedula', '$nombre', '$telefono', '$email', '$foto');");
 					break;
-				}
-				
-				break;
+
+			}
+			break;
 
 			case "animal":
-				switch($options['lvl2']){
-				
+			switch($options['lvl2'])
+			{
 				case "normal":
 					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
 					$fecha_de_nacimiento=mysqli_real_escape_string($this->cn, $object->get('fecha_de_nacimiento'));
@@ -109,15 +109,30 @@ class db
 					$especie=mysqli_real_escape_string($this->cn,$object->get('especie'));
 					$foto=mysqli_real_escape_string($this->cn,$object->get('foto'));
 					$dueno=mysqli_real_escape_string($this->cn,$object->get('dueno'));
-					if ($dueno == "") {
+					if ($dueno == ""){
 						$this->do_operation("INSERT INTO animal (id, nombre, fecha_de_nacimiento, peso, talla, genero, especie, foto, dueno) VALUES (NULL, '$nombre', '$fecha_de_nacimiento', '$peso', '$talla', '$genero', '$especie', '$foto', NULL);");
 					}else{
 						$this->do_operation("INSERT INTO animal (id, nombre, fecha_de_nacimiento, peso, talla, genero, especie, foto, dueno) VALUES (NULL, '$nombre', '$fecha_de_nacimiento', '$peso', '$talla', '$genero', '$especie', '$foto', '$dueno');");
 					}
 					break;
-				}
-				
-				break;
+			}
+			break;
+																																																																																												
+			case "veterinario":
+				switch($options['lvl2'])
+				{
+				case "normal":
+					$identificacion=mysqli_real_escape_string($this->cn,$object->get('identificacion'));
+					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+					$telefono=mysqli_real_escape_string($this->cn, $object->get('telefono'));
+					$email=mysqli_real_escape_string($this->cn,$object->get('email'));
+					$sueldo=mysqli_real_escape_string($this->cn,$object->get('sueldo'));
+					$user=mysqli_real_escape_string($this->cn,$object->get('user'));
+					$pass=mysqli_real_escape_string($this->cn,$object->get('pass'));
+					$this->do_operation("INSERT INTO veterinario (identificacion, nombre, telefono, email, sueldo, user, pass) VALUES ('$identificacion', '$nombre', '$telefono', '$email', '$sueldo', '$user', '$pass');");
+					break;
+			}
+			break;
 
 			default: break;
 		}
@@ -137,9 +152,8 @@ class db
 			}
 			break;
 			
-            
-             case "veterinario":
-                switch($options['lvl2'])
+         	case "veterinario":
+            switch($options['lvl2'])
 			{
 				case "normal":
 					$identificacion=mysqli_real_escape_string($this->cn,$object->get('identificacion'));
@@ -147,14 +161,11 @@ class db
                     $telefono=mysqli_real_escape_string($this->cn, $object->get('telefono'));
                     $email=mysqli_real_escape_string($this->cn,$object->get('email'));
                     $sueldo=mysqli_real_escape_string($this->cn,$object->get('sueldo'));
-          
-                    
                     $this->do_operation("UPDATE veterinario SET nombre ='$nombre',email= '$email', sueldo='$sueldo', telefono='$telefono'  WHERE identificacion='$identificacion';");
 					break;
 			}
 			break;
-            
-            
+
 			default: break;
 		}
 	}
@@ -172,6 +183,7 @@ class db
 					break;
 			}
 			break;
+
 			case "veterinario":
 			switch($options['lvl2'])
 			{
@@ -191,7 +203,6 @@ class db
 	{
 		$info = array();
 		switch($option['lvl1'])
-
 		{																																																																			
 
 			case "administrador":
@@ -199,7 +210,7 @@ class db
 			{
 				case "all": 
 					//
-				break;
+					break;
 
 				case "one_login":
 					$user = mysqli_real_escape_string($this->cn, $data['user']);
@@ -214,12 +225,11 @@ class db
 			break;
 
 			case "veterinario":
-
 			switch($option['lvl2'])
 			{
 				case "all": 
-					//
-				break;
+					$info = $this->get_data("SELECT * FROM veterinario;");
+					break;
 
 				case "one_login":
 					$user = mysqli_real_escape_string($this->cn, $data['user']);
