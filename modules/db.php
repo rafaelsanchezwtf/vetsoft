@@ -187,11 +187,6 @@ class db
 
 			switch($option['lvl2'])
 			{
-				case "all": 
-					//
-				break;
-
-  
                 case "all": 
 					$info=$this->get_data("SELECT * FROM animal;"); 
 					break;
