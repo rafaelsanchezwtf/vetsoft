@@ -10,6 +10,7 @@ class c_prueba extends super_controller {
             $this->engine->assign('title', "Home");
             $this->engine->assign('title',$this->gvar['n_index']);
             $this->engine->display('cabecera.tpl');
+        $this->engine->display('index.tpl');
             $this->engine->display('piedepagina.tpl');
     }
     
