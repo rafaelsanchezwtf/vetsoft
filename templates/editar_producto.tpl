@@ -32,7 +32,7 @@
                       <div class="camposeditar">
                         <div class="input-group">
                             <span class="input-group-addon" >Cantidad (Solo se permite aumentar)</span>
-                            <input  class="form-control " type="time" value="{$cantidad}" required name="cantidad" aria-describedby="basic-addon1" {if isset($cantidad_vacio) or isset($cantidad_invalido)} style="background-color: #F78181" {/if}>
+                            <input  class="form-control " type="number" value="{$cantidad}" required name="cantidad" aria-describedby="basic-addon1" {if isset($cantidad_vacio) or isset($cantidad_invalido)} style="background-color: #F78181" {/if}>
                         </div>
                     </div> 
                        
@@ -46,7 +46,7 @@
                       <div class="camposeditar">
                         <div class="input-group">
                             <span class="input-group-addon" >Precio por unidad</span>
-                            <input  class="form-control " type="time" value="{$precio_unidad}" required name="precio_unidad" aria-describedby="basic-addon1" {if isset($precio_unidad_vacio) or isset($precio_unidad_invalido)} style="background-color: #F78181" {/if}>
+                            <input  class="form-control " type="number" value="{$precio_unidad}" required name="precio_unidad" aria-describedby="basic-addon1" {if isset($precio_unidad_vacio) or isset($precio_unidad_invalido)} style="background-color: #F78181" {/if}>
                         </div>
                     </div> 
                       
