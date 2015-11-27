@@ -639,13 +639,13 @@ class db
 				case "by_nombre": 
 					$this->escape_string($data);
 					$nombre=$data['valor'];
-					$info=$this->get_data("SELECT * FROM producto WHERE nombre like '%$nombre%' AND tipo = '$tipo';"); 
+					$info=$this->get_data("SELECT * FROM producto WHERE nombre like '%$nombre%';"); 
 					break;
 
 				case "by_all":
 					$this->escape_string($data);
-					$tipo=$data['tipo']; 
-					$info=$this->get_data("SELECT * FROM producto WHERE tipo = '$tipo';"); 
+					$tipo=$data['valor']; 
+					$info=$this->get_data("SELECT * FROM producto;"); 
 					break;
 
 				case "by_tipo": 
@@ -669,7 +669,7 @@ class db
 				case "by_precio": 
 					$this->escape_string($data);
 					$precio=$data['valor'];	
-					$info=$this->get_data("SELECT * FROM producto WHERE precio_unidad >= '$precio'AND '$precio'>0;");										
+					$info=$this->get_data("SELECT * FROM producto WHERE precio_unidad <= '$precio';");										
 					break;
 
 				case "by_nombre": 

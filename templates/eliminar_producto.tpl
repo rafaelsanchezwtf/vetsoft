@@ -8,6 +8,7 @@
                         <th>Nombre</th>
                         <th>Fecha de adquisición</th>
                         <th>Marca</th>
+                        <th>Cantidad</th>
                         <th>Precio</th>
                         <th>Tipo</th>
                           
@@ -18,6 +19,7 @@
                             <td>{$producto->get("nombre")}</td>
                             <td>{$producto->get("fecha_de_adquisicion")}</dh>
                             <td>{$producto->get("marca")}</td>
+                            <td>{$producto->get("cantidad")}</td>
                             <td>{$producto->get("precio_unidad")}</td>
                             <td>{$producto->get("tipo")}</td>
                          
