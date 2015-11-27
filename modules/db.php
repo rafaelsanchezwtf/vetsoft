@@ -137,6 +137,24 @@ class db
 			}
 			break;
 			
+            
+             case "veterinario":
+                switch($options['lvl2'])
+			{
+				case "normal":
+					$identificacion=mysqli_real_escape_string($this->cn,$object->get('identificacion'));
+                    $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+                    $telefono=mysqli_real_escape_string($this->cn, $object->get('telefono'));
+                    $email=mysqli_real_escape_string($this->cn,$object->get('email'));
+                    $sueldo=mysqli_real_escape_string($this->cn,$object->get('sueldo'));
+          
+                    
+                    $this->do_operation("UPDATE veterinario SET nombre ='$nombre',email= '$email', sueldo='$sueldo', telefono='$telefono'  WHERE identificacion='$identificacion';");
+					break;
+			}
+			break;
+            
+            
 			default: break;
 		}
 	}
@@ -151,6 +169,15 @@ class db
 			{
 				case "normal": 
 					//
+					break;
+			}
+			break;
+			case "veterinario":
+			switch($options['lvl2'])
+			{
+				case "normal": 
+					$identificacion=mysqli_real_escape_string($this->cn,$object->get('identificacion'));
+                	$this->do_operation("DELETE FROM veterinario WHERE identificacion='$identificacion';");
 					break;
 			}
 			break;
@@ -204,24 +231,92 @@ class db
 					unset($hasher);
 					break;
 
-				case "one_login":
-					$user = mysqli_real_escape_string($this->cn, $data['user']);
-					$pass = $data['pass'];
-					$result = $this->get_data("SELECT user, pass FROM administrador WHERE user='$user';");
-					$hasher = new PasswordHash(8, FALSE);
-					if ($hasher->CheckPassword($pass, $result[0]->pass))
-						$info = $this->get_data("SELECT * FROM administrador WHERE user = '$user';");
-					unset($hasher);
+				case "by_nombre": 
+					$this->escape_string($data);
+					$nombre=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE nombre like '%$nombre%';"); 
+					break;
+
+				case "by_identificacion": 
+					$this->escape_string($data);
+					$identificacion=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE identificacion like '%$identificacion%';"); 
+					break;
+
+				case "por_identificacion": 
+					$this->escape_string($data);
+					$identificacion=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE identificacion = '$identificacion';"); 
+					break;
+
+				case "by_telefono": 
+					$this->escape_string($data);
+					$telefono=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE telefono like '%$telefono%';"); 
+					break;
+
+				case "by_email": 
+					$this->escape_string($data);
+					$email=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM veterinario WHERE email like '%$email%';"); 
 					break;
 			}
 			break;
 
-			case "animal":
+			case "cita":
 			switch($option['lvl2'])
 			{
 				case "max": 
 					$info=$this->get_data("SELECT * FROM animal WHERE id = (SELECT MAX(id) FROM animal);");
 					break;
+
+                case "by_animal_hist": 
+					$this->escape_string($data);
+					$animal=$data['valor'];
+					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM cita t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' AND t.estado='finalizado';"); 
+					break;
+
+				case "all":
+					$this->escape_string($data);
+					$identificacion=$data['identificacion']; 
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.animal = a.id AND c.veterinario = '$identificacion';"); 
+					break;
+				
+				case "by_codigo": 
+					$this->escape_string($data);
+					$codigo=$data['valor'];
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.codigo like '%$codigo%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
+					break;
+
+				case "by_motivo": 
+					$this->escape_string($data);
+					$motivo=$data['valor'];
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.motivo like '%$motivo%' AND c.animal = a.id AND c.veterinario = '$identificacion';");
+					break;
+
+				case "by_hora": 
+					$this->escape_string($data);
+					$hora=$data['valor'];
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.hora like '%$hora%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
+					break;
+
+				case "by_fecha": 
+					$this->escape_string($data);
+					$fecha=$data['valor'];
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.fecha like '%$fecha%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
+					break;
+
+				case "by_animal": 
+					$this->escape_string($data);
+					$animal=$data['valor'];
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE a.nombre like '%$animal%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
+					break;
+
 			}
 			break;
 
@@ -233,20 +328,6 @@ class db
 					break;
 			}
 			break;
-
-            case "cita":
-			switch($option['lvl2'])
-			{
-                case "by_animal_hist": 
-					$this->escape_string($data);
-					$animal=$data['valor'];
-					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM cita t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' AND t.estado='finalizado';"); 
-                
-
-					break;
-                
-            }
-            break;
             
 			case "tratamiento":
 			switch($option['lvl2'])
@@ -275,7 +356,7 @@ class db
 					$this->escape_string($data);
 					$fecha=$data['valor'];
 					$identificacion=$data['identificacion'];
-					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.fecha like '%$fecha%' AND t.animal = a.id AND t.veterinario = '$identificacion';"); 
+					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.fecha like '%$fecha%' AND t.animal = a.id AND t.veterinario = '$identificacion';");
 					break;
 
 				case "by_hora": 
@@ -284,12 +365,19 @@ class db
 					$identificacion=$data['identificacion'];
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.hora like '%$hora%' AND t.animal = a.id AND t.veterinario = '$identificacion';"); 
 					break;
+
+				case "by_animal": 
+					$this->escape_string($data);
+					$animal=$data['valor'];
+					$identificacion=$data['identificacion'];
+					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.nombre like '%$animal%' AND t.animal = a.id AND t.veterinario = '$identificacion';"); 
+					break;
                 
 				case "by_animal_hist": 
 					$this->escape_string($data);
 					$animal=$data['valor'];
-					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' AND t.estado='finalizado';"); 
-					break;
+					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' AND t.estado='finalizado';");
+					break; 
 
 			}
 			break;
