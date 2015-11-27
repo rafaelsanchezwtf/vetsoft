@@ -80,16 +80,45 @@ class db
 	public function insert($options,$object) 
 	{
 		switch($options['lvl1'])
-		{																																																																																													
-			case "user":
-			switch($options['lvl2'])
-			{
+		{	
+
+			case "dueno":
+				switch($options['lvl2']){
+				
 				case "normal":
-					//
+					$cedula=mysqli_real_escape_string($this->cn,$object->get('cedula'));
+					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+					$telefono=mysqli_real_escape_string($this->cn, $object->get('telefono'));
+					$email=mysqli_real_escape_string($this->cn,$object->get('email'));
+					$foto=mysqli_real_escape_string($this->cn,$object->get('foto'));
+					$this->do_operation("INSERT INTO dueno (cedula, nombre, telefono, email, foto) VALUES ('$cedula', '$nombre', '$telefono', '$email', '$foto');");
 					break;
-			}
-			break;
-			
+				}
+				
+				break;
+
+			case "animal":
+				switch($options['lvl2']){
+				
+				case "normal":
+					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+					$fecha_de_nacimiento=mysqli_real_escape_string($this->cn, $object->get('fecha_de_nacimiento'));
+					$peso=mysqli_real_escape_string($this->cn,$object->get('peso'));
+					$talla=mysqli_real_escape_string($this->cn,$object->get('talla'));
+					$genero=mysqli_real_escape_string($this->cn,$object->get('genero'));
+					$especie=mysqli_real_escape_string($this->cn,$object->get('especie'));
+					$foto=mysqli_real_escape_string($this->cn,$object->get('foto'));
+					$dueno=mysqli_real_escape_string($this->cn,$object->get('dueno'));
+					if ($dueno == "") {
+						$this->do_operation("INSERT INTO animal (id, nombre, fecha_de_nacimiento, peso, talla, genero, especie, foto, dueno) VALUES (NULL, '$nombre', '$fecha_de_nacimiento', '$peso', '$talla', '$genero', '$especie', '$foto', NULL);");
+					}else{
+						$this->do_operation("INSERT INTO animal (id, nombre, fecha_de_nacimiento, peso, talla, genero, especie, foto, dueno) VALUES (NULL, '$nombre', '$fecha_de_nacimiento', '$peso', '$talla', '$genero', '$especie', '$foto', '$dueno');");
+					}
+					break;
+				}
+				
+				break;
+
 			default: break;
 		}
 	}
@@ -174,7 +203,23 @@ class db
 			}
 			break;
 
+			case "animal":
+			switch($option['lvl2'])
+			{
+				case "max": 
+					$info=$this->get_data("SELECT * FROM animal WHERE id = (SELECT MAX(id) FROM animal);");
+					break;
+			}
+			break;
 
+			case "dueno":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					$info=$this->get_data("SELECT * FROM dueno;");
+					break;
+			}
+			break;
 			
 			default: break;
 		}

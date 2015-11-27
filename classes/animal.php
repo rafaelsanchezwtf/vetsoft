@@ -24,6 +24,45 @@
 			return array("id");
 		}
 
+		public static function validar_completitud($animal){
+			$flag = FALSE;
+			if (is_empty($animal->get('nombre'))){
+            	$flag = TRUE;
+        	}
+        	if (is_empty($animal->get('fecha_de_nacimiento'))){
+            	$flag = TRUE;
+	        }
+	        if (is_empty($animal->get('peso'))){
+	            $flag = TRUE;
+	        }
+	        if (is_empty($animal->get('talla'))){
+	            $flag = TRUE;
+	        }
+	        if (is_empty($animal->get('genero'))){
+	            $flag = TRUE;
+	        }
+	        if (is_empty($animal->get('especie'))){
+	            $flag = TRUE;
+	        }
+        	RETURN $flag;
+		}
+
+    	public static function validar_correctitud($animal){
+    		$flag = FALSE;
+    		$fecha_actual = date('Y-m-d');
+    		if((!(parent::validateDate($animal->get('fecha_de_nacimiento')))) or ($animal->get('fecha_de_nacimiento') > $fecha_actual)){
+    			$flag = TRUE;	
+    		}
+    		if ((!is_numeric($animal->get('peso'))) or ($animal->get('peso') <= 0)){
+	            $flag = TRUE;     
+	        }
+
+	        if ((!is_numeric($animal->get('talla'))) or ($animal->get('talla') <= 0)){
+	            $flag = TRUE;      
+	        }
+	        RETURN $flag;
+    	}
+
 		public function relational_keys($class, $rel_name){
 			switch($class){
 				case "dueno":
