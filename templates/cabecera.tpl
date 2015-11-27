@@ -80,10 +80,6 @@
                 
             {if (not isset($tipo))}
                 <li>
-                    <a href="{$gvar.l_global}historia_clinica.php"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-heartbeat fa-stack-1x "></i></span>Ver historia clínica</a>
-                </li>
-            
-                <li>
                       <a href="{$gvar.l_global}acerca_de.php"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span>Acerca De</a>  
                 </li>
             {/if}

@@ -133,7 +133,7 @@ class c_atender_cita extends super_controller {
                 }
 
             $this->orm->connect();
-            $this->orm->update_data("normal",$mi_producto);
+            $this->orm->update_data("normal_uso",$mi_producto);
             $this->orm->close();
 
             $options['producto']['lvl2'] = $this->session['consulta_prod'];

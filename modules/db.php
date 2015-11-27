@@ -130,7 +130,21 @@ class db
 					$animal=mysqli_real_escape_string($this->cn,$object->get('animal'));
 					$veterinario=mysqli_real_escape_string($this->cn,$object->get('veterinario'));
 					$this->do_operation("INSERT INTO tratamiento (codigo, titulo, descripcion, fecha, hora, duracion, lugar, estado, resultado, animal, veterinario) VALUES (NULL, '$titulo', '$descripcion', '$fecha', '$hora', NULL, '$lugar', '$estado', NULL, '$animal', '$veterinario');");
-			
+			}
+			break;
+
+			case "producto":
+				switch($options['lvl2']){
+				
+				case "normal":
+					$nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+					$marca=mysqli_real_escape_string($this->cn, $object->get('marca'));
+					$cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+					$precio_neto=mysqli_real_escape_string($this->cn,$object->get('precio_neto'));
+					$tipo=mysqli_real_escape_string($this->cn,$object->get('tipo'));
+					$fecha_de_adquisicion=mysqli_real_escape_string($this->cn,$object->get('fecha_de_adquisicion'));
+					$this->do_operation("INSERT INTO producto (id, nombre, cantidad, fecha_de_adquisicion, marca, precio_neto, tipo) VALUES (NULL,'$nombre', '$cantidad', '$fecha_de_adquisicion', '$marca', '$precio_neto', '$tipo');");
+					break;	
 			}	
 			break;
 
@@ -261,10 +275,20 @@ class db
 			case "producto":
 			switch($options['lvl2'])
 			{
-				case "normal":
+				case "normal_uso":
 					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
 					$cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
 					$this->do_operation("UPDATE producto SET cantidad = '$cantidad' WHERE id = '$id';");
+					break;
+
+				case "normal":
+					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
+                    $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+                    $marca=mysqli_real_escape_string($this->cn,$object->get('marca'));
+                    $cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+                    $fecha_de_adquisicion=mysqli_real_escape_string($this->cn,$object->get('fecha_de_adquisicion')); 
+                    $precio_unidad=mysqli_real_escape_string($this->cn,$object->get('precio_unidad'));
+                    $this->do_operation("UPDATE producto SET nombre= '$nombre', marca='$marca', cantidad='$cantidad',  fecha_de_adquisicion='$fecha_de_adquisicion', precio_unidad='$precio_unidad' WHERE id='$id';");
 					break;
 			}
 			break;
@@ -297,21 +321,6 @@ class db
 			}
 			break;
 
-         	case "producto":
-          	switch($options['lvl2'])
-            {
-				case "normal":
-					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
-                    $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
-                    $marca=mysqli_real_escape_string($this->cn,$object->get('marca'));
-                    $cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
-                    $fecha_de_adquisicion=mysqli_real_escape_string($this->cn,$object->get('fecha_de_adquisicion')); 
-                    $precio_unidad=mysqli_real_escape_string($this->cn,$object->get('precio_unidad'));
-                    $this->do_operation("UPDATE producto SET nombre= '$nombre', marca='$marca', cantidad='$cantidad',  fecha_de_adquisicion='$fecha_de_adquisicion', precio_unidad='$precio_unidad' WHERE id='$id';");
-					break;
-				}
-			break;
-
 			default: break;
 		}
 	}
@@ -338,8 +347,6 @@ class db
 				case "normal": 
 					$identificacion=mysqli_real_escape_string($this->cn,$object->get('identificacion'));
                 	$this->do_operation("DELETE FROM veterinario WHERE identificacion='$identificacion';");
-
-					
 					break;
 			}
 			break;
@@ -359,9 +366,7 @@ class db
 			{
 				case "normal": 
 					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
-               
-                $this->do_operation("DELETE FROM producto WHERE id='$id';");
-			
+                	$this->do_operation("DELETE FROM producto WHERE id='$id';");
 					break;
 			}
 			break;
@@ -454,6 +459,7 @@ class db
 
 				case "max": 
 					$info=$this->get_data("SELECT * FROM animal WHERE id = (SELECT MAX(id) FROM animal);");
+					break;
 
 				case "by_id": 
 					$this->escape_string($data);
@@ -648,6 +654,10 @@ class db
 					$info=$this->get_data("SELECT * FROM producto;"); 
 					break;
 
+				case "all": 
+					$info = $this->get_data("SELECT * FROM producto;");
+					break;
+	
 				case "by_tipo": 
 					$this->escape_string($data);
 					$tipo=$data['valor'];					
