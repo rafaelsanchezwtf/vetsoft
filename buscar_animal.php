@@ -73,19 +73,19 @@ class c_buscar_animal extends super_controller {
             }
 
         }  
-            $options['animal']['lvl2'] = $consulta;
-            $cod['animal']['valor'] = $valor;
-            $this->orm->connect();
-            $this->orm->read_data(array("animal"), $options, $cod);
-            $animales = $this->orm->get_objects("animal");
-            $this->orm->close();
-                if (is_empty($animales)){
-                    $this->engine->assign('error3',3);
-                    $this->mensaje("warning","Error","","No existen coincidencias!");
-                    throw_exception("");
-                }else{
-                    $this->engine->assign("animal",$animales);
-                }  
+        $options['animal']['lvl2'] = $consulta;
+        $cod['animal']['valor'] = $valor;
+        $this->orm->connect();
+        $this->orm->read_data(array("animal"), $options, $cod);
+        $animales = $this->orm->get_objects("animal");
+        $this->orm->close();
+            if (is_empty($animales)){
+                $this->engine->assign('error3',3);
+                $this->mensaje("warning","Error","","No existen coincidencias!");
+                throw_exception("");
+            }else{
+                $this->engine->assign("animal",$animales);
+            }  
     }
     
     
@@ -114,7 +114,7 @@ class c_buscar_animal extends super_controller {
                     throw_exception("Opción ". $this->get->option." no disponible");
             }
         } catch (Exception $e) {
-            #$this->error=1;
+            $this->error=1;
             $this->msg_warning=$e->getMessage();
             $this->temp_aux = 'message.tpl';
             $this->engine->assign('type_warning',$this->type_warning);

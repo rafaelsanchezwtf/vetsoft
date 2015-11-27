@@ -95,8 +95,23 @@ class db
 					$veterinario=mysqli_real_escape_string($this->cn,$object->get('veterinario'));
 					$this->do_operation("INSERT INTO tratamiento (codigo, titulo, descripcion, fecha, hora, duracion, lugar, estado, resultado, animal, veterinario) VALUES (NULL, '$titulo', '$descripcion', '$fecha', '$hora', NULL, '$lugar', '$estado', NULL, '$animal', '$veterinario');");
 					break;
-				}
-			
+			}
+			break;
+
+			case "cita":
+				switch($options['lvl2']){
+				
+				case "normal":
+					$motivo=mysqli_real_escape_string($this->cn,$object->get('motivo'));
+					$fecha=mysqli_real_escape_string($this->cn,$object->get('fecha'));
+					$hora=mysqli_real_escape_string($this->cn, $object->get('hora'));
+					$lugar=mysqli_real_escape_string($this->cn,$object->get('lugar'));
+					$estado=mysqli_real_escape_string($this->cn,$object->get('estado'));
+					$animal=mysqli_real_escape_string($this->cn,$object->get('animal'));
+					$veterinario=mysqli_real_escape_string($this->cn,$object->get('veterinario'));
+					$this->do_operation("INSERT INTO cita (codigo, motivo, fecha, hora, lugar, condicion, estado, diagnostico, animal, veterinario) VALUES (NULL, '$motivo', '$fecha', '$hora', '$lugar', NULL, '$estado', NULL, '$animal', '$veterinario');");
+					break;
+			}
 			break;
 			
 			default: break;
@@ -237,13 +252,14 @@ class db
 					$info=$this->get_data("SELECT * FROM dueno WHERE cedula='$cedula';");
                 break;
 
-            }break;
+            }
+            break;
 
 			case "veterinario":
 			switch($option['lvl2'])
 			{
 				case "all": 
-					//
+					$info=$this->get_data("SELECT * FROM veterinario;");
 					break;
 
 				case "one_login":
@@ -264,6 +280,7 @@ class db
 				case "all": 
 					$info=$this->get_data("SELECT * FROM cita;");
 					break;
+		
 			}
 			break;
 
@@ -273,9 +290,10 @@ class db
 				case "all": 
 					$info=$this->get_data("SELECT * FROM tratamiento;");
 					break;
+
 			}
 			break;
-
+			
 			default: break;
 		}
 		return $info;

@@ -16,8 +16,7 @@
                             <label class="radio-inline"><input type="radio" name="optradio" value="i">Id</label>
                             <label class="radio-inline"><input type="radio" name="optradio" value="n">Nombre</label>
                             <label class="radio-inline"><input type="radio" name="optradio" value="e">Especie</label>
-                            <label class="radio-inline"><input type="radio" name="optradio" value="f">Fecha de nacimiento</label>
-                            
+                            <label class="radio-inline"><input type="radio" name="optradio" value="f">Fecha de nacimiento</label> 
                         </div>
                     </div>
                     <div class="form-group">
@@ -60,7 +59,7 @@
                             <td>{$animal[$j]->get("talla")}</td>
                             <td>{$animal[$j]->get("genero")}</td>
                             <td>{$animal[$j]->get("especie")}</td>
-                        
+
                         {if $tipo eq "administrador"}    
                         <form action="{$gvar.l_global}editar_animal.php" method="post">    
                             <input type="hidden" name="id" value="{$animal[$j]->get('id')}">
