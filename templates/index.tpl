@@ -15,7 +15,7 @@
                    
                    Por favor Inicia sesión para empezar a utilizar el sistema <br><br><br>
                     
-                    <img src="{$gvar.l_global}files/animal/index-image.jpg" height="300" width="400">
+                    <img src="{$gvar.l_global}images/index-image.jpg" height="300" width="400">
 </h4>
 
 
