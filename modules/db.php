@@ -108,6 +108,24 @@ class db
 			}
 			break;
 			
+            
+             case "veterinario":
+                switch($options['lvl2'])
+			{
+				case "normal":
+					$identificacion=mysqli_real_escape_string($this->cn,$object->get('identificacion'));
+                    $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+                    $telefono=mysqli_real_escape_string($this->cn, $object->get('telefono'));
+                    $email=mysqli_real_escape_string($this->cn,$object->get('email'));
+                    $sueldo=mysqli_real_escape_string($this->cn,$object->get('sueldo'));
+          
+                    
+                    $this->do_operation("UPDATE veterinario SET nombre ='$nombre',email= '$email', sueldo='$sueldo', telefono='$telefono'  WHERE identificacion='$identificacion';");
+					break;
+			}
+			break;
+            
+            
 			default: break;
 		}
 	}
