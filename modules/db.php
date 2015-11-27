@@ -112,12 +112,22 @@ class db
 			case "tratamiento":
 			switch($options['lvl2'])
 			{
-				case "normal":
+				case "normal_completar":
 					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
 					$duracion=mysqli_real_escape_string($this->cn,$object->get('duracion'));
 					$resultado=mysqli_real_escape_string($this->cn,$object->get('resultado'));
 					$estado=mysqli_real_escape_string($this->cn,$object->get('estado'));
 					$this->do_operation("UPDATE tratamiento SET duracion = '$duracion', resultado = '$resultado', estado = '$estado' WHERE codigo = '$codigo';");
+					break;
+
+				case "normal":
+					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
+                    $titulo=mysqli_real_escape_string($this->cn,$object->get('titulo'));
+                    $descripcion=mysqli_real_escape_string($this->cn,$object->get('descripcion'));
+                    $fecha=mysqli_real_escape_string($this->cn, $object->get('fecha'));
+                    $hora=mysqli_real_escape_string($this->cn,$object->get('hora'));
+                    $lugar=mysqli_real_escape_string($this->cn,$object->get('lugar'));
+                    $this->do_operation("UPDATE tratamiento SET titulo ='$titulo',descripcion ='$descripcion',hora= '$hora', lugar='$lugar', fecha='$fecha'  WHERE codigo='$codigo';");
 					break;
 			}
 			break;
@@ -131,26 +141,7 @@ class db
 					$this->do_operation("UPDATE producto SET cantidad = '$cantidad' WHERE id = '$id';");
 					break;
 			}
-			break;
-			
-            
-            case "tratamiento":
-                switch($options['lvl2'])
-			{
-				case "normal":
-					$codigo=mysqli_real_escape_string($this->cn,$object->get('codigo'));
-                    $titulo=mysqli_real_escape_string($this->cn,$object->get('titulo'));
-                    $descripcion=mysqli_real_escape_string($this->cn,$object->get('descripcion'));
-                    $fecha=mysqli_real_escape_string($this->cn, $object->get('fecha'));
-                    $hora=mysqli_real_escape_string($this->cn,$object->get('hora'));
-                    $lugar=mysqli_real_escape_string($this->cn,$object->get('lugar'));
-          
-                    
-                    $this->do_operation("UPDATE tratamiento SET titulo ='$titulo',descripcion ='$descripcion',hora= '$hora', lugar='$lugar', fecha='$fecha'  WHERE codigo='$codigo';");
-					break;
-			}
-			break;
-            
+			break;        
             
 			default: break;
 		}

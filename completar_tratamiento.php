@@ -26,7 +26,7 @@ class c_completar_tratamiento extends super_controller {
         $tratamiento->set('estado','finalizado');
 
         $this->orm->connect();
-        $this->orm->update_data("normal",$tratamiento);
+        $this->orm->update_data("normal_completar",$tratamiento);
         $this->orm->close();
 
         $msg = "Tratamiento completado satisfactoriamente!";
