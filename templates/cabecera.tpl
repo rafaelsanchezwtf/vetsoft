@@ -39,7 +39,6 @@
                     <a class="navbar-brand" href="{$gvar.l_global}index.php">
                     
                     <i class="fa fa-paw fa-4"></i> VETSOFT
-
                     
                     </a>
                 </div>

@@ -1,7 +1,7 @@
 <?php
 
 require('configs/include.php');
-        
+
 class c_buscar_animal extends super_controller {
 
     public function buscar(){
@@ -9,9 +9,7 @@ class c_buscar_animal extends super_controller {
         $valor = $_POST['codigo'];
         if(is_empty($valor) AND is_empty($opcion)){
             $consulta = "all";   
-        }
-        
-        else{
+        }else{
             switch ($opcion) {
                 case 'i':
                     if (is_numeric($valor) or $valor>0){
@@ -20,15 +18,13 @@ class c_buscar_animal extends super_controller {
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
                         throw_exception("");
-                    }
-                elseif (is_empty($valor)){
+                    }elseif (is_empty($valor)){
                         $this->engine->assign('error1',1);
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");}
                     break;
 
                 case 'n':
-
                     if (!(is_empty($valor))){
                         $consulta = "by_nombre";    
                     }else{
@@ -46,11 +42,7 @@ class c_buscar_animal extends super_controller {
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");
                     }
-
-                    
                     break;
-
-               
 
                 case 'f':
                     if (is_numeric($valor)){
@@ -72,7 +64,7 @@ class c_buscar_animal extends super_controller {
                         throw_exception("");
                           
                     }
-                 break;
+                break;
                 
                 default:
                     $this->mensaje("warning","Error","","Debe seleccionar un criterio de busqueda");
@@ -80,27 +72,21 @@ class c_buscar_animal extends super_controller {
                     break;
             }
 
-        }
-        
-        $options['animal']['lvl2'] = $consulta;
-        $cod['animal']['valor'] = $valor;
-        $this->orm->connect();
-        $this->orm->read_data(array("animal"), $options, $cod);
-        $animales = $this->orm->get_objects("animal");
-        $this->orm->close();
-        if (is_empty($animales)){
-            $this->engine->assign('error3',3);
-            $this->mensaje("warning","Error","","No existen coincidencias!");
-            throw_exception("");
-        }else{
-            $this->engine->assign("animal",$animales);
-        }
-
-            
-        }
-
-
-    
+        }  
+            $options['animal']['lvl2'] = $consulta;
+            $cod['animal']['valor'] = $valor;
+            $this->orm->connect();
+            $this->orm->read_data(array("animal"), $options, $cod);
+            $animales = $this->orm->get_objects("animal");
+            $this->orm->close();
+                if (is_empty($animales)){
+                    $this->engine->assign('error3',3);
+                    $this->mensaje("warning","Error","","No existen coincidencias!");
+                    throw_exception("");
+                }else{
+                    $this->engine->assign("animal",$animales);
+                }  
+    }
     
     
     public function display(){
@@ -141,6 +127,5 @@ class c_buscar_animal extends super_controller {
 
     $call = new c_buscar_animal();
     $call->run();
-
 
 ?>
