@@ -43,17 +43,9 @@ class c_buscar_tratamiento extends super_controller {
                     break;
 
                 case 'f':
-                    if (is_numeric($valor)){
-                        
-                         if($valor<0){$this->engine->assign('error2',2);
-                        $this->mensaje("warning","Error","","Dato incorrecto");
-                        throw_exception("");}
+                    if (!(is_empty($valor))){
                         $consulta = "by_fecha";    
-                    }elseif (!(is_numeric($valor))){
-                        $this->engine->assign('error2',2);
-                        $this->mensaje("warning","Error","","Dato incorrecto");
-                        throw_exception("");
-                    }elseif (is_empty($valor)){
+                    }else{
                         $this->engine->assign('error1',1);
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");
