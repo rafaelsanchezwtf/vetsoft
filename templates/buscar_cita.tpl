@@ -79,8 +79,6 @@
                             <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-edit"></span> Editar</button></td>
                         </form>
                         
-                        
-                        
                         <form action="{$gvar.l_global}eliminar_cita.php" method="post">    
                             <input type="hidden" name="codigo" value="{$cita[$j]->get('codigo')}">
                             <td><button {if $cita[$j]->get('estado') eq "finalizado"} disabled="disabled" {/if} type ="submit" class="btn btn-primary"><span class="fa fa-close"></span> Eliminar</button></td>

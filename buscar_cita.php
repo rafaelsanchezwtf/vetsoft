@@ -9,13 +9,12 @@ class c_buscar_cita extends super_controller {
         $valor = $_POST['codigo'];
         if(is_empty($valor) AND is_empty($opcion)){
             $consulta = "by_all";   
-        }
-        else{
+        }else{
             switch ($opcion) {
                 case 'c':
-                    if (is_numeric($valor)){
+                    if (is_numeric($valor) AND $valor>0){
                         $consulta = "by_codigo";    
-                    }elseif (!(is_numeric($valor))){
+                    }elseif ((!(is_numeric($valor))) OR $valor<=0) {
                         $this->engine->assign('error2',2);
                         $this->mensaje("warning","Error","","Dato incorrecto");
                         throw_exception("");
@@ -30,6 +29,25 @@ class c_buscar_cita extends super_controller {
                     if (!(is_empty($valor))){
                         $consulta = "by_motivo";    
                     }else{
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
+                        throw_exception("");
+                    }
+                    break;
+
+                case 'f':
+                    if (is_numeric($valor)){
+                        if($valor<0){
+                            $this->engine->assign('error2',2);
+                            $this->mensaje("warning","Error","","Dato incorrecto");
+                            throw_exception("");
+                        }
+                    $consulta = "by_fecha";    
+                    }elseif (!(is_numeric($valor))){
+                        $this->engine->assign('error2',2);
+                        $this->mensaje("warning","Error","","Dato incorrecto");
+                        throw_exception("");
+                    }elseif (is_empty($valor)){
                         $this->engine->assign('error1',1);
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");
@@ -51,7 +69,6 @@ class c_buscar_cita extends super_controller {
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
                         throw_exception("");    
                     }
-                    
                     break;
 
                 case 'f':
