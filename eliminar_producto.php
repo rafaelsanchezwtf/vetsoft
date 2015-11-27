@@ -2,13 +2,31 @@
 
 require('configs/include.php');
         
-class c_buscar_cita extends super_controller {
+class c_eliminar_producto extends super_controller {
+
+
+    public function eliminar(){
+        $producto = new producto($this->post);
+        $this->orm->connect();  
+        $this->orm->delete_data("normal",$producto);   
+        $this->orm->close();
+        
+        $dir = $gvar['l_global']."buscar_producto.php";
+        $this->mensaje("warning","Información",$dir,"Borrado exitoso"); 
+        
+        // para evitar el display de un error por inexistencia del registro recien borrado
+        $this->get->option='cancelar';
+    }
+    public function cancelar(){
+        $dir = $gvar['l_global']."buscar_producto.php";
+        $this->mensaje("warning","Información",$dir,"Operacion cancelada por el adminsitardor");
+    }
 
     public function buscar(){
         $opcion = $this->post->optradio;
         $valor = $_POST['codigo'];
         if(is_empty($valor) AND is_empty($opcion)){
-            $consulta = "by_all";   
+            $consulta = "all";   
         }
         else{
             switch ($opcion) {
@@ -22,14 +40,14 @@ class c_buscar_cita extends super_controller {
                     }
                     break;
 
-                case 'i':
+                case 'p':
                     if (is_numeric($valor)){
                         if($valor<0){
                             $this->engine->assign('error2',2);
                             $this->mensaje("warning","Error","","Dato incorrecto");
                             throw_exception("");
                         }else{
-                            $consulta = "by_identificacion"; 
+                            $consulta = "by_precio"; 
                         }
                            
                     }elseif (!(is_numeric($valor))){
@@ -43,14 +61,14 @@ class c_buscar_cita extends super_controller {
                     }
                     break;
 
-                case 't':
+                case 'f':
                     if (is_numeric($valor)){
                         if($valor<0){
                             $this->engine->assign('error2',2);
                             $this->mensaje("warning","Error","","Dato incorrecto");
                             throw_exception("");
                         }else{
-                            $consulta = "by_telefono"; 
+                           $consulta = "by_fecha";  
                         }
                            
                     }elseif (!(is_numeric($valor))){
@@ -64,9 +82,25 @@ class c_buscar_cita extends super_controller {
                     }
                     break;
 
-                case 'e':
+                case 'm':
                     if (!(is_empty($valor))){
-                        $consulta = "by_email";    
+                        $consulta = "by_marca";    
+                    }else{
+                        $this->engine->assign('error1',1);
+                        $this->mensaje("warning","Error","","El campo de busqueda está vacío");
+                        throw_exception("");
+                    }
+                    break;
+                case 't':
+                    if (!(is_empty($valor))){
+                        if((strcmp ( $valor , "medicamento" )==0) or (strcmp ( $valor , "implemento" )==0)){
+                            $consulta = "by_tipo";
+                        }else{
+                            $this->engine->assign('error1',2);
+                            $this->mensaje("warning","Error","","El creterio de búsqueda solo recibe los tipos implemneto o medicamento.");
+                            throw_exception("");  
+                        }
+                            
                     }else{
                         $this->engine->assign('error1',1);
                         $this->mensaje("warning","Error","","El campo de busqueda está vacío");
@@ -80,32 +114,42 @@ class c_buscar_cita extends super_controller {
                     break;
             }
         }
-        $options['veterinario']['lvl2'] = $consulta;
-        $cod['veterinario']['valor'] = $valor;
-        $cod['veterinario']['identificacion']=$this->session['usuario']['identificacion'];
+        $options['producto']['lvl2'] = $consulta;
+        $cod['producto']['valor'] = $valor;
         $this->orm->connect();
-        $this->orm->read_data(array("veterinario"), $options, $cod);
-        $veterinarios = $this->orm->get_objects("veterinario");
-
+        $this->orm->read_data(array("producto"), $options, $cod);
+        $productos = $this->orm->get_objects("producto");        
         $this->orm->close();
-        if (is_empty($veterinarios)){
+        if (is_empty($productos)){
             $this->engine->assign('error3',3);
             $this->mensaje("warning","Error","","No existen coincidencias!");
             throw_exception("");
         }else{
-            $this->engine->assign("veterinarios",$veterinarios);
+            $this->engine->assign("productos",$productos);
         }
     }
     
     
     public function display(){
-        $this->engine->assign('title', "Buscar Veterinario");
+        
+
+        $this->engine->assign('title', "Eliminar Producto");
         $this->engine->assign('nombre',$this->session['usuario']['nombre']);
         $this->engine->assign('tipo',$this->session['usuario']['tipo']);
         $this->engine->display('cabecera.tpl');
         if (($this->session['usuario']['tipo'] == "administrador")){
+            settype($data,'object');
+            $data->id=$this->post->id;
+            $data->nombre=$this->post->nombre_p;
+            $data->marca=$this->post->marca;
+            $data->cantidad=$this->post->cantidad_viejo;
+            $data->precio_unidad=$this->post->precio_unidad;
+            $data->fecha_de_adquisicion=$this->post->fecha_de_adquisicion;
+            $data->tipo=$this->post->tipo;
+            $producto=new producto($data);
+            $this->engine->assign('producto',$producto);
             $this->engine->display($this->temp_aux);
-            $this->engine->display('buscar_veterinario.tpl');
+            $this->engine->display('eliminar_producto.tpl');
         }else{
             $direccion=$gvar['l_global']."index.php";
             $this->mensaje("warning","Informacion",$direccion,"Lo sentimos, usted no tiene permisos para acceder");
@@ -115,10 +159,15 @@ class c_buscar_cita extends super_controller {
     }
     
     public function run(){
+                
         try {
             if (isset($this->get->option)) {
-                if ($this->get->option == "buscar")
+                if ($this->get->option == "cancelar")
                     $this->{$this->get->option}();
+                elseif($this->get->option == "eliminar"){
+                    $this->{$this->get->option}();
+                }
+
                 else
                     throw_exception("Opción ". $this->get->option." no disponible");
             }
@@ -134,7 +183,7 @@ class c_buscar_cita extends super_controller {
         
 }
 
-    $call = new c_buscar_cita();
+    $call = new c_eliminar_producto();
     $call->run();
 
 

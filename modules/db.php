@@ -297,6 +297,21 @@ class db
 			}
 			break;
 
+         	case "producto":
+          	switch($options['lvl2'])
+            {
+				case "normal":
+					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
+                    $nombre=mysqli_real_escape_string($this->cn,$object->get('nombre'));
+                    $marca=mysqli_real_escape_string($this->cn,$object->get('marca'));
+                    $cantidad=mysqli_real_escape_string($this->cn,$object->get('cantidad'));
+                    $fecha_de_adquisicion=mysqli_real_escape_string($this->cn,$object->get('fecha_de_adquisicion')); 
+                    $precio_unidad=mysqli_real_escape_string($this->cn,$object->get('precio_unidad'));
+                    $this->do_operation("UPDATE producto SET nombre= '$nombre', marca='$marca', cantidad='$cantidad',  fecha_de_adquisicion='$fecha_de_adquisicion', precio_unidad='$precio_unidad' WHERE id='$id';");
+					break;
+				}
+			break;
+
 			default: break;
 		}
 	}
@@ -339,6 +354,18 @@ class db
 			}
 			break;
             
+			case "producto":
+			switch($options['lvl2'])
+			{
+				case "normal": 
+					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
+               
+                $this->do_operation("DELETE FROM producto WHERE id='$id';");
+			
+					break;
+			}
+			break;
+			
 			default: break;			  
 		}
 	}
@@ -501,16 +528,7 @@ class db
 					$identificacion=$data['identificacion']; 
 					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.animal = a.id AND c.veterinario = '$identificacion';"); 
 					break;
-				
-				case "by_codigo": 
-					$this->escape_string($data);
-					$codigo=$data['valor'];
-					$identificacion=$data['identificacion'];
-					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.codigo like '%$codigo%' AND c.animal = a.id AND c.veterinario = '$identificacion';"); 
-					break;
-
-				case "by_motivo": 
-					$this->escape_string($data);
+			
 					$motivo=$data['valor'];
 					$identificacion=$data['identificacion'];
 					$info=$this->get_data("SELECT c.*, a.nombre as nombre_animal FROM cita c, animal a WHERE c.motivo like '%$motivo%' AND c.animal = a.id AND c.veterinario = '$identificacion';");
@@ -582,7 +600,6 @@ class db
 					$fecha=$data['valor'];
 					$identificacion=$data['identificacion'];
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.fecha like '%$fecha%' AND t.animal = a.id AND t.veterinario = '$identificacion';");
-					break;
 
 				case "by_hora": 
 					$this->escape_string($data);
@@ -591,12 +608,6 @@ class db
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.hora like '%$hora%' AND t.animal = a.id AND t.veterinario = '$identificacion';"); 
 					break;
 
-				case "por_codigo": 
-					$this->escape_string($data);
-					$codigo=$data['codigo'];
-					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE t.codigo = '$codigo';"); 
-					break;
-				
 				case "by_animal": 
 					$this->escape_string($data);
 					$animal=$data['valor'];
@@ -608,7 +619,6 @@ class db
 					$this->escape_string($data);
 					$animal=$data['valor'];
 					$info=$this->get_data("SELECT t.*, a.nombre as nombre_animal FROM tratamiento t, animal a WHERE a.id ='$animal' AND t.animal ='$animal' AND t.estado='finalizado';");
-					break;
 
 				case "one":
 	                $codigo = mysqli_real_escape_string($this->cn,$data['codigo']);
@@ -628,8 +638,7 @@ class db
 
 				case "by_nombre": 
 					$this->escape_string($data);
-					$nombre=$data['nombre'];
-					$tipo=$data['tipo'];
+					$nombre=$data['valor'];
 					$info=$this->get_data("SELECT * FROM producto WHERE nombre like '%$nombre%' AND tipo = '$tipo';"); 
 					break;
 
@@ -637,6 +646,36 @@ class db
 					$this->escape_string($data);
 					$tipo=$data['tipo']; 
 					$info=$this->get_data("SELECT * FROM producto WHERE tipo = '$tipo';"); 
+					break;
+
+				case "by_tipo": 
+					$this->escape_string($data);
+					$tipo=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM producto WHERE tipo like '%$tipo%';"); 
+					break;
+
+				case "by_marca": 
+					$this->escape_string($data);
+					$marca=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM producto WHERE marca like '%$marca%';");					 
+					break;
+
+				case "by_fecha": 
+					$this->escape_string($data);		
+					$fecha=$data['valor'];					
+					$info=$this->get_data("SELECT * FROM producto WHERE fecha_de_adquisicion like '%$fecha%';");					
+					break;
+
+				case "by_precio": 
+					$this->escape_string($data);
+					$precio=$data['valor'];	
+					$info=$this->get_data("SELECT * FROM producto WHERE precio_unidad >= '$precio'AND '$precio'>0;");										
+					break;
+
+				case "by_nombre": 
+					$this->escape_string($data);
+					$nombre=$data['valor'];										
+					$info=$this->get_data("SELECT * FROM producto WHERE nombre like '%$nombre%';"); 					
 					break;
 			}
 			break;
