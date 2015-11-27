@@ -37,8 +37,7 @@
                         <th>Nombre</th>
                         <th>Teléfono</th>
                         <th>Email</th>
-                        <th>Sueldo</th>
-                        
+                        <th>Sueldo (COP)</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                         
