@@ -95,6 +95,7 @@ class c_atender_cita extends super_controller {
 
             $tiempo_actual = $hora . ":" . $minutos . ":" . $segundos;
 
+            echo $fecha_actual . " " . $tiempo_actual; 
             $option['cita']['lvl2']= "por_codigo";
             $cod['cita']['codigo'] = $codigo;
             $auxiliars['cita']=array("nombre_animal");
@@ -135,6 +136,8 @@ class c_atender_cita extends super_controller {
             $tiempo_antes = $hora_antes . ":" . $minutos_antes . ":00";
             $tiempo_despues = $hora_despues . ":" . $minutos_despues . ":00";
 
+            echo " " . $tiempo_antes . " " . $tiempo_despues; 
+
             if(($fecha_actual < $mi_cita->get('fecha')) OR (($fecha_actual == $mi_cita->get('fecha')) AND ($tiempo_actual<$tiempo_antes))){
                 
                 $dir=$gvar['l_global']."buscar_cita.php";
@@ -143,9 +146,9 @@ class c_atender_cita extends super_controller {
             }
             if(($fecha_actual > $mi_cita->get('fecha')) OR (($fecha_actual == $mi_cita->get('fecha')) AND ($tiempo_actual>$tiempo_despues))){
                 
-                $this->orm->connect();
-                $this->orm->delete_data("normal",$mi_cita);
-                $this->orm->close();
+                // $this->orm->connect();
+                // $this->orm->delete_data("normal",$mi_cita);
+                // $this->orm->close();
 
                 $dir=$gvar['l_global']."buscar_cita.php";
                 $this->mensaje("warning","Error",$dir,"No puede acceder a esta cita ya que se excedió a su horario. La cita será eliminada");
